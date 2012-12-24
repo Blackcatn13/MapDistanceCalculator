@@ -79,6 +79,7 @@ public class Window {
 	btnSearch.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    nodes = g.getNeighbors(textField.getText());
+		    textPane.setText("");
 		    for(int i = 0; i < nodes.size(); i++) {
 			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getName());
 		    }

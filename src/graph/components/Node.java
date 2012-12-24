@@ -30,7 +30,7 @@ public class Node {
     }
     
     public boolean isThisNode(String n) {
-	return meName.equals(n);
+	return meName.SameName(n);
     }
     
     public void addNeighbor(String name, float cost) {
@@ -43,5 +43,13 @@ public class Node {
     
     public void setName(String n) {
 	meName.setName(n);
+    }
+    
+    public ArrayList<Node> getNeighbors(){
+	ArrayList<Node> nb = new ArrayList<Node>();
+	for(int i = 0; i < neighbors.size(); i++) {
+	    nb.add(neighbors.get(i).getNeighbor(this));
+	}
+	return nb;
     }
 }

@@ -34,7 +34,7 @@ public class Parser {
 		String[] relation;
 		int nRel = 0;
 		//Cost
-		
+		ArrayList<Node> nodeArray = new ArrayList<Node>();
 		boolean first = true;
 		while (line != null){
 			if (line.startsWith("//")){
@@ -43,7 +43,6 @@ public class Parser {
 			}
 			nNodes = Integer.parseInt(line.split(" ")[0]);
 			//System.out.println(nNodes);
-			ArrayList<Node> nodeArray = new ArrayList<Node>();
 			for (int i = 0; i < nNodes; i++){
 				nodeArray.add(new Node());
 			}
@@ -57,13 +56,16 @@ public class Parser {
 					//relation = (nodeAct, nodeDest, cost)
 					// N1 N2 3
 					relation = line.split(" ");
-					nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(relation[1].substring(1))), Float.parseFloat(relation[2]));
+					nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(relation[1].substring(1)) - 1), Float.parseFloat(relation[2]));
 				}
-				line = file.readLine();
+				//line = file.readLine();
 			}
 		line = file.readLine();
 		}
 		file.close();
+		for(int i = 0; i < nNodes; i++) {
+		    graph.addNode(nodeArray.get(i));
+		}
 		return graph;
 	}
 }
