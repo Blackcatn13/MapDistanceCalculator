@@ -22,6 +22,13 @@ public class NodeNames {
     }
     
     /**
+     * Default Constructor.
+     */
+    public NodeNames() {
+	Name = "";
+    }
+    
+    /**
      * Getter of the name.
      * @return The name of that NodeName.
      */
