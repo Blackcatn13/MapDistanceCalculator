@@ -6,11 +6,13 @@
  */
 package graph.components;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Node {
     //TODO: Change NodeNames to String if it work's
-    private Map<NodeNames,Edge> neighbors;
+    //private Map<NodeNames,Edge> neighbors;
+    private ArrayList<Edge> neighbors;
     private NodeNames meName;
     
     public Node(String name) {
@@ -28,7 +30,11 @@ public class Node {
     }
     
     public void addNeighbor(String name, float cost) {
-	neighbors.put(new NodeNames(name), new Edge(this, new Node(name), cost));
+	neighbors.add(new Edge(this, new Node(name), cost));
+    }
+    
+    public void addNeighbor(Node n, float cost) {
+	neighbors.add(new Edge(this, n, cost));
     }
     
     public void setName(String n) {
