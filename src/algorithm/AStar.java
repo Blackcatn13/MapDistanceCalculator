@@ -4,7 +4,7 @@
  * 
  * TODO : <insrt description here>
  */
-package algorothm;
+package algorithm;
 
 public class AStar {
 
