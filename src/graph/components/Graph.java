@@ -21,5 +21,10 @@ public class Graph {
 	nodes.add(n);
     }
     
+    public ArrayList<Node> getNeighbours(String name) {
+	
+	return new ArrayList<Node>();
+    }
+    
     
 }
