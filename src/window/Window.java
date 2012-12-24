@@ -7,11 +7,19 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
+import graph.components.Graph;
+import graph.components.Node;
 
 public class Window {
 
     private JFrame frame;
     private JTextField textField;
+    private Graph g;
+    private ArrayList<Node> nodes;
 
     /**
      * Launch the application.
@@ -49,10 +57,26 @@ public class Window {
 	textField.setColumns(10);
 	
 	JButton btnParse = new JButton("Parse");
+	btnParse.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+		    
+		}
+	});
 	frame.getContentPane().add(btnParse, BorderLayout.WEST);
 	
-	JTextPane textPane = new JTextPane();
+	final JTextPane textPane = new JTextPane();
 	frame.getContentPane().add(textPane, BorderLayout.CENTER);
+	
+	JButton btnSearch = new JButton("Search");
+	btnSearch.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    nodes = g.getNeighbours(textField.getText());
+		    for(int i = 0; i < nodes.size(); i++) {
+			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getName());
+		    }
+		}
+	});
+	frame.getContentPane().add(btnSearch, BorderLayout.EAST);
     }
 
 }
