@@ -17,10 +17,12 @@ public class Node {
     
     public Node(String name) {
 	meName = new NodeNames(name);
+	neighbors = new ArrayList<Edge>();
     }
     
     public Node() {
 	meName = new NodeNames();
+	neighbors = new ArrayList<Edge>();
     }
     
     public String getName() {
