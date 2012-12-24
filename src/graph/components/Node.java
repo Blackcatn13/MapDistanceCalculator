@@ -20,7 +20,9 @@ public class Node {
     }
     
     public Node() {
+	meName = new NodeNames();
     }
+    
     public String getName() {
 	return meName.getName();
     }
