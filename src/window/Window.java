@@ -70,7 +70,7 @@ public class Window {
 	JButton btnSearch = new JButton("Search");
 	btnSearch.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    nodes = g.getNeighbours(textField.getText());
+		    nodes = g.getNeighbors(textField.getText());
 		    for(int i = 0; i < nodes.size(); i++) {
 			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getName());
 		    }
