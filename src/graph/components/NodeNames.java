@@ -21,4 +21,8 @@ public class NodeNames {
     public boolean SameName(String n) {
 	return Name.equals(n);
     }
+    
+    public void setName(String n) {
+	Name = n;
+    }
 }
