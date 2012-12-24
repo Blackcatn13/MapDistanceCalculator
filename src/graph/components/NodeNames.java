@@ -2,7 +2,7 @@
  * File: NodeNames.java
  * Created on 07/12/2012 by Marc
  * 
- * TODO : <insrt description here>
+ * Class that represents a Node Name
  */
 package graph.components;
 

@@ -2,7 +2,7 @@
  * File: Graph.java
  * Created on 24/12/2012 by Marc
  * 
- * TODO : <insrt description here>
+ * Class that represents a graph
  */
 package graph.components;
 
@@ -16,4 +16,10 @@ public class Graph {
     public Graph() {
 	
     }
+    
+    public void addNode(Node n) {
+	nodes.add(n);
+    }
+    
+    
 }

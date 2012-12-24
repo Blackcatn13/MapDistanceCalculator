@@ -2,7 +2,7 @@
  * File: Edge.java
  * Created on 07/12/2012 by Marc
  * 
- * TODO : <insrt description here>
+ * Class to describe a edge of a graph
  */
 package graph.components;
 

@@ -2,7 +2,7 @@
  * File: AStar.java
  * Created on 24/12/2012 by Marc
  * 
- * TODO : <insrt description here>
+ * Class that represents the A* algorithm
  */
 package algorithm;
 
