@@ -9,7 +9,7 @@ package graph.components;
 import java.util.Map;
 
 public class Node {
-    
+    //TODO: Change NodeNames to String if it work's
     private Map<NodeNames,Edge> neighbors;
     private NodeNames meName;
     
@@ -17,6 +17,8 @@ public class Node {
 	meName = new NodeNames(name);
     }
     
+    public Node() {
+    }
     public String getName() {
 	return meName.getName();
     }
@@ -27,5 +29,9 @@ public class Node {
     
     public void addNeighbor(String name, float cost) {
 	neighbors.put(new NodeNames(name), new Edge(this, new Node(name), cost));
+    }
+    
+    public void setName(String n) {
+	meName.setName(n);
     }
 }
