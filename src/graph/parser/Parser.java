@@ -43,7 +43,7 @@ public class Parser {
 			}
 			nNodes = Integer.parseInt(line.split(" ")[0]);
 			//System.out.println(nNodes);
-			ArrayList<Node> nodeArray;
+			ArrayList<Node> nodeArray = new ArrayList<Node>();
 			for (int i = 0; i < nNodes; i++){
 				nodeArray.add(new Node());
 			}
