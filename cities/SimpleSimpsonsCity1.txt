@@ -1,0 +1,35 @@
+//********************************************
+//*********  ------------------------ ********
+//********* | Simple Simpsons City 1| ********
+//*********  ------------------------ ********
+//********* City Image: http://goo.gl/80nmY **
+//********************************************
+6
+Simpsons street
+2
+N1 N2 3
+N1 N3 1
+Nuclear power station
+3
+N2 N1 3
+N2 N3 7
+N2 N4 2
+Springfield Elementary School
+5
+N3 N1 1
+N3 N2 7
+N3 N4 2
+N3 N5 5
+N3 N6 4
+Mr Burns square
+3
+N4 N2 2
+N4 N3 10
+N4 N6 6
+Crusty the clawn avenue
+2
+N6 N3 4
+N6 N4 6
+I'm Ralph street
+1
+N5 N3 5
