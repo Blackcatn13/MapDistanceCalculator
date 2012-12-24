@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import graph.components.Graph;
 import graph.components.Node;
+import graph.parser.Parser;
 
 public class Window {
 
@@ -20,6 +21,7 @@ public class Window {
     private JTextField textField;
     private Graph g;
     private ArrayList<Node> nodes;
+    private Parser p;
 
     /**
      * Launch the application.
@@ -52,6 +54,8 @@ public class Window {
 	frame.setBounds(100, 100, 450, 300);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
+	p = new Parser();
+	
 	textField = new JTextField();
 	frame.getContentPane().add(textField, BorderLayout.NORTH);
 	textField.setColumns(10);
@@ -59,7 +63,11 @@ public class Window {
 	JButton btnParse = new JButton("Parse");
 	btnParse.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-		    
+		    try {
+			g = p.ParseTxtFile("SimpleSimpsonsCity1.txt");
+		    } catch(Exception e) {
+			e.printStackTrace();
+		    }
 		}
 	});
 	frame.getContentPane().add(btnParse, BorderLayout.WEST);
