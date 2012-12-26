@@ -21,6 +21,10 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+import algorithm.AStar;
+import algorithm.Heuristic;
+import algorithm.Heuristic1;
+
 public class Window {
 
     private JFrame frame;
@@ -29,6 +33,8 @@ public class Window {
     private Parser p;
     private JTextField textField;
     private JTextField textField_1;
+    private AStar as;
+    private Heuristic h;
 
     /**
      * Launch the application.
@@ -81,7 +87,9 @@ public class Window {
 	JButton btnSearch = new JButton("Search");
 	btnSearch.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    nodes = g.getNeighbors(textField.getText());
+		    h = new Heuristic1();
+		    as = new AStar(g, g.getNode(textField.getText()), g.getNode(textField_1.getText()), h);
+		    nodes = as.getPath(); // = g.getNeighbors(textField.getText());
 		    textPane.setText("");
 		    for(int i = 0; i < nodes.size(); i++) {
 			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getName());
