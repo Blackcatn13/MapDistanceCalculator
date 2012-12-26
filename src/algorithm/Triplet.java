@@ -69,4 +69,8 @@ public class Triplet implements Comparator<Object>{
 	return false;
     }
     
+    public Node getFirst() {
+	return path.get(path.size() - 1);
+    }
+    
 }
