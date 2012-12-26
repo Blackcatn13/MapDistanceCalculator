@@ -27,5 +27,9 @@ public class OrderedList {
     public Triplet getFirst() {
 	return list.first();
     }
+    
+    public boolean empty() {
+	return list.size() == 0;
+    }
 
 }
