@@ -52,4 +52,13 @@ public class Node {
 	}
 	return nb;
     }
+    
+    public float costTo(Node n) {
+	for(int i = 0; i < neighbors.size(); i++) {
+	    if(neighbors.get(i).isNode(n)) {
+		return neighbors.get(i).getCost();
+	    }
+	}
+	return -1;
+    }
 }
