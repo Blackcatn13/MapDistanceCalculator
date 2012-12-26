@@ -27,7 +27,7 @@ public abstract class Heuristic {
      * @param n node to get the heuristic.
      * @return The heuristic value.
      */
-    public abstract float Calculate(Node n);
+    public abstract float Calculate(Node s, Node d);
 
     /**
      * Function to get the graph.
