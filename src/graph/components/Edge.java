@@ -82,4 +82,13 @@ public class Edge {
 	}
     }
     
+    /**
+     * Function to now if the node is on one of the edge's side.
+     * @param n node to check.
+     * @return True if the node is in false in other cases.
+     */
+    public boolean isNode(Node n) {
+	return Lneighbor == n || Rneighbor == n;
+    }
+    
 }
