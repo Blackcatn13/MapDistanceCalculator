@@ -33,5 +33,17 @@ public class Graph {
 	//return new ArrayList<Node>();
     }
     
+    public Node getNode(String name) {
+	int node = 0;
+	for(int i = 0; i < nodes.size(); i++) {
+	    if(nodes.get(i).isThisNode(name)) {
+		node = i;
+		break;
+	    }
+	}
+	return nodes.get(node);
+	//return new ArrayList<Node>();
+    }
+    
     
 }
