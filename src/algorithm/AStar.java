@@ -58,7 +58,7 @@ public class AStar {
 	    t = list.getFirst();
 	    aux = t.getFirst();
 	    auxl = aux.getNeighbors();
-	    System.out.println(aux.getName());
+	    System.out.println(aux.getAlias());
 	    for(int i = 0; i < auxl.size(); i++) {
 		path = new ArrayList<Node>(t.getPath());
 		path.add(auxl.get(i));

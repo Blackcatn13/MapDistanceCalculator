@@ -88,11 +88,11 @@ public class Window {
 	btnSearch.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    h = new Heuristic1();
-		    as = new AStar(g, g.getNode(textField.getText()), g.getNode(textField_1.getText()), h);
+		    as = new AStar(g, g.getNodebyAlias(textField.getText()), g.getNodebyAlias(textField_1.getText()), h);
 		    nodes = as.getPath(); // = g.getNeighbors(textField.getText());
 		    textPane.setText("");
 		    for(int i = 0; i < nodes.size(); i++) {
-			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getName());
+			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getAlias());
 		    }
 		}
 	});
