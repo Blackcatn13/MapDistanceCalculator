@@ -7,7 +7,6 @@
 package graph.components;
 
 import java.util.ArrayList;
-//import java.util.Map;
 
 public class Node {
     //TODO: Change NodeNames to String if it work's
@@ -60,5 +59,9 @@ public class Node {
 	    }
 	}
 	return -1;
+    }
+    
+    public boolean equals(Node a) {
+	return meName.SameName(a.meName.getName());
     }
 }
