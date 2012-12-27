@@ -24,8 +24,14 @@ public class OrderedList {
 	// TODO : implement this method to take out the same path's with more distance
     }
     
-    public Triplet getFirst() {
+    public Triplet First() {
 	return list.first();
+    }
+    
+    public Triplet getFirst() {
+	Triplet t = list.first();
+	list.remove(t);
+	return t;
     }
     
     public boolean empty() {
