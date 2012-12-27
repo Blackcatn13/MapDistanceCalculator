@@ -73,7 +73,7 @@ public class Window {
 	btnParse.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 		    try {
-			g = p.ParseTxtFile("SimpleSimpsonsCity1.txt");
+			g = p.ParseTxtFile("RandomCity.txt");
 		    } catch(Exception e) {
 			e.printStackTrace();
 		    }

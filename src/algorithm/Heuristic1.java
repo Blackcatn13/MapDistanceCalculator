@@ -13,10 +13,7 @@ public class Heuristic1 extends Heuristic{
 
     @Override
     public float Calculate(Node s, Node d) {
-	if(s.costTo(d) != -1) {
-	    return s.costTo(d);
-	}
-	return 5;
+	return 0;
     }
 
 }

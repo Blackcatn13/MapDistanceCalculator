@@ -47,12 +47,13 @@ public class AStar {
 	ArrayList<Node> path = new ArrayList<Node>();
 	ArrayList<Node> auxl = new ArrayList<Node>();
 	Node aux;
-	float cost;
+	float cost = 0;
 	float oldcost;
 	Triplet t;
 	
 	path.add(source);
-	list.add(new Triplet(h.Calculate(source, destination), 0, path));
+	int costaux = 50;
+	list.add(new Triplet(cost + costaux + h.Calculate(source, destination), 0, path));
 	while(!list.First().getFirst().equals(destination) && !list.empty()) {
 	    t = list.getFirst();
 	    aux = t.getFirst();
@@ -63,7 +64,7 @@ public class AStar {
 		path.add(auxl.get(i));
 		cost = aux.costTo(auxl.get(i));
 		oldcost = t.getGx();
-		list.add(new Triplet(cost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
+		list.add(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
 	    }
 	}
 	if(list.empty()) {
