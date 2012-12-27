@@ -59,15 +59,15 @@ public class Triplet implements Comparable<Object>{
     public int compareTo(Object a) {
 	Triplet a_ = (Triplet)a;
 	int aux = 0;
-	if(a_.Fx == Fx) {
+	if(a_.path.equals(path)) {
 	    aux = 0;
 	}
-	else if(a_.Fx < Fx) {
-	    aux = 11;
-	}
+	else if(a_.Fx <= Fx) {
+    	    aux = 1;
+    	} 
 	else {
-	    aux = -1;
-	}
+    	    aux = -1;
+    	}
 	return aux;
     }
     
