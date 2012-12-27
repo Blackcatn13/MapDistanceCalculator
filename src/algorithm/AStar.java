@@ -6,10 +6,10 @@
  */
 package algorithm;
 
-import java.util.ArrayList;
-
 import graph.components.Graph;
 import graph.components.Node;
+
+import java.util.ArrayList;
 
 public class AStar {
     
@@ -49,17 +49,20 @@ public class AStar {
 	Node aux;
 	float cost;
 	float oldcost;
+	Triplet t;
 	
 	path.add(source);
 	list.add(new Triplet(h.Calculate(source, destination), 0, path));
-	while(list.getFirst().getFirst() == destination || list.empty()) {
-	    aux = list.getFirst().getFirst();
+	while(!list.First().getFirst().equals(destination) && !list.empty()) {
+	    t = list.getFirst();
+	    aux = t.getFirst();
 	    auxl = aux.getNeighbors();
+	    System.out.println(aux.getName());
 	    for(int i = 0; i < auxl.size(); i++) {
-		path = new ArrayList<Node>(list.getFirst().getPath());
+		path = new ArrayList<Node>(t.getPath());
 		path.add(auxl.get(i));
 		cost = aux.costTo(auxl.get(i));
-		oldcost = list.getFirst().getGx();
+		oldcost = t.getGx();
 		list.add(new Triplet(cost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
 	    }
 	}
@@ -67,7 +70,7 @@ public class AStar {
 	    return new ArrayList<Node>();
 	}
 
-	return list.getFirst().getPath();
+	return list.First().getPath();
     }
     
 
