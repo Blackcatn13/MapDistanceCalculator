@@ -46,6 +46,7 @@ public class AStar {
     public ArrayList<Node> getPath(){
 	ArrayList<Node> path = new ArrayList<Node>();
 	ArrayList<Node> auxl = new ArrayList<Node>();
+	ArrayList<Node> visited = new ArrayList<Node>();
 	Node aux;
 	float cost = 0;
 	float oldcost;
@@ -57,14 +58,16 @@ public class AStar {
 	while(!list.First().getFirst().equals(destination) && !list.empty()) {
 	    t = list.getFirst();
 	    aux = t.getFirst();
+	    visited.add(aux);
 	    auxl = aux.getNeighbors();
 	    System.out.println(aux.getName());
 	    for(int i = 0; i < auxl.size(); i++) {
+		if(visited.contains(auxl.get(i))) continue;
 		path = new ArrayList<Node>(t.getPath());
 		path.add(auxl.get(i));
 		cost = aux.costTo(auxl.get(i));
 		oldcost = t.getGx();
-		list.add(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
+		list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
 	    }
 	}
 	if(list.empty()) {
