@@ -14,8 +14,8 @@ public class Node {
     private ArrayList<Edge> neighbors;
     private NodeNames meName;
     
-    public Node(String name) {
-	meName = new NodeNames(name);
+    public Node(String name, String alias) {
+	meName = new NodeNames(name, alias);
 	neighbors = new ArrayList<Edge>();
     }
     
@@ -27,13 +27,24 @@ public class Node {
     public String getName() {
 	return meName.getName();
     }
-    
-    public boolean isThisNode(String n) {
-	return meName.SameName(n);
+    public String getAlias(){
+    return meName.getAlias();
     }
     
-    public void addNeighbor(String name, float cost) {
-	neighbors.add(new Edge(this, new Node(name), cost));
+    public boolean isThisNode(String n, String m) {
+	return meName.Same(n, m);
+    }
+    
+    public boolean isThisNodebyName(String n) {
+    	return meName.SameName(n);
+        }
+    
+    public boolean isThisNodebyAlias(String n) {
+    	return meName.SameAlias(n);
+        }
+    
+    public void addNeighbor(String name, String alias, float cost) {
+	neighbors.add(new Edge(this, new Node(name, alias), cost));
     }
     
     public void addNeighbor(Node n, float cost) {
@@ -42,6 +53,10 @@ public class Node {
     
     public void setName(String n) {
 	meName.setName(n);
+    }
+    
+    public void setAlias(String n) {
+    meName.setAlias(n);
     }
     
     public ArrayList<Node> getNeighbors(){
@@ -62,6 +77,6 @@ public class Node {
     }
     
     public boolean equals(Node a) {
-	return meName.SameName(a.meName.getName());
+	return meName.Same(a.meName.getName(), a.meName.getAlias());
     }
 }

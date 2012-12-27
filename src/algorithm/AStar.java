@@ -60,7 +60,7 @@ public class AStar {
 	    aux = t.getFirst();
 	    visited.add(aux);
 	    auxl = aux.getNeighbors();
-	    System.out.println(aux.getName());
+	    System.out.println(aux.getAlias());
 	    for(int i = 0; i < auxl.size(); i++) {
 		if(visited.contains(auxl.get(i))) continue;
 		path = new ArrayList<Node>(t.getPath());

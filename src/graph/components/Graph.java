@@ -21,10 +21,10 @@ public class Graph {
 	nodes.add(n);
     }
     
-    public ArrayList<Node> getNeighbors(String name) {
+    public ArrayList<Node> getNeighbors(String name, String alias) {
 	int node = 0;
 	for(int i = 0; i < nodes.size(); i++) {
-	    if(nodes.get(i).isThisNode(name)) {
+	    if(nodes.get(i).isThisNode(name, alias)) {
 		node = i;
 		break;
 	    }
@@ -33,10 +33,10 @@ public class Graph {
 	//return new ArrayList<Node>();
     }
     
-    public Node getNode(String name) {
+    public Node getNode(String name, String alias) {
 	int node = 0;
 	for(int i = 0; i < nodes.size(); i++) {
-	    if(nodes.get(i).isThisNode(name)) {
+	    if(nodes.get(i).isThisNode(name, alias)) {
 		node = i;
 		break;
 	    }
@@ -44,6 +44,30 @@ public class Graph {
 	return nodes.get(node);
 	//return new ArrayList<Node>();
     }
+    
+    public Node getNodebyName(String name) {
+    	int node = 0;
+    	for(int i = 0; i < nodes.size(); i++) {
+    	    if(nodes.get(i).isThisNodebyName(name)) {
+    		node = i;
+    		break;
+    	    }
+    	}
+    	return nodes.get(node);
+    	//return new ArrayList<Node>();
+        }
+    
+    public Node getNodebyAlias(String alias) {
+    	int node = 0;
+    	for(int i = 0; i < nodes.size(); i++) {
+    	    if(nodes.get(i).isThisNodebyAlias(alias)) {
+    		node = i;
+    		break;
+    	    }
+    	}
+    	return nodes.get(node);
+    	//return new ArrayList<Node>();
+        }
     
     
 }

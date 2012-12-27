@@ -32,9 +32,7 @@ public class Parser {
 		String line = file.readLine();
 		String[] relation;
 		int nRel = 0;
-		//Cost
 		ArrayList<Node> nodeArray = new ArrayList<Node>();
-		boolean first = true;
 		while (line != null){
 			if (line.startsWith("//")){
 				line = file.readLine();
@@ -48,6 +46,7 @@ public class Parser {
 			for (int i = 0; i < nNodes; i++){
 				line = file.readLine();
 				nodeArray.get(i).setName(line);
+				nodeArray.get(i).setAlias("N".concat(String.valueOf(i+1)));
 				line = file.readLine();
 				nRel = Integer.parseInt(line.split(" ")[0]);
 				for (int j = 0; j < nRel; j++){

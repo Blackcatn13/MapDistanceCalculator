@@ -12,13 +12,18 @@ public class NodeNames {
      * The name
      */
     private String Name;
-    
+    /**
+     * The alias of the node
+     */
+    private String Alias;
     /**
      * Constructor.
      * @param n is the name for that node.
+     * @param m is the alias name for that node.
      */
-    public NodeNames(String n) {
+    public NodeNames(String n, String m) {
 	Name = n;
+	Alias = m;
     }
     
     /**
@@ -26,6 +31,7 @@ public class NodeNames {
      */
     public NodeNames() {
 	Name = "";
+	Alias = "";
     }
     
     /**
@@ -36,13 +42,26 @@ public class NodeNames {
 	return Name;
     }
     
+    public String getAlias() {
+    return Alias;
+    }
+    
     /**
      * Function to compare if a name is the same.
      * @param n name to compare.
-     * @return True if the name is the same.
+     * @param m alias to compare.
+     * @return True if the name and alias is the same.
      */
-    public boolean SameName(String n) {
-	return Name.toLowerCase().equals(n.toLowerCase());
+    public boolean Same(String n, String m){
+    	return (Name.toLowerCase().equals(n.toLowerCase()) && Alias.toLowerCase().equals(n.toLowerCase()));
+    }
+    
+    public boolean SameName(String n){
+    	return Name.toLowerCase().equals(n.toLowerCase());
+    }
+    
+    public boolean SameAlias(String n){
+    	return Alias.toLowerCase().equals(n.toLowerCase());
     }
     
     /**
@@ -51,5 +70,8 @@ public class NodeNames {
      */
     public void setName(String n) {
 	Name = n;
+    }
+    public void setAlias(String n){
+    Alias = n;
     }
 }
