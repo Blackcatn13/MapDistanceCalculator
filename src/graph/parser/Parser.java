@@ -3,15 +3,14 @@
  */
 package graph.parser;
 
+import graph.components.Graph;
+import graph.components.Node;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import graph.components.Edge;
-import graph.components.Graph;
-import graph.components.Node;
 
 /**
  * @author xyz0k
