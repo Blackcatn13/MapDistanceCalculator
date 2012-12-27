@@ -13,9 +13,8 @@ package algorithm;
 import graph.components.Node;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
-public class Triplet implements Comparator<Object>{
+public class Triplet implements Comparable<Object>{
 
     private float Fx;
     private float Gx;
@@ -44,23 +43,6 @@ public class Triplet implements Comparator<Object>{
     public ArrayList<Node> getPath(){
 	return path;
     }
-
-    @Override
-    public int compare(Object a, Object b) {
-	Triplet a_ = (Triplet)a;
-	Triplet b_ = (Triplet)b;
-	int aux = 0;
-	if(a_.Fx == b_.Fx) {
-	    aux = 0;
-	}
-	else if(a_.Fx < b_.Fx) {
-	    aux = -1;
-	}
-	else {
-	    aux = 1;
-	}
-	return aux;
-    }
     
     public boolean EqualPath(Triplet a) {
 	if(this.path == a.path) {
@@ -71,6 +53,22 @@ public class Triplet implements Comparator<Object>{
     
     public Node getFirst() {
 	return path.get(path.size() - 1);
+    }
+
+    @Override
+    public int compareTo(Object a) {
+	Triplet a_ = (Triplet)a;
+	int aux = 0;
+	if(a_.Fx == Fx) {
+	    aux = 0;
+	}
+	else if(a_.Fx < Fx) {
+	    aux = 11;
+	}
+	else {
+	    aux = -1;
+	}
+	return aux;
     }
     
 }
