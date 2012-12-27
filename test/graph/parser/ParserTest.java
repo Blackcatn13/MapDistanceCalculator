@@ -1,6 +1,6 @@
 package graph.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 import graph.components.Graph;
 
 import org.junit.Test;
