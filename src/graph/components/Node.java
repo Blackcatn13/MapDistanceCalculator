@@ -31,16 +31,16 @@ public class Node {
     return meName.getAlias();
     }
     
-    public boolean isThisNode(String n, String m) {
-	return meName.Same(n, m);
+    public boolean isThisNode(String n, String a) {
+	return meName.Same(n, a);
     }
     
     public boolean isThisNodebyName(String n) {
     	return meName.SameName(n);
         }
     
-    public boolean isThisNodebyAlias(String n) {
-    	return meName.SameAlias(n);
+    public boolean isThisNodebyAlias(String a) {
+    	return meName.SameAlias(a);
         }
     
     public void addNeighbor(String name, String alias, float cost) {
