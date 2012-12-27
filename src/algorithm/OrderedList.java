@@ -21,7 +21,21 @@ public class OrderedList {
     }
     
     public void addWithoutRep(Triplet t) {
-	// TODO : implement this method to take out the same path's with more distance
+	TreeSet<Triplet> listaux = new TreeSet<Triplet>(list);
+	boolean added = false;
+	for(Triplet tr : list) {
+	    if(tr.getFirst().equals(t.getFirst())) {
+		if(tr.getGx() > t.getGx()) {
+		    listaux.remove(tr);
+		    listaux.add(t);   
+		}
+		added = true;
+	    }
+	}
+	if(!added) {
+	    listaux.add(t);
+	}
+	list = listaux;
     }
     
     public Triplet First() {
