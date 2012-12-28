@@ -66,16 +66,16 @@ public class Parser {
 					//nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(relation[1].substring(1)) - 1), Float.parseFloat(relation[2]));
 					nDefinedCost = 2*Integer.parseInt(relation[2]);
 					for (int k = 0; k < nDefinedCost; k+=2){
-						if (relation[3+k] == "S"){
+						if (relation[3+k].equals("B")){
 							busCost = Float.parseFloat(relation[4+k]);
 						}
-						else if (relation[3+k] == "S"){
+						else if (relation[3+k].equals("S")){
 							subCost = Float.parseFloat(relation[4+k]);
 						}
-						else if (relation[3+k] == "W"){
+						else if (relation[3+k].equals("W")){
 							walCost = Float.parseFloat(relation[4+k]);
 						}
-						else if (relation[3+k] == "F"){
+						else if (relation[3+k].equals("F")){
 							funCost = Float.parseFloat(relation[4+k]);
 						}
 					}
