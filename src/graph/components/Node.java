@@ -43,12 +43,12 @@ public class Node {
     	return meName.SameAlias(a);
         }
     
-    public void addNeighbor(String name, String alias, float cost) {
-	neighbors.add(new Edge(this, new Node(name, alias), cost));
+    public void addNeighbor(String name, String alias, float Bcost, float Scost, float Wcost) {
+	neighbors.add(new Edge(this, new Node(name, alias), Bcost, Scost, Wcost));
     }
     
-    public void addNeighbor(Node n, float cost) {
-	neighbors.add(new Edge(this, n, cost));
+    public void addNeighbor(Node n, float Bcost, float Scost, float Wcost) {
+	neighbors.add(new Edge(this, n, Bcost, Scost, Wcost));
     }
     
     public void setName(String n) {
@@ -67,10 +67,17 @@ public class Node {
 	return nb;
     }
     
-    public float costTo(Node n) {
+    public float costTo(Node n, Transports t) {
 	for(int i = 0; i < neighbors.size(); i++) {
 	    if(neighbors.get(i).isNode(n)) {
-		return neighbors.get(i).getCost();
+		switch(t) {
+		case BUS:
+		    return neighbors.get(i).getBusCost();
+		case SUBWAY:
+		    return neighbors.get(i).getSubWCost();
+		case WALK:
+		    return neighbors.get(i).getWalkCost();
+		}
 	    }
 	}
 	return -1;
