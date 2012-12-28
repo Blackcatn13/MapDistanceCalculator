@@ -8,6 +8,7 @@ package algorithm;
 
 import graph.components.Graph;
 import graph.components.Node;
+import graph.components.Transports;
 
 import java.util.ArrayList;
 
@@ -65,7 +66,7 @@ public class AStar {
 		if(visited.contains(auxl.get(i))) continue;
 		path = new ArrayList<Node>(t.getPath());
 		path.add(auxl.get(i));
-		cost = aux.costTo(auxl.get(i));
+		cost = aux.costTo(auxl.get(i), Transports.BUS);
 		oldcost = t.getGx();
 		list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
 	    }
