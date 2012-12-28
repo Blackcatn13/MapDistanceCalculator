@@ -70,8 +70,10 @@ public class AStar {
                 	path = new ArrayList<Node>(t.getPath());
                 	path.add(auxl.get(i));
                 	cost = aux.costTo(auxl.get(i), Transports.values()[j]);
-                	oldcost = t.getGx();
-                	list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
+                	if(cost != -1) {
+                	    oldcost = t.getGx();
+                	    list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
+                	}
 		    }
 		}
 	    }
