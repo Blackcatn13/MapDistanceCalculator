@@ -77,7 +77,9 @@ public class AStar {
 	    }
 	}
 	if(list.empty()) {
-	    return new ArrayList<Node>();
+	    ArrayList<Node> a = new ArrayList<Node>();
+	    a.add(new Node("Not path to go", "Not path to go"));
+	    return a;
 	}
 
 	return list.First().getPath();
