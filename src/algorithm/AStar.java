@@ -11,6 +11,7 @@ import graph.components.Node;
 import graph.components.Transports;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 
 public class AStar {
     
@@ -44,7 +45,7 @@ public class AStar {
 	destination = d;
     }
     
-    public ArrayList<Node> getPath(){
+    public ArrayList<Node> getPath(BitSet b){
 	ArrayList<Node> path = new ArrayList<Node>();
 	ArrayList<Node> auxl = new ArrayList<Node>();
 	ArrayList<Node> visited = new ArrayList<Node>();
@@ -64,11 +65,15 @@ public class AStar {
 	    System.out.println(aux.getAlias());
 	    for(int i = 0; i < auxl.size(); i++) {
 		if(visited.contains(auxl.get(i))) continue;
-		path = new ArrayList<Node>(t.getPath());
-		path.add(auxl.get(i));
-		cost = aux.costTo(auxl.get(i), Transports.BUS);
-		oldcost = t.getGx();
-		list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
+		for(int j = 0; j < b.length(); j++) {
+		    if(b.get(j)) {
+                	path = new ArrayList<Node>(t.getPath());
+                	path.add(auxl.get(i));
+                	cost = aux.costTo(auxl.get(i), Transports.values()[j]);
+                	oldcost = t.getGx();
+                	list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
+		    }
+		}
 	    }
 	}
 	if(list.empty()) {
