@@ -30,10 +30,10 @@ public class Edge {
      * @param rneighbor Second node of the edge.
      * @param c Cost to travel form the first to the second or otherwise node.
      */
-    public Edge(Node lneighbor, Node rneighbor, float c) {
+    public Edge(Node lneighbor, Node rneighbor, float Bc, float Sc, float Wc) {
 	Lneighbor = lneighbor;
 	Rneighbor = rneighbor;
-	cost = new Cost(c);
+	cost = new Cost(Bc, Sc, Wc);
     }
     
     /**
