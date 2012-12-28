@@ -23,7 +23,7 @@ N3 N4 3 S 3.5 B 4.3 W 3.8
 N3 N6 3 S 2.5 B 2.4 W 4.3
 N3 N7 2 S 2.5 W 2.1
 N3 N8 3 S 4.25 B 3.9 W 4.3
-N3 N9 3 S 4.5 W 2.5
+N3 N9 2 S 4.5 W 2.5
 N3 N17 3 S 5.5 B 3.2 W 4.75
 ChinaTown
 2
@@ -53,7 +53,7 @@ N8 N9 2 S 5.5 W 8.2
 N8 N29 3 S 4.0 B 5.7 W 7.1
 Ludibrium
 4
-N9 N3 3 S 4.5 W 2.5
+N9 N3 2 S 4.5 W 2.5
 N9 N8 2 S 5.5 W 8.2
 N9 N11 3 S 3.25 B 4 W 4.3
 N9 N17 2 S 2.25 W 2.75
@@ -82,7 +82,7 @@ N14 N15 2 B 5.2 W 3
 N14 N17 2 S 4.75 W 4.2
 N14 N30 2 S 5.0 W 8.3
 Rohan
-2
+3
 N15 N14 2 B 5.2 W 3
 N15 N17 2 B 8.9 W 11.4
 N15 N20 2 W 28.8 F 9.23
@@ -108,10 +108,10 @@ N18 N19 3 S 2.25 B 3.7 W 5.1
 Demacia
 2
 N19 N18 3 S 2.25 B 3.7 W 5.1
-N19 N20 3 S 3.0 5.2 W 7.3
+N19 N20 3 S 3.0 B 5.2 W 7.3
 Noxus
 2
-N20 N19 3 S 3.0 5.2 W 7.3
+N20 N19 3 S 3.0 B 5.2 W 7.3
 N20 N21 2 B 4.5 W 10.2
 Orgrimmar
 2
@@ -122,7 +122,7 @@ Stormwind
 N22 N21 2 B 2.4 W 4
 N22 N23 2 B 3.2 W 5.2
 Tanaris
-2
+3
 N23 N22 2 B 3.2 W 5.2
 N23 N24 3 S 2.5 B 3.9 W 5.9
 N23 N30 3 S 14.3 W 35.2 F 11.5
@@ -141,14 +141,14 @@ N26 N27 3 S 5.5 B 6.2 W 10.3
 Grieta del Invocador
 2
 N27 N26 3 S 5.5 B 6.2 W 10.3 
-N27 N28 2.5 3 S 2.5 B 4.2 W 6.5
+N27 N28 3 S 2.5 B 4.2 W 6.5
 Alderaan
 2
 N28 N27 3 S 2.5 B 4.2 W 6.5
 N28 N29 3 S 1.25 B 3.2 W 4.2
 Matrix
 2
-N29 N28 3 3.2 S 3 B 1.25 W 4.2
+N29 N28 3 S 3 B 1.25 W 4.2
 N29 N8 3 S 4.0 B 5.7 W 7.1
 Abismo de Helm
 2
