@@ -69,13 +69,13 @@ public class Parser {
 						if (relation[3+k] == "S"){
 							busCost = Float.parseFloat(relation[4+k]);
 						}
-						if (relation[3+k] == "S"){
+						else if (relation[3+k] == "S"){
 							subCost = Float.parseFloat(relation[4+k]);
 						}
-						if (relation[3+k] == "W"){
+						else if (relation[3+k] == "W"){
 							walCost = Float.parseFloat(relation[4+k]);
 						}
-						if (relation[3+k] == "F"){
+						else if (relation[3+k] == "F"){
 							funCost = Float.parseFloat(relation[4+k]);
 						}
 					}
