@@ -91,4 +91,15 @@ public class Edge {
 	return Lneighbor == n || Rneighbor == n;
     }
     
+    public float getBusCost() {
+	return cost.getBusC();
+    }
+    
+    public float getSubWCost() {
+	return cost.getSubWC();
+    }
+    
+    public float getWalkCost() {
+	return cost.getWalkC();
+    }
 }
