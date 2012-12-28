@@ -8,15 +8,23 @@ package graph.components;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.Iterator;
 
 public class Cost {
 
     private ArrayList<Date> schedule = new ArrayList<Date>();
     private ArrayList<Float> cost = new ArrayList<Float>();
+    private EnumMap<Transports, Float> costs = new EnumMap<Transports, Float>(Transports.class);
     private float defaultCost;
     private boolean haveSchedule = false;
     
+    public Cost(float Bc, float Sc, float Wc) {
+	costs.put(Transports.BUS, Bc);
+	costs.put(Transports.SUBWAY, Sc);
+	costs.put(Transports.WALK, Wc);
+	
+    }
     public Cost(boolean time) {
 	defaultCost = 5;
 	haveSchedule = time;
@@ -49,5 +57,29 @@ public class Cost {
     
     public float getCost() {
 	return defaultCost;
+    }
+    
+    public void setBusC(float c) {
+	costs.put(Transports.BUS, c);
+    }
+    
+    public void setSubWC(float c) {
+	costs.put(Transports.SUBWAY, c);
+    }
+    
+    public void setWalkC(float c) {
+	costs.put(Transports.WALK, c);
+    }
+    
+    public float getBusC() {
+	return costs.get(Transports.BUS);
+    }
+    
+    public float getSubWC() {
+	return costs.get(Transports.SUBWAY);
+    }
+    
+    public float getWalkC() {
+	return costs.get(Transports.WALK);
     }
 }
