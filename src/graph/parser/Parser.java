@@ -32,6 +32,11 @@ public class Parser {
 		String line = file.readLine();
 		String[] relation;
 		int nRel = 0;
+		int nDefinedCost;
+		float busCost;
+		float subCost;
+		float walCost;
+		float funCost;
 		ArrayList<Node> nodeArray = new ArrayList<Node>();
 		while (line != null){
 			if (line.startsWith("//")){
@@ -50,11 +55,32 @@ public class Parser {
 				line = file.readLine();
 				nRel = Integer.parseInt(line.split(" ")[0]);
 				for (int j = 0; j < nRel; j++){
+					busCost = -1;
+					subCost = -1;
+					walCost = -1;
+					funCost = -1;
 					line = file.readLine();
 					//relation = (nodeAct, nodeDest, cost)
 					// N1 N2 3
 					relation = line.split(" ");
-					nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(relation[1].substring(1)) - 1), Float.parseFloat(relation[2]));
+					//nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(relation[1].substring(1)) - 1), Float.parseFloat(relation[2]));
+					nDefinedCost = 2*Integer.parseInt(relation[2]);
+					for (int k = 0; k < nDefinedCost; k+=2){
+						if (relation[3+k] == "S"){
+							busCost = Float.parseFloat(relation[4+k]);
+						}
+						if (relation[3+k] == "S"){
+							subCost = Float.parseFloat(relation[4+k]);
+						}
+						if (relation[3+k] == "W"){
+							walCost = Float.parseFloat(relation[4+k]);
+						}
+						if (relation[3+k] == "F"){
+							funCost = Float.parseFloat(relation[4+k]);
+						}
+					}
+					//addNeighbor(String name, String alias, float Bcost, float Scost, float Wcost)
+					nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(relation[1].substring(1)) - 1), busCost, subCost, walCost);
 				}
 				//line = file.readLine();
 			}
