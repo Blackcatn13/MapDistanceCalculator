@@ -19,6 +19,12 @@ public class Cost {
     private float defaultCost;
     private boolean haveSchedule = false;
     
+    public Cost(float Bc, float Sc, float Wc) {
+	costs.put(Transports.BUS, Bc);
+	costs.put(Transports.SUBWAY, Sc);
+	costs.put(Transports.WALK, Wc);
+	
+    }
     public Cost(boolean time) {
 	defaultCost = 5;
 	haveSchedule = time;
