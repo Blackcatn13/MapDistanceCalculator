@@ -86,4 +86,13 @@ public class Node {
     public boolean equals(Node a) {
 	return meName.Same(a.meName.getName(), a.meName.getAlias());
     }
+    
+    public Transports getTransMinTo(Node n) {
+	for(int i = 0; i < neighbors.size(); i++) {
+	    if(neighbors.get(i).getNeighbor(this).equals(n)) {
+		return neighbors.get(i).getTransMin();
+	    }
+	}
+	return Transports.NOTHING;
+    }
 }
