@@ -2,6 +2,7 @@ package window;
 
 import graph.components.Graph;
 import graph.components.Node;
+import graph.components.Transports;
 import graph.parser.Parser;
 
 import java.awt.BorderLayout;
@@ -36,12 +37,63 @@ public class Window {
     private Parser p;
     private JTextField textField;
     private JTextField textField_1;
+    private JTextPane textPane;
     private AStar as;
     private Heuristic h;
-    private boolean bus = false;
-    private boolean subway = false;
-    private boolean walk = false;
 
+    public void WritePath(ArrayList<Node> path) {
+	Transports t;
+	for(int i = 0; i < path.size() - 1; i++) {
+	    t = path.get(i).getTransMinTo(path.get(i + 1));
+	    switch(t) {
+	    case BUS:
+		textPane.setText(textPane.getText() + "\n" + "Take the bus");
+		break;
+	    case SUBWAY:
+		textPane.setText(textPane.getText() + "\n" + "Take the subway");
+		break;
+	    case WALK:
+		textPane.setText(textPane.getText() + "\n" + "Walk");
+	    }
+	    textPane.setText(textPane.getText() + " from " + nodes.get(i).getAlias());
+	    textPane.setText(textPane.getText() + " to " + nodes.get(i + 1).getAlias());
+	}
+	
+	textPane.setText(textPane.getText() + "\n\n");
+	Transports t1 = Transports.NOTHING;
+	for(int i = 0; i < path.size() - 1; i++) {
+	    t = path.get(i).getTransMinTo(path.get(i+1));
+	    if(t1 != t) {
+		switch(t1) {
+		case NOTHING:
+		    textPane.setText(textPane.getText() + "\n" + "Take in " + nodes.get(i).getAlias());
+		    break;
+		case BUS:
+		    textPane.setText(textPane.getText() + "\n" + "Get out of the bus in " + nodes.get(i).getAlias());
+		    break;
+		case SUBWAY:
+		    textPane.setText(textPane.getText() + "\n" + "Get out of the subway in " + nodes.get(i).getAlias());
+		    break;
+		case WALK:
+		    textPane.setText(textPane.getText() + "\n" + "Walk to " + nodes.get(i).getAlias());
+		    break;
+		}
+		switch(t) {
+		case BUS:
+		    textPane.setText(textPane.getText() + " and take the bus in " + nodes.get(i).getAlias());
+		    break;
+		case SUBWAY:
+		    textPane.setText(textPane.getText() + " and take the subway in " + nodes.get(i).getAlias());
+		    break;
+		case WALK:
+		    textPane.setText(textPane.getText() + " and walk to " + nodes.get(i).getAlias());
+		}
+		t1 = t;
+		
+	    }
+	}
+	textPane.setText(textPane.getText() + "\n" + "Stop in " + nodes.get(nodes.size() - 1).getAlias());
+    }
     /**
      * Launch the application.
      */
@@ -120,7 +172,7 @@ public class Window {
 	gbc_rdbtnWalking.gridy = 2;
 	panel_1.add(rdbtnWalking, gbc_rdbtnWalking);
 	
-	final JTextPane textPane = new JTextPane();
+	textPane = new JTextPane();
 	frame.getContentPane().add(textPane, BorderLayout.CENTER);
 	
 	JButton btnSearch = new JButton("Search");
@@ -183,14 +235,16 @@ public class Window {
 		    h = new Heuristic1();
 		    as = new AStar(g, g.getNodebyAlias(textField.getText()), g.getNodebyAlias(textField_1.getText()), h);
 		    BitSet b = new BitSet(3);
+		    b.clear();
 		    b.set(0, rdbtnBus.isSelected());
 		    b.set(1, rdbtnSubway.isSelected());
 		    b.set(2, rdbtnWalking.isSelected());
 		    nodes = as.getPath(b); // = g.getNeighbors(textField.getText());
 		    textPane.setText("");
-		    for(int i = 0; i < nodes.size(); i++) {
+		    WritePath(nodes);
+		    /*for(int i = 0; i < nodes.size(); i++) {
 			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getAlias());
-		    }
+		    }*/
 		}
 	});
     }
