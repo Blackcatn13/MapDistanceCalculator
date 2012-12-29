@@ -30,6 +30,7 @@ public class OrderedList {
 		    listaux.add(t);   
 		}
 		added = true;
+		break;
 	    }
 	}
 	if(!added) {
@@ -43,13 +44,12 @@ public class OrderedList {
     }
     
     public Triplet getFirst() {
-	Triplet t = list.first();
-	list.remove(t);
+	Triplet t = list.pollFirst();
 	return t;
     }
     
     public boolean empty() {
-	return list.size() == 0;
+	return list.isEmpty();
     }
 
 }
