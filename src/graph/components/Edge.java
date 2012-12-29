@@ -102,4 +102,8 @@ public class Edge {
     public float getWalkCost() {
 	return cost.getWalkC();
     }
+    
+    public Transports getTransMin() {
+	return cost.getMinTrans();
+    }
 }
