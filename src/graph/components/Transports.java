@@ -7,5 +7,5 @@
 package graph.components;
 
 public enum Transports {
-    BUS, SUBWAY, WALK;
+    BUS, SUBWAY, WALK, NOTHING;
 }
