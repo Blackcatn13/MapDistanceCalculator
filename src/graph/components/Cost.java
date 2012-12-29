@@ -82,4 +82,30 @@ public class Cost {
     public float getWalkC() {
 	return costs.get(Transports.WALK);
     }
+    
+    public Transports getMinTrans() {
+	float bus = (costs.get(Transports.BUS) == -1) ? 1000 : costs.get(Transports.BUS);
+	float sub = (costs.get(Transports.SUBWAY) == -1) ? 1000 : costs.get(Transports.SUBWAY);
+	float walk = (costs.get(Transports.WALK) == -1) ? 1000 : costs.get(Transports.WALK);
+	
+	Transports t = Transports.NOTHING;
+	
+	if(bus < sub) {
+	    if(bus < walk) {
+		t = Transports.BUS;
+	    }
+	    else {
+		t = Transports.WALK;
+	    }
+	}
+	else {
+	    if(sub < walk) {
+		t = Transports.SUBWAY;
+	    }
+	    else {
+		t = Transports.WALK;
+	    }
+	}
+	return t;
+    }
 }
