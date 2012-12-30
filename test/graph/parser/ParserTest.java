@@ -9,7 +9,7 @@ public class ParserTest {
 
 	@Test
 	public void testParseTxtFile() {
-		Parser parser = new Parser();
+		ParserGraph parser = new ParserGraph();
 		try {
 			Graph graph;
 			graph = parser.ParseTxtFile("SimpleSimpsonsCity1.txt");
