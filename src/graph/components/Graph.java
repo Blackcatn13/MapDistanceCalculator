@@ -96,4 +96,12 @@ public class Graph {
     	}
     	return nodes.get(node);
     }
+    
+    /**
+     * Function to get the number of nodes.
+     * @return The number of nodes of the graph.
+     */
+    public int getGraphSize(){
+    	return nodes.size();
+    }
 }
