@@ -7,6 +7,7 @@
 package graph.components;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 
 public class Node {
     //TODO: Change NodeNames to String if it work's
@@ -87,10 +88,10 @@ public class Node {
 	return meName.Same(a.meName.getName(), a.meName.getAlias());
     }
     
-    public Transports getTransMinTo(Node n) {
+    public Transports getTransMinTo(Node n, BitSet b) {
 	for(int i = 0; i < neighbors.size(); i++) {
 	    if(neighbors.get(i).getNeighbor(this).equals(n)) {
-		return neighbors.get(i).getTransMin();
+		return neighbors.get(i).getTransMin(b);
 	    }
 	}
 	return Transports.NOTHING;
