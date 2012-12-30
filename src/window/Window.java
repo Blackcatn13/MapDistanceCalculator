@@ -205,12 +205,9 @@ public class Window {
 		    b.set(0, rdbtnBus.isSelected());
 		    b.set(1, rdbtnSubway.isSelected());
 		    b.set(2, rdbtnWalking.isSelected());
-		    nodes = as.getPath(b); // = g.getNeighbors(textField.getText());
+		    nodes = as.getPath(b);
 		    textPane.setText("");
 		    WritePath(nodes, b);
-		    /*for(int i = 0; i < nodes.size(); i++) {
-			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getAlias());
-		    }*/
 		}
 	});
     }
