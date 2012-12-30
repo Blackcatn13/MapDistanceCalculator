@@ -92,18 +92,35 @@ public class Edge {
 	return Lneighbor == n || Rneighbor == n;
     }
     
+    /**
+     * Function to get the bus cost to the neighbor node.
+     * @return the bus cost.
+     */
     public float getBusCost() {
 	return cost.getBusC();
     }
     
+    /**
+     * Function to get the subway cost to the neighbor node. 
+     * @return the subway cost.
+     */
     public float getSubWCost() {
 	return cost.getSubWC();
     }
     
+    /**
+     * Function to get the walking cost to he neighbor node.
+     * @return the walking cost.
+     */
     public float getWalkCost() {
 	return cost.getWalkC();
     }
     
+    /**
+     * Function to get which transport have the minimum cost.
+     * @param b transports to check.
+     * @return the transport name.
+     */
     public Transports getTransMin(BitSet b) {
 	return cost.getMinTrans(b);
     }
