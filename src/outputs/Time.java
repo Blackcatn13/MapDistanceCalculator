@@ -4,27 +4,27 @@
 package outputs;
 
 /**
- * @author User
+ * @author xyz0k
  *
  */
 public class Time {
 
-	long start;
-	int scaleF;
+	private long start;
+	private int scaleF;
 	
 	public Time(){
 		start = System.currentTimeMillis();
-		//set scale to miliseconds;
+		//set scale to millisecond;
 		scaleF = 1;
 	}
 	
 	public void setScale (String scale){
 		String scalelc = scale.toLowerCase();
-		if (scalelc.equals("seconds")){
+		if (scalelc.equals("second")){
 			scaleF = 1000;
 		}
-		else if (scalelc.equals("miliseconds")){
-			scaleF = 1000/60;
+		else if (scalelc.equals("minute")){
+			scaleF = 1000*60;
 		}
 	}
 	
