@@ -149,7 +149,7 @@ public class Window {
 	JPanel panel = new JPanel();
 	frame.getContentPane().add(panel, BorderLayout.NORTH);
 	GridBagLayout gbl_panel = new GridBagLayout();
-	gbl_panel.columnWidths = new int[]{0, 61, 163, 0, 216, 0};
+	gbl_panel.columnWidths = new int[]{0, 113, 163, 0, 216, 0};
 	gbl_panel.rowHeights = new int[]{20, 0};
 	gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 	gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
@@ -157,8 +157,9 @@ public class Window {
 	
 	JLabel lblSource = new JLabel("Source");
 	GridBagConstraints gbc_lblSource = new GridBagConstraints();
-	gbc_lblSource.insets = new Insets(0, 0, 0, 5);
+	gbc_lblSource.fill = GridBagConstraints.HORIZONTAL;
 	gbc_lblSource.anchor = GridBagConstraints.EAST;
+	gbc_lblSource.insets = new Insets(0, 0, 0, 5);
 	gbc_lblSource.gridx = 1;
 	gbc_lblSource.gridy = 0;
 	panel.add(lblSource, gbc_lblSource);
