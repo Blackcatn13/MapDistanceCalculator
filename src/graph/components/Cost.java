@@ -7,6 +7,7 @@
 package graph.components;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.Iterator;
@@ -83,10 +84,10 @@ public class Cost {
 	return costs.get(Transports.WALK);
     }
     
-    public Transports getMinTrans() {
-	float bus = (costs.get(Transports.BUS) == -1) ? 1000 : costs.get(Transports.BUS);
-	float sub = (costs.get(Transports.SUBWAY) == -1) ? 1000 : costs.get(Transports.SUBWAY);
-	float walk = (costs.get(Transports.WALK) == -1) ? 1000 : costs.get(Transports.WALK);
+    public Transports getMinTrans(BitSet b) {
+	float bus = (b.get(0) && costs.get(Transports.BUS) != -1) ? costs.get(Transports.BUS) : 1000;
+	float sub = (b.get(1) && costs.get(Transports.SUBWAY) != -1) ? costs.get(Transports.SUBWAY) : 1000;
+	float walk = (b.get(2) && costs.get(Transports.WALK) != -1) ? costs.get(Transports.WALK) : 1000;
 	
 	Transports t = Transports.NOTHING;
 	
