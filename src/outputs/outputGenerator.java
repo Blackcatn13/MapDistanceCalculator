@@ -43,11 +43,14 @@ public class outputGenerator {
 	 * Method that generate TXT output file.
 	 * @param filename
 	 */
-	public void generateTXT(String filename){
+	public void generateTXT(String filename, long elapsedTime, ArrayList<Node> path, Graph graph){
 		FileWriter fstream;
 		try {
 			fstream = new FileWriter("fileOutputs/".concat(filename));
 			BufferedWriter file = new BufferedWriter(fstream);
+			file.write(String.valueOf(elapsedTime));
+			file.newLine();
+			file.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,19 +64,20 @@ public class outputGenerator {
     public static void main(String[] args) throws Exception {
     	String city = "RandomCity.txt";
     	outputGenerator oG = new outputGenerator();
-    	oG.generateTXT("a.txt");    	
     	pG = new ParserGraph();
     	graph = pG.ParseTxtFile(city);
     	h = new Heuristic1();
-    	astar = new AStar(graph,graph.getNodebyAlias("N1"), graph.getNodebyAlias("N5"), h);
-    	BitSet b = new BitSet(3);
-    	b.clear();
-	    b.set(0, true);
-	    b.set(1, true);
-	    b.set(2, true);
-	    nodes = astar.getPath(b);
-    	time = new Time();
-		astar.getPath(b);
-    	System.out.println(time.elapsedTime());
+    	for (int i = 0; i < graph.getGraphSize(); i++){
+    		astar = new AStar(graph,graph.getNodebyAlias("N".concat(String.valueOf(i+1))), graph.getNodebyAlias("N5"), h);
+    		BitSet b = new BitSet(3);
+        	b.clear();
+        	b.set(0, true);
+    	    b.set(1, true);
+    	    b.set(2, true);
+    	    nodes = astar.getPath(b);
+        	time = new Time();
+    		astar.getPath(b);
+        	oG.generateTXT("N".concat(String.valueOf(i+1)).concat("-"+"N5"), time.elapsedTime(), nodes, graph);    	
+    	} 	
     }
 }
