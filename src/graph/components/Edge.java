@@ -7,6 +7,7 @@
  */
 package graph.components;
 
+import java.util.BitSet;
 import java.util.Date;
 
 public class Edge {
@@ -103,7 +104,7 @@ public class Edge {
 	return cost.getWalkC();
     }
     
-    public Transports getTransMin() {
-	return cost.getMinTrans();
+    public Transports getTransMin(BitSet b) {
+	return cost.getMinTrans(b);
     }
 }
