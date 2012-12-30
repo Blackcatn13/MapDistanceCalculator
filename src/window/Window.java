@@ -41,10 +41,10 @@ public class Window {
     private AStar as;
     private Heuristic h;
 
-    public void WritePath(ArrayList<Node> path) {
+    public void WritePath(ArrayList<Node> path, BitSet b) {
 	Transports t;
 	for(int i = 0; i < path.size() - 1; i++) {
-	    t = path.get(i).getTransMinTo(path.get(i + 1));
+	    t = path.get(i).getTransMinTo(path.get(i + 1), b);
 	    switch(t) {
 	    case BUS:
 		textPane.setText(textPane.getText() + "\n" + "Take the bus");
@@ -58,41 +58,6 @@ public class Window {
 	    textPane.setText(textPane.getText() + " from " + nodes.get(i).getAlias());
 	    textPane.setText(textPane.getText() + " to " + nodes.get(i + 1).getAlias());
 	}
-	
-	textPane.setText(textPane.getText() + "\n\n");
-	Transports t1 = Transports.NOTHING;
-	for(int i = 0; i < path.size() - 1; i++) {
-	    t = path.get(i).getTransMinTo(path.get(i+1));
-	    if(t1 != t) {
-		switch(t1) {
-		case NOTHING:
-		    textPane.setText(textPane.getText() + "\n" + "Take in " + nodes.get(i).getAlias());
-		    break;
-		case BUS:
-		    textPane.setText(textPane.getText() + "\n" + "Get out of the bus in " + nodes.get(i).getAlias());
-		    break;
-		case SUBWAY:
-		    textPane.setText(textPane.getText() + "\n" + "Get out of the subway in " + nodes.get(i).getAlias());
-		    break;
-		case WALK:
-		    textPane.setText(textPane.getText() + "\n" + "Walk to " + nodes.get(i).getAlias());
-		    break;
-		}
-		switch(t) {
-		case BUS:
-		    textPane.setText(textPane.getText() + " and take the bus in " + nodes.get(i).getAlias());
-		    break;
-		case SUBWAY:
-		    textPane.setText(textPane.getText() + " and take the subway in " + nodes.get(i).getAlias());
-		    break;
-		case WALK:
-		    textPane.setText(textPane.getText() + " and walk to " + nodes.get(i).getAlias());
-		}
-		t1 = t;
-		
-	    }
-	}
-	textPane.setText(textPane.getText() + "\n" + "Stop in " + nodes.get(nodes.size() - 1).getAlias());
     }
     /**
      * Launch the application.
@@ -241,7 +206,7 @@ public class Window {
 		    b.set(2, rdbtnWalking.isSelected());
 		    nodes = as.getPath(b); // = g.getNeighbors(textField.getText());
 		    textPane.setText("");
-		    WritePath(nodes);
+		    WritePath(nodes, b);
 		    /*for(int i = 0; i < nodes.size(); i++) {
 			textPane.setText(textPane.getText() + "\n" + nodes.get(i).getAlias());
 		    }*/
