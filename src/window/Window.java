@@ -24,11 +24,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.text.html.parser.Parser;
-
 import algorithm.AStar;
 import algorithm.Heuristic;
-import algorithm.Heuristic1;
+import algorithm.HeuristicD;
 
 public class Window {
 
@@ -204,7 +202,7 @@ public class Window {
 	
 	btnSearch.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    h = new Heuristic1();
+		    h = new HeuristicD();
 		    as = new AStar(g, g.getNodebyAlias(textField.getText()), g.getNodebyAlias(textField_1.getText()), h);
 		    BitSet b = new BitSet(3);
 		    b.clear();
