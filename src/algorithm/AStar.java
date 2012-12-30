@@ -97,7 +97,7 @@ public class AStar {
 	// We add the new triplet that holds the f(x), the g(x) and the path in our ordered list.
 	list.add(new Triplet(cost + costaux + h.Calculate(source, destination), 0, path));
 	// While the list holds an element or the first element is equals to the destination.
-	while(!list.First().getFirst().equals(destination) && !list.empty()) {
+	while(!list.empty() && !list.First().getFirst().equals(destination)) {
 	    // Get the first element of the list.
 	    t = list.getFirst();
 	    // Get the last node in that path.
@@ -123,7 +123,7 @@ public class AStar {
                 	if(cost != -1) {
                 	    // We get the accumulated cost from the source node to this.
                 	    oldcost = t.getGx();
-                	    // Add the node to the orderd list.
+                	    // Add the node to the ordered list.
                 	    list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
                 	}
 		    }
@@ -131,9 +131,7 @@ public class AStar {
 	    }
 	}
 	if(list.empty()) {
-	    ArrayList<Node> a = new ArrayList<Node>();
-	    a.add(new Node("Not path to go", "Not path to go"));
-	    return a;
+	    return new ArrayList<Node>();
 	}
 	return list.First().getPath();
     }

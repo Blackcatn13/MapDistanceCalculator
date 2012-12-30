@@ -43,20 +43,25 @@ public class Window {
 
     public void WritePath(ArrayList<Node> path, BitSet b) {
 	Transports t;
-	for(int i = 0; i < path.size() - 1; i++) {
-	    t = path.get(i).getTransMinTo(path.get(i + 1), b);
-	    switch(t) {
-	    case BUS:
-		textPane.setText(textPane.getText() + "\n" + "Take the bus");
-		break;
-	    case SUBWAY:
-		textPane.setText(textPane.getText() + "\n" + "Take the subway");
-		break;
-	    case WALK:
-		textPane.setText(textPane.getText() + "\n" + "Walk");
+	if(!path.isEmpty()) {
+	    for(int i = 0; i < path.size() - 1; i++) {
+		t = path.get(i).getTransMinTo(path.get(i + 1), b);
+		switch(t) {
+    	    	case BUS:
+    	    	    textPane.setText(textPane.getText() + "\n" + "Take the bus");
+    	    	    break;
+    	    	case SUBWAY:
+    	    	    textPane.setText(textPane.getText() + "\n" + "Take the subway");
+    	    	    break;
+    	    	case WALK:
+    	    	    textPane.setText(textPane.getText() + "\n" + "Walk");
+		}
+		textPane.setText(textPane.getText() + " from " + nodes.get(i).getAlias());
+		textPane.setText(textPane.getText() + " to " + nodes.get(i + 1).getAlias());
 	    }
-	    textPane.setText(textPane.getText() + " from " + nodes.get(i).getAlias());
-	    textPane.setText(textPane.getText() + " to " + nodes.get(i + 1).getAlias());
+	}
+	else {
+	    textPane.setText(textPane.getText() + "\n" + "Don't exist a way from source to destination with the selected transports.");
 	}
     }
     /**
