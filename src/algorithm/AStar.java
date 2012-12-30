@@ -14,13 +14,30 @@ import java.util.ArrayList;
 import java.util.BitSet;
 
 public class AStar {
-    
+    /**
+     * Variable to hold a graph for the heuristic function.
+     */
     private Graph graph;
+    /**
+     * Node source for the A*.
+     */
     private Node source;
+    /**
+     * Node destination for the A*.
+     */
     private Node destination;
+    /**
+     * OrderedList to save the nodes in f(x) order.
+     */
     private OrderedList list;
+    /**
+     * Heuristic used in the A*.
+     */
     private Heuristic h;
     
+    /**
+     * Default constructor of the class.
+     */
     public AStar() {
 	graph = new Graph();
 	source = new Node();
@@ -28,6 +45,13 @@ public class AStar {
 	list = new OrderedList();
     }
     
+    /**
+     * Constructor with all the parameters to run the A*.
+     * @param g Graph used for the A*.
+     * @param s node source.
+     * @param d node destination.
+     * @param heu heuristic to check.
+     */
     public AStar(Graph g, Node s, Node d, Heuristic heu) {
 	graph = g;
 	source = s;
@@ -37,14 +61,27 @@ public class AStar {
 	h.init(g);
     }
     
+    /**
+     * Setter of the source Node.
+     * @param s new source node.
+     */
     public void setSource(Node s) {
 	source = s;
     }
     
+    /**
+     * Setter of the destination Node.
+     * @param d new destination node.
+     */
     public void setDestination(Node d) {
 	destination = d;
     }
     
+    /**
+     * Function that calculates the A*.
+     * @param b types of transports to use.
+     * @return The path with then nodes to go fomr source to destination.
+     */
     public ArrayList<Node> getPath(BitSet b){
 	ArrayList<Node> path = new ArrayList<Node>();
 	ArrayList<Node> auxl = new ArrayList<Node>();
@@ -54,24 +91,39 @@ public class AStar {
 	float oldcost;
 	Triplet t;
 	
+	// We add the source in a clear path to start.
 	path.add(source);
 	int costaux = 50;
+	// We add the new triplet that holds the f(x), the g(x) and the path in our ordered list.
 	list.add(new Triplet(cost + costaux + h.Calculate(source, destination), 0, path));
+	// While the list holds an element or the first element is equals to the destination.
 	while(!list.First().getFirst().equals(destination) && !list.empty()) {
+	    // Get the first element of the list.
 	    t = list.getFirst();
+	    // Get the last node in that path.
 	    aux = t.getFirst();
+	    // Mark the node as visited.
 	    visited.add(aux);
+	    // Get the neighbors of the node.
 	    auxl = aux.getNeighbors();
-	    System.out.println(aux.getAlias());
+	    // For every neighbor.
 	    for(int i = 0; i < auxl.size(); i++) {
+		// If the neighbor has been visited we skip it.
 		if(visited.contains(auxl.get(i))) continue;
+		// For the different types of transports.
 		for(int j = 0; j < b.length(); j++) {
+		    // If the transport method is selected.
 		    if(b.get(j)) {
+			// Add the node to the path.
                 	path = new ArrayList<Node>(t.getPath());
                 	path.add(auxl.get(i));
+                	// Get the cost to the node.
                 	cost = aux.costTo(auxl.get(i), Transports.values()[j]);
+                	// If the system of transport exist from the parent to the neighbor.
                 	if(cost != -1) {
+                	    // We get the accumulated cost from the source node to this.
                 	    oldcost = t.getGx();
+                	    // Add the node to the orderd list.
                 	    list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
                 	}
 		    }
@@ -83,9 +135,6 @@ public class AStar {
 	    a.add(new Node("Not path to go", "Not path to go"));
 	    return a;
 	}
-
 	return list.First().getPath();
     }
-    
-
 }
