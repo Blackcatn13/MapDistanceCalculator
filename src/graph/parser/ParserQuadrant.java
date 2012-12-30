@@ -19,24 +19,24 @@ import algorithm.Position;
 public class ParserQuadrant {
 	
 	int nNodes;
-	ArrayList<Position> alPos;
 	
 	public ParserQuadrant(){
 		nNodes = 0;
-		alPos = new ArrayList<Position>();
 	}
 	
 	public ArrayList<Position> quadrantInit(String filename) throws Exception{
-		FileInputStream fstream = new FileInputStream("heuristicInit/".concat(filename));
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader file = new BufferedReader(new InputStreamReader(in));
-		nNodes = Integer.parseInt(file.readLine());
-		String[] splitLine;
-		for (int i = 0; i < nNodes; i++){
-			splitLine = file.readLine().split(" ");
-			alPos.add(new Position(Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[0]));
-		}		
-		file.close();
-		return alPos;
+	    ArrayList<Position> alPos = new ArrayList<Position>();
+	    
+	    FileInputStream fstream = new FileInputStream("heuristicInit/".concat(filename));
+	    DataInputStream in = new DataInputStream(fstream);
+	    BufferedReader file = new BufferedReader(new InputStreamReader(in));
+	    nNodes = Integer.parseInt(file.readLine());
+	    String[] splitLine;
+	    for (int i = 0; i < nNodes; i++){
+		splitLine = file.readLine().split(" ");
+		alPos.add(new Position(Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[0]));
+	    }		
+	    file.close();
+	    return alPos;
 	}
 }
