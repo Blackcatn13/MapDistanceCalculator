@@ -8,6 +8,7 @@ package algorithm;
 
 import graph.components.Graph;
 import graph.components.Node;
+import graph.components.Transports;
 
 public abstract class Heuristic {
 
@@ -22,12 +23,23 @@ public abstract class Heuristic {
      */
     public abstract void init(Graph g);
     
+    
     /**
      * Function that returns the heuristic value from a node in the graph saved.
-     * @param n node to get the heuristic.
-     * @return The heuristic value.
+     * @param s node from where calculate the heuristic.
+     * @param d node to where calculate the heuristic.
+     * @return The estimated cost to got from n to d.
      */
     public abstract float Calculate(Node s, Node d);
+    
+    /**
+     * Function that returns the heuristic value from a node in the graph saved.
+     * @param s node from where calculate the heuristic.
+     * @param d node to where calculate the heuristic.
+     * @param t transport to use.
+     * @return The estimated cost to got from n to d.
+     */
+    public abstract float Calculate(Node s, Node d, Transports t);
 
     /**
      * Function to get the graph.
