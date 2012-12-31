@@ -28,7 +28,7 @@ public class Triplet implements Comparable<Object>{
     /**
      * Variable to hold the path.
      */
-    private ArrayList<Node> path;
+    private ArrayList<InfoPath> path;
     
     /**
      * Variable to hold the last transport used in this path.
@@ -46,7 +46,7 @@ public class Triplet implements Comparable<Object>{
     public Triplet() {
 	Fx = 0;
 	Gx = 0;
-	path = new ArrayList<Node>();
+	path = new ArrayList<InfoPath>();
 	transfers = 0;
 	lastTransport = Transports.NOTHING;
     }
@@ -57,7 +57,7 @@ public class Triplet implements Comparable<Object>{
      * @param g value of the g(x).
      * @param p path.
      */
-    public Triplet(float f, float g, ArrayList<Node> p) {
+    public Triplet(float f, float g, ArrayList<InfoPath> p) {
 	Fx = f;
 	Gx = g;
 	path = p;
@@ -74,7 +74,7 @@ public class Triplet implements Comparable<Object>{
      * @param tsf number of transfers.
      * @param t last transport used.
      */
-    public Triplet(float f, float g, ArrayList<Node> p, int tsf, Transports t) {
+    public Triplet(float f, float g, ArrayList<InfoPath> p, int tsf, Transports t) {
 	Fx = f;
 	Gx = g;
 	path = p;
@@ -102,7 +102,7 @@ public class Triplet implements Comparable<Object>{
      * Getter of the path.
      * @return the path.
      */
-    public ArrayList<Node> getPath(){
+    public ArrayList<InfoPath> getPath(){
 	return path;
     }
     
@@ -123,7 +123,7 @@ public class Triplet implements Comparable<Object>{
      * @return the last node of the path.
      */
     public Node getFirst() {
-	return path.get(path.size() - 1);
+	return path.get(path.size() - 1).getDNode();
     }
 
     /**
