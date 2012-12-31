@@ -58,7 +58,6 @@ public class AStar {
 	destination = d;
 	list = new OrderedList();
 	h = heu;
-	h.init(g);
     }
     
     /**
@@ -93,9 +92,8 @@ public class AStar {
 	
 	// We add the source in a clear path to start.
 	path.add(source);
-	int costaux = 50;
 	// We add the new triplet that holds the f(x), the g(x) and the path in our ordered list.
-	list.add(new Triplet(cost + costaux + h.Calculate(source, destination), 0, path));
+	list.add(new Triplet(cost + h.Calculate(source, destination), 0, path));
 	// While the list holds an element or the first element is equals to the destination.
 	while(!list.empty() && !list.First().getFirst().equals(destination)) {
 	    // Get the first element of the list.
@@ -124,7 +122,7 @@ public class AStar {
                 	    // We get the accumulated cost from the source node to this.
                 	    oldcost = t.getGx();
                 	    // Add the node to the ordered list.
-                	    list.addWithoutRep(new Triplet(cost + costaux + oldcost + h.Calculate(auxl.get(i), destination), cost + oldcost, path));
+                	    list.addWithoutRep(new Triplet(cost + oldcost + h.Calculate(auxl.get(i), destination, Transports.values()[j]), cost + oldcost, path));
                 	}
 		    }
 		}

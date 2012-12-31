@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.BitSet;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,11 +25,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.text.html.parser.Parser;
-
 import algorithm.AStar;
 import algorithm.Heuristic;
-import algorithm.Heuristic1;
+import algorithm.HeuristicD;
+import algorithm.HeuristicE;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class Window {
 
@@ -98,17 +100,39 @@ public class Window {
 	
 	p = new ParserGraph();
 	
+	JPanel panel_2 = new JPanel();
+	frame.getContentPane().add(panel_2, BorderLayout.WEST);
+	GridBagLayout gbl_panel_2 = new GridBagLayout();
+	gbl_panel_2.columnWidths = new int[]{59, 0};
+	gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 23, 0};
+	gbl_panel_2.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+	gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+	panel_2.setLayout(gbl_panel_2);
+	
 	JButton btnParse = new JButton("Parse");
-	btnParse.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent arg0) {
-		    try {
-			g = p.ParseTxtFile("RandomCity.txt");
-		    } catch(Exception e) {
-			e.printStackTrace();
-		    }
-		}
-	});
-	frame.getContentPane().add(btnParse, BorderLayout.WEST);
+	GridBagConstraints gbc_btnParse = new GridBagConstraints();
+	gbc_btnParse.insets = new Insets(0, 0, 5, 0);
+	gbc_btnParse.anchor = GridBagConstraints.NORTH;
+	gbc_btnParse.gridx = 0;
+	gbc_btnParse.gridy = 0;
+	panel_2.add(btnParse, gbc_btnParse);
+	
+	final JRadioButton rdbtnHx = new JRadioButton("H(x) = 0");
+	rdbtnHx.setSelected(true);
+	GridBagConstraints gbc_rdbtnHx = new GridBagConstraints();
+	gbc_rdbtnHx.anchor = GridBagConstraints.WEST;
+	gbc_rdbtnHx.insets = new Insets(0, 0, 5, 0);
+	gbc_rdbtnHx.gridx = 0;
+	gbc_rdbtnHx.gridy = 4;
+	panel_2.add(rdbtnHx, gbc_rdbtnHx);
+	
+	final JRadioButton rdbtnHxEuclidean = new JRadioButton("H(x) = Euclidean");
+	GridBagConstraints gbc_rdbtnHxEuclidean = new GridBagConstraints();
+	gbc_rdbtnHxEuclidean.anchor = GridBagConstraints.WEST;
+	gbc_rdbtnHxEuclidean.insets = new Insets(0, 0, 5, 0);
+	gbc_rdbtnHxEuclidean.gridx = 0;
+	gbc_rdbtnHxEuclidean.gridy = 5;
+	panel_2.add(rdbtnHxEuclidean, gbc_rdbtnHxEuclidean);
 	
 	JPanel panel_1 = new JPanel();
 	frame.getContentPane().add(panel_1, BorderLayout.EAST);
@@ -202,9 +226,35 @@ public class Window {
 	panel.add(textField_1, gbc_textField_1);
 	textField_1.setColumns(10);
 	
+	ButtonGroup group = new ButtonGroup();
+	group.add(rdbtnHxEuclidean);
+	group.add(rdbtnHx);
+	
+	btnParse.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+		    try {
+			g = p.ParseTxtFile("RandomCity.txt");
+		    } catch(Exception e) {
+			e.printStackTrace();
+		    }
+		}
+	});
+	
 	btnSearch.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    h = new Heuristic1();
+		    if(rdbtnHx.isSelected()) {
+			h = new HeuristicD();
+			h.init(g);
+		    }
+		    else if (rdbtnHxEuclidean.isSelected()){
+			h = new HeuristicE();
+			ArrayList<String> names = new ArrayList<String>();
+			names.add("busquadrant.txt");
+			names.add("subquadrant.txt");
+			names.add("walkquadrant.txt");
+			h.init(g);
+			((HeuristicE) h).setDistances(names);
+		    }
 		    as = new AStar(g, g.getNodebyAlias(textField.getText()), g.getNodebyAlias(textField_1.getText()), h);
 		    BitSet b = new BitSet(3);
 		    b.clear();
