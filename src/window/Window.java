@@ -31,6 +31,8 @@ import algorithm.HeuristicD;
 import algorithm.HeuristicE;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class Window {
 
@@ -230,6 +232,20 @@ public class Window {
 	group.add(rdbtnHxEuclidean);
 	group.add(rdbtnHx);
 	
+	JLabel lblMaxTransfers = new JLabel("Max transfers");
+	GridBagConstraints gbc_lblMaxTransfers = new GridBagConstraints();
+	gbc_lblMaxTransfers.insets = new Insets(0, 0, 5, 0);
+	gbc_lblMaxTransfers.gridx = 0;
+	gbc_lblMaxTransfers.gridy = 6;
+	panel_2.add(lblMaxTransfers, gbc_lblMaxTransfers);
+	
+	final JSpinner spinner = new JSpinner();
+	spinner.setModel(new SpinnerNumberModel(0, 0, 99999999, 1));
+	GridBagConstraints gbc_spinner = new GridBagConstraints();
+	gbc_spinner.gridx = 0;
+	gbc_spinner.gridy = 7;
+	panel_2.add(spinner, gbc_spinner);
+	
 	btnParse.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 		    try {
@@ -255,7 +271,8 @@ public class Window {
 			h.init(g);
 			((HeuristicE) h).setDistances(names);
 		    }
-		    as = new AStar(g, g.getNodebyAlias(textField.getText()), g.getNodebyAlias(textField_1.getText()), h);
+		    int transf = (int) spinner.getModel().getValue();
+		    as = new AStar(g, g.getNodebyAlias(textField.getText()), g.getNodebyAlias(textField_1.getText()), h, transf);
 		    BitSet b = new BitSet(3);
 		    b.clear();
 		    b.set(0, rdbtnBus.isSelected());
