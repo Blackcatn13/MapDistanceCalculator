@@ -10,29 +10,32 @@ package outputs;
 public class Time {
 
 	private long start;
-	private int scaleF;
+	private float scaleF;
 	
 	public Time(){
-		start = System.currentTimeMillis();
-		//set scale to millisecond;
-		scaleF = 1;
+		start = System.nanoTime();
+		//set scale to nanosecond;
+		scaleF = 1F;
 	}
 	
 	public void setScale (String scale){
 		String scalelc = scale.toLowerCase();
-		if (scalelc.equals("second")){
-			scaleF = 1000;
+		if (scalelc.equals("millisecond")){
+			scaleF = 1000*1000F;
+		}
+		else if (scalelc.equals("second")){
+			scaleF = 1000*1000*1000F;
 		}
 		else if (scalelc.equals("minute")){
-			scaleF = 1000*60;
+			scaleF = 1000*1000*1000*60F;
 		}
 	}
 	
 	public void resetTime(){
-		start = System.currentTimeMillis();
+		start = System.nanoTime();
 	}
 	
-	public long elapsedTime(){
-		return (System.currentTimeMillis()-start)/scaleF;
+	public float elapsedTime(){
+		return  ((System.nanoTime()-start)/scaleF);
 	}
 }
