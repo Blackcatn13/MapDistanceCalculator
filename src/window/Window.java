@@ -3,7 +3,7 @@ package window;
 import graph.components.Graph;
 import graph.components.Node;
 import graph.components.Transports;
-import graph.parser.Parser;
+import graph.parser.ParserGraph;
 
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
@@ -34,7 +34,7 @@ public class Window {
     private JFrame frame;
     private Graph g;
     private ArrayList<Node> nodes;
-    private Parser p;
+    private ParserGraph p;
     private JTextField textField;
     private JTextField textField_1;
     private JTextPane textPane;
@@ -95,7 +95,7 @@ public class Window {
 	frame.setBounds(100, 100, 450, 300);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-	p = new Parser();
+	p = new ParserGraph();
 	
 	JButton btnParse = new JButton("Parse");
 	btnParse.addActionListener(new ActionListener() {

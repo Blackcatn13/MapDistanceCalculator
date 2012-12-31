@@ -23,7 +23,7 @@ import outputs.Time;
  * @author xyz0k
  *
  */
-public class outputGenerator {
+public class OutputGenerator {
 
 	private static Graph graph;
 	private static ArrayList<Node> nodes;
@@ -35,7 +35,7 @@ public class outputGenerator {
 	/**
 	 * Default constructor.
 	 */
-	public outputGenerator(){
+	public OutputGenerator(){
 		
 	}
 	
@@ -43,13 +43,58 @@ public class outputGenerator {
 	 * Method that generate TXT output file.
 	 * @param filename
 	 */
-	public void generateTXT(String filename, long elapsedTime, ArrayList<Node> path, Graph graph){
+	public void generateTXT(String filename, Graph graph){
 		FileWriter fstream;
 		try {
 			fstream = new FileWriter("fileOutputs/".concat(filename));
 			BufferedWriter file = new BufferedWriter(fstream);
-			file.write(String.valueOf(elapsedTime));
-			file.newLine();
+	    	ArrayList<String> actNodes = new ArrayList<String>();
+	    	ArrayList<String> allNodes = new ArrayList<String>();
+	    	String iniNode;
+	    	float averageTime = 0;
+	    	int iter = 0;
+	    	/*
+	    	 * All transports enabled.
+	    	 */
+	    	BitSet b = new BitSet(3);
+        	b.clear();
+        	b.set(0, true);
+    	    b.set(1, true);
+    	    b.set(2, true);
+    	    file.write("All paths and it's time using the transport below.");
+    	    file.newLine();
+    	    file.write("Bus" + ": " + b.get(0));
+    	    file.newLine();
+    	    file.write("Subwalk" + ": " + b.get(1));
+    	    file.newLine();
+    	    file.write("Walk" + ": " + b.get(2));
+    	    file.newLine();
+    	    file.write("Heuristic usage: ");
+    	    file.write(String.valueOf(h.getClass().getName()));
+    	    file.newLine();
+			for (int i = 0; i < graph.getGraphSize(); i++){
+	    		allNodes.add("N".concat(String.valueOf(i+1)));
+	    		actNodes.add("N".concat(String.valueOf(i+1)));
+	    	}
+			for (int i = 0; i < graph.getGraphSize(); i++){
+				if(actNodes.size() > 1){
+					iniNode = actNodes.get(0);
+    				actNodes.remove("N".concat(String.valueOf(i+1)));
+    				for (int j = 0; j < actNodes.size(); j++){
+    					astar = new AStar(graph,graph.getNodebyAlias(iniNode), graph.getNodebyAlias(actNodes.get(j)), h);
+    					file.write(iniNode + " ");
+    		    		file.write(actNodes.get(j) + " ");
+    					time = new Time();
+    		        	time.setScale("millisecond");
+    					nodes = astar.getPath(b);
+    		    		file.write(String.valueOf(averageTime += time.elapsedTime()));
+    		    		file.newLine();
+    		    		iter++;
+    				}
+				}
+			}
+			file.write("Average Time: ");
+			file.write(String.valueOf(averageTime/iter));
 			file.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -61,23 +106,12 @@ public class outputGenerator {
      * Launch the application.
      * @throws Exception 
      */
-    public static void main(String[] args) throws Exception {
-    	String city = "RandomCity.txt";
-    	outputGenerator oG = new outputGenerator();
+    public static void main(String[] args){
+    	String city = "SimpleSimpsonsCity2.txt";
+    	OutputGenerator oG = new OutputGenerator();
     	pG = new ParserGraph();
     	graph = pG.ParseTxtFile(city);
-    	h = new Heuristic1();
-    	for (int i = 0; i < graph.getGraphSize(); i++){
-    		astar = new AStar(graph,graph.getNodebyAlias("N".concat(String.valueOf(i+1))), graph.getNodebyAlias("N5"), h);
-    		BitSet b = new BitSet(3);
-        	b.clear();
-        	b.set(0, true);
-    	    b.set(1, true);
-    	    b.set(2, true);
-    	    nodes = astar.getPath(b);
-        	time = new Time();
-    		astar.getPath(b);
-        	oG.generateTXT("N".concat(String.valueOf(i+1)).concat("-"+"N5"), time.elapsedTime(), nodes, graph);    	
-    	} 	
+    	h = new Heuristic1(); 	
+    	oG.generateTXT("output.txt", graph);    	
     }
 }
