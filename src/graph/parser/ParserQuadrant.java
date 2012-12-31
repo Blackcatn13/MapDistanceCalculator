@@ -18,7 +18,7 @@ import algorithm.Position;
 
 public class ParserQuadrant {
 	
-	int nNodes;
+	private int nNodes;
 	
 	public ParserQuadrant(){
 		nNodes = 0;
