@@ -11,6 +11,7 @@
 package algorithm;
 
 import graph.components.Node;
+import graph.components.Transports;
 
 import java.util.ArrayList;
 
@@ -30,12 +31,24 @@ public class Triplet implements Comparable<Object>{
     private ArrayList<Node> path;
     
     /**
+     * Variable to hold the last transport used in this path.
+     */
+    private Transports lastTransport;
+    
+    /**
+     * Variable to hold the number of transfers make's in this path.
+     */
+    private int transfers;
+    
+    /**
      * Default constructor of the class.
      */
     public Triplet() {
 	Fx = 0;
 	Gx = 0;
 	path = new ArrayList<Node>();
+	transfers = 0;
+	lastTransport = Transports.NOTHING;
     }
     
     /**
@@ -48,6 +61,25 @@ public class Triplet implements Comparable<Object>{
 	Fx = f;
 	Gx = g;
 	path = p;
+	transfers = 0;
+	lastTransport = Transports.NOTHING;
+    }
+    
+
+    /**
+     * Constructor of the class that take all the arguments to save it.
+     * @param f value of the f(x).
+     * @param g value of the g(x):
+     * @param p path.
+     * @param tsf number of transfers.
+     * @param t last transport used.
+     */
+    public Triplet(float f, float g, ArrayList<Node> p, int tsf, Transports t) {
+	Fx = f;
+	Gx = g;
+	path = p;
+	transfers = tsf;
+	lastTransport = t;
     }
     
     /**
@@ -111,6 +143,37 @@ public class Triplet implements Comparable<Object>{
     	    aux = -1;
     	}
 	return aux;
+    }
+    
+    /**
+     * Function to get the number of transfer in that path, and change the last transport used.
+     * @param t The new transport used for this path.
+     * @return The number of transfers realized in this path.
+     */
+    public int updateTransport(Transports t) {
+	if(lastTransport != Transports.NOTHING) {
+	    if(t != lastTransport) {
+		transfers++;
+	    }
+	}
+	lastTransport = t;
+	return transfers;
+    }
+    
+    /**
+     * Getter of the transfers.
+     * @return The number of transfers.
+     */
+    public int getTransfers() {
+	return transfers;
+    }
+    
+    /**
+     * Getter of the last transport used.
+     * @return The last transport used.
+     */
+    public Transports getLastTransport() {
+	return lastTransport;
     }
     
 }
