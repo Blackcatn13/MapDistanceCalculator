@@ -6,17 +6,25 @@ import graph.components.Transports;
 
 public class HeuristicD extends Heuristic{
 
-    enum names {n1, n2, n3, n4, n5, n6};
+    /* (non-Javadoc)
+     * @see algorithm.Heuristic#init(graph.components.Graph)
+     */
     @Override
     public void init(Graph g) {
 	this.setGraph(g);
     }
 
+    /* (non-Javadoc)
+     * @see algorithm.Heuristic#Calculate(graph.components.Node, graph.components.Node)
+     */
     @Override
     public float Calculate(Node s, Node d) {
 	return 0;
     }
 
+    /* (non-Javadoc)
+     * @see algorithm.Heuristic#Calculate(graph.components.Node, graph.components.Node, graph.components.Transports)
+     */
     @Override
     public float Calculate(Node s, Node d, Transports t) {
 	return 0;
