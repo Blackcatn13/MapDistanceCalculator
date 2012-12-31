@@ -36,6 +36,11 @@ public class AStar {
     private Heuristic h;
     
     /**
+     * Number of maximum transfers.
+     */
+    private int maxTransfers;
+    
+    /**
      * Default constructor of the class.
      */
     public AStar() {
@@ -52,12 +57,13 @@ public class AStar {
      * @param d node destination.
      * @param heu heuristic to check.
      */
-    public AStar(Graph g, Node s, Node d, Heuristic heu) {
+    public AStar(Graph g, Node s, Node d, Heuristic heu, int t) {
 	graph = g;
 	source = s;
 	destination = d;
 	list = new OrderedList();
 	h = heu;
+	maxTransfers = t;
     }
     
     /**
@@ -122,7 +128,10 @@ public class AStar {
                 	    // We get the accumulated cost from the source node to this.
                 	    oldcost = t.getGx();
                 	    // Add the node to the ordered list.
-                	    list.addWithoutRep(new Triplet(cost + oldcost + h.Calculate(auxl.get(i), destination, Transports.values()[j]), cost + oldcost, path));
+                	    Triplet nt = new Triplet(cost + oldcost + h.Calculate(auxl.get(i), destination, Transports.values()[j]), cost + oldcost, path, t.getTransfers(), t.getLastTransport());
+                	    if(nt.updateTransport(Transports.values()[j]) <= maxTransfers) {
+                		list.addWithoutRep(nt);
+                	    }
                 	}
 		    }
 		}
