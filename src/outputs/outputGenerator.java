@@ -52,6 +52,7 @@ public class OutputGenerator {
 	    	ArrayList<String> allNodes = new ArrayList<String>();
 	    	String iniNode;
 	    	float averageTime = 0;
+	    	float actTime = 0;
 	    	int iter = 0;
 	    	/*
 	    	 * All transports enabled.
@@ -87,13 +88,17 @@ public class OutputGenerator {
     					time = new Time();
     		        	time.setScale("millisecond");
     					nodes = astar.getPath(b);
-    		    		file.write(String.valueOf(averageTime += time.elapsedTime()));
+    					actTime = time.elapsedTime();
+    					averageTime += actTime;
+    		    		file.write(String.valueOf(actTime));
     		    		file.newLine();
     		    		iter++;
     				}
 				}
 			}
 			file.write("Average Time: ");
+			System.out.println(iter);
+			System.out.println(averageTime);
 			file.write(String.valueOf(averageTime/iter));
 			file.close();
 		} catch (IOException e) {
