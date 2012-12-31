@@ -127,9 +127,11 @@ public class AStar {
                 	if(cost != -1) {
                 	    // We get the accumulated cost from the source node to this.
                 	    oldcost = t.getGx();
-                	    // Add the node to the ordered list.
+                	    // Create a new triplet with all the info
                 	    Triplet nt = new Triplet(cost + oldcost + h.Calculate(auxl.get(i), destination, Transports.values()[j]), cost + oldcost, path, t.getTransfers(), t.getLastTransport());
+                	    // We check if the number of transfer realized yet is minor than the maximum.
                 	    if(nt.updateTransport(Transports.values()[j]) <= maxTransfers) {
+                		// If after all the node gets there we put it in the list.
                 		list.addWithoutRep(nt);
                 	    }
                 	}
