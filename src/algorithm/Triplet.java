@@ -6,7 +6,6 @@
  * Aggregated Value.
  * G(x).
  * Path.
- *
  */
 package algorithm;
 
@@ -123,7 +122,7 @@ public class Triplet implements Comparable<Object>{
      * @return the last node of the path.
      */
     public Node getFirst() {
-	return path.get(path.size() - 1).getDNode();
+	return path.get(path.size() - 1).getSNode();
     }
 
     /**
