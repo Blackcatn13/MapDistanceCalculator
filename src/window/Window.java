@@ -1,7 +1,6 @@
 package window;
 
 import graph.components.Graph;
-import graph.components.Node;
 import graph.components.Transports;
 import graph.parser.ParserGraph;
 
@@ -22,19 +21,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+
 import algorithm.AStar;
 import algorithm.Heuristic;
 import algorithm.HeuristicD;
 import algorithm.HeuristicE;
 import algorithm.InfoPath;
-
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 public class Window {
 
