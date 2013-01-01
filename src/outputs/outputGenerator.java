@@ -51,55 +51,80 @@ public class OutputGenerator {
 	    	ArrayList<String> actNodes = new ArrayList<String>();
 	    	ArrayList<String> allNodes = new ArrayList<String>();
 	    	String iniNode;
-	    	float averageTime = 0;
-	    	float actTime = 0;
-	    	int iter = 0;
+	    	String dashed = "------------------------------------------------------";
+	    	float averageTime;
+	    	float actTime;
+	    	float maxTime;
+	    	float finAverageTime = 0;
+	    	float finMaxTime = 0;
+	    	int iter;
+	    	int finIter = 0;
 	    	/*
 	    	 * All transports enabled.
 	    	 */
 	    	BitSet b = new BitSet(3);
-        	b.clear();
-        	b.set(0, true);
-    	    b.set(1, true);
-    	    b.set(2, true);
-    	    file.write("All paths and it's time using the transport below.");
-    	    file.newLine();
-    	    file.write("Bus" + ": " + b.get(0));
-    	    file.newLine();
-    	    file.write("Subwalk" + ": " + b.get(1));
-    	    file.newLine();
-    	    file.write("Walk" + ": " + b.get(2));
-    	    file.newLine();
-    	    file.write("Heuristic usage: ");
-    	    file.write(String.valueOf(h.getClass().getName()));
-    	    file.newLine();
-			for (int i = 0; i < graph.getGraphSize(); i++){
-	    		allNodes.add("N".concat(String.valueOf(i+1)));
-	    		actNodes.add("N".concat(String.valueOf(i+1)));
-	    	}
-			for (int i = 0; i < graph.getGraphSize(); i++){
-				if(actNodes.size() > 1){
-					iniNode = actNodes.get(0);
-    				actNodes.remove("N".concat(String.valueOf(i+1)));
-    				for (int j = 0; j < actNodes.size(); j++){
-    					astar = new AStar(graph,graph.getNodebyAlias(iniNode), graph.getNodebyAlias(actNodes.get(j)), h);
-    					file.write(iniNode + " ");
-    		    		file.write(actNodes.get(j) + " ");
-    					time = new Time();
-    		        	time.setScale("millisecond");
-    					nodes = astar.getPath(b);
-    					actTime = time.elapsedTime();
-    					averageTime += actTime;
-    		    		file.write(String.valueOf(actTime));
-    		    		file.newLine();
-    		    		iter++;
-    				}
+        	boolean[][] init = new boolean[][]{{false,false,false},{false,false,true},{false,true,false},{false,true,true},{true,false,false},{true,false,true},{true,true,false},{true,true,true}};
+	    	b.clear();
+	    	for(int k = 0; k < init.length; k++){
+	    		b.set(0,init[k][0]);
+	    		b.set(1,init[k][1]);
+	    		b.set(2,init[k][2]);
+	    	    file.write("All paths and it's time using the transport below.");
+	    	    file.newLine();
+	    	    file.write("Bus" + ": " + b.get(0));
+	    	    file.newLine();
+	    	    file.write("Subwalk" + ": " + b.get(1));
+	    	    file.newLine();
+	    	    file.write("Walk" + ": " + b.get(2));
+	    	    file.newLine();
+	    	    file.write("Heuristic usage: ");
+	    	    file.write(String.valueOf(h.getClass().getName()));
+	    	    file.newLine();
+	    	    averageTime = 0;
+	    	    actTime = 0;
+	    	    maxTime = 0;
+	    	    iter = 0;
+	    	    for (int i = 0; i < graph.getGraphSize(); i++){
+		    		allNodes.add("N".concat(String.valueOf(i+1)));
+		    		actNodes.add("N".concat(String.valueOf(i+1)));
+		    	}
+				for (int i = 0; i < graph.getGraphSize(); i++){
+					if(actNodes.size() > 1){
+						iniNode = actNodes.get(0);
+	    				actNodes.remove("N".concat(String.valueOf(i+1)));
+	    				for (int j = 0; j < actNodes.size(); j++){
+	    					astar = new AStar(graph,graph.getNodebyAlias(iniNode), graph.getNodebyAlias(actNodes.get(j)), h);
+	    					file.write(iniNode + " ");
+	    		    		file.write(actNodes.get(j) + " ");
+	    					time = new Time();
+	    		        	time.setScale("millisecond");
+	    					nodes = astar.getPath(b);
+	    					actTime = time.elapsedTime();
+	    					if (maxTime < actTime) maxTime = actTime;
+	    					if (finMaxTime < maxTime) finMaxTime = maxTime;
+	    					averageTime += actTime;
+	    		    		file.write(String.valueOf(actTime));
+	    		    		file.newLine();
+	    		    		iter++;
+	    				}
+					}
 				}
-			}
-			file.write("Average Time: ");
-			System.out.println(iter);
-			System.out.println(averageTime);
-			file.write(String.valueOf(averageTime/iter));
+				file.write("Average time of calculate path: ");
+				finAverageTime += averageTime/iter;
+				finIter++;
+				file.write(String.valueOf(averageTime/iter));
+				file.newLine();
+				file.write("Max time of calculate path: ");
+				file.write(String.valueOf(maxTime));
+				file.newLine();
+				file.write(dashed);
+				file.newLine();
+	    	}
+	    	file.write("Average of average of calculate path: ");
+	    	file.write(String.valueOf(finAverageTime/finIter));
+	    	file.newLine();
+	    	file.write("Max of max of calculate path: ");
+	    	file.write(String.valueOf(finMaxTime));
 			file.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -112,11 +137,11 @@ public class OutputGenerator {
      * @throws Exception 
      */
     public static void main(String[] args){
-    	String city = "SimpleSimpsonsCity2.txt";
+    	String city = "SimpleSimpsonsCity2";
     	OutputGenerator oG = new OutputGenerator();
     	pG = new ParserGraph();
-    	graph = pG.ParseTxtFile(city);
+    	graph = pG.ParseTxtFile(city.concat(".txt"));
     	h = new Heuristic1(); 	
-    	oG.generateTXT("output.txt", graph);    	
+    	oG.generateTXT(city.concat("output.txt"), graph);    	
     }
 }
