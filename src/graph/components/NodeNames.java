@@ -8,10 +8,12 @@
 package graph.components;
 
 public class NodeNames {
+    
     /**
      * The name
      */
     private String Name;
+    
     /**
      * The alias of the node
      */
