@@ -122,12 +122,15 @@ public class AStar {
 		for(int j = 0; j < b.length(); j++) {
 		    // If the transport method is selected.
 		    if(b.get(j)) {
-			// Add the node to the path.
+			// Copy the path.
                 	path = copyList(t.getPath());
+                	// Update the last InfoPath with the destination node, and the transport used.
                 	path.get(path.size() - 1).setDNode(auxl.get(i));
                 	path.get(path.size() - 1).setTransport(Transports.values()[j]);
+                	// Create a new InfoPath with the source node.
                 	ip = new InfoPath();
                 	ip.setSNode(auxl.get(i));
+                	// Add it to the path.
                 	path.add(ip);
                 	// Get the cost to the node.
                 	cost = aux.costTo(auxl.get(i), Transports.values()[j]);
@@ -153,6 +156,11 @@ public class AStar {
 	return list.First().getPath();
     }
     
+    /**
+     * Function to copy an ArrayList.
+     * @param list list to copy.
+     * @return The new ArrayList copied.
+     */
     private ArrayList<InfoPath> copyList(ArrayList<InfoPath> list){
 	ArrayList<InfoPath> newList = new ArrayList<InfoPath>();
 	for(InfoPath p : list) {
