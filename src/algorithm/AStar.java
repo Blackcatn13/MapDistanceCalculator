@@ -12,7 +12,6 @@ import graph.components.Transports;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Collections;
 
 public class AStar {
     /**
@@ -86,7 +85,7 @@ public class AStar {
     /**
      * Function that calculates the A*.
      * @param b types of transports to use.
-     * @return The path with then nodes to go fomr source to destination.
+     * @return The path with then nodes to go from source to destination.
      */
     public ArrayList<InfoPath> getPath(BitSet b){
 	ArrayList<InfoPath> path = new ArrayList<InfoPath>();
@@ -115,9 +114,9 @@ public class AStar {
 	    // Get the neighbors of the node.
 	    auxl = aux.getNeighbors();
 	    // For every neighbor.
-	    for(int i = 0; i < auxl.size(); i++) {
+	    for(Node n : auxl) {
 		// If the neighbor has been visited we skip it.
-		if(visited.contains(auxl.get(i))) continue;
+		if(visited.contains(n)) continue;
 		// For the different types of transports.
 		for(int j = 0; j < b.length(); j++) {
 		    // If the transport method is selected.
@@ -125,21 +124,21 @@ public class AStar {
 			// Copy the path.
                 	path = copyList(t.getPath());
                 	// Update the last InfoPath with the destination node, and the transport used.
-                	path.get(path.size() - 1).setDNode(auxl.get(i));
+                	path.get(path.size() - 1).setDNode(n);
                 	path.get(path.size() - 1).setTransport(Transports.values()[j]);
                 	// Create a new InfoPath with the source node.
                 	ip = new InfoPath();
-                	ip.setSNode(auxl.get(i));
+                	ip.setSNode(n);
                 	// Add it to the path.
                 	path.add(ip);
                 	// Get the cost to the node.
-                	cost = aux.costTo(auxl.get(i), Transports.values()[j]);
+                	cost = aux.costTo(n, Transports.values()[j]);
                 	// If the system of transport exist from the parent to the neighbor.
                 	if(cost != -1) {
                 	    // We get the accumulated cost from the source node to this.
                 	    oldcost = t.getGx();
                 	    // Create a new triplet with all the info
-                	    Triplet nt = new Triplet(cost + oldcost + h.Calculate(auxl.get(i), destination, Transports.values()[j]), cost + oldcost, path, t.getTransfers(), t.getLastTransport());
+                	    Triplet nt = new Triplet(cost + oldcost + h.Calculate(n, destination, Transports.values()[j]), cost + oldcost, path, t.getTransfers(), t.getLastTransport());
                 	    // We check if the number of transfer realized yet is minor than the maximum.
                 	    if(nt.updateTransport(Transports.values()[j]) <= maxTransfers) {
                 		// If after all the node gets there we put it in the list.
