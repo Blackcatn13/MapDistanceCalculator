@@ -6,6 +6,7 @@ package graph.parser;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -17,16 +18,16 @@ import algorithm.Position;
  */
 
 public class ParserQuadrant {
-	
-	private int nNodes;
-	
-	public ParserQuadrant(){
-		nNodes = 0;
-	}
-	
-	public ArrayList<Position> quadrantInit(String filename) throws Exception{
-	    ArrayList<Position> alPos = new ArrayList<Position>();
-	    
+
+    private int nNodes;
+
+    public ParserQuadrant(){
+	nNodes = 0;
+    }
+
+    public ArrayList<Position> quadrantInit(String filename){
+	ArrayList<Position> alPos = new ArrayList<Position>();
+	try{
 	    FileInputStream fstream = new FileInputStream("heuristicInit/".concat(filename));
 	    DataInputStream in = new DataInputStream(fstream);
 	    BufferedReader file = new BufferedReader(new InputStreamReader(in));
@@ -37,6 +38,10 @@ public class ParserQuadrant {
 		alPos.add(new Position(Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[0]));
 	    }		
 	    file.close();
-	    return alPos;
+	    return alPos;	
+	}catch (IOException e){
+	    e.printStackTrace();
+	    return null;
 	}
+    }
 }

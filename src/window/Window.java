@@ -17,6 +17,7 @@ import java.util.BitSet;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,8 +33,6 @@ import algorithm.Heuristic;
 import algorithm.HeuristicD;
 import algorithm.HeuristicE;
 import algorithm.InfoPath;
-import javax.swing.JCheckBox;
-import java.awt.Dimension;
 
 public class Window {
 
@@ -117,7 +116,7 @@ public class Window {
 	gbl_panel_2.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 	gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 	panel_2.setLayout(gbl_panel_2);
-	
+
 	JButton btnParse = new JButton("Parse");
 	GridBagConstraints gbc_btnParse = new GridBagConstraints();
 	gbc_btnParse.insets = new Insets(0, 0, 5, 0);
