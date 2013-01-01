@@ -7,20 +7,20 @@
 package algorithm;
 
 public class Position {
+    
     /**
      * Variable for the x coordinate.
      */
-    
     private int x;
+    
     /**
      * Variable for the y coordinate.
      */
-    
     private int y;
+    
     /**
      * Variable for the name.
      */
-    
     private String name;
     
     /**
