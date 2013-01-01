@@ -29,6 +29,8 @@ import algorithm.AStar;
 import algorithm.Heuristic;
 import algorithm.HeuristicD;
 import algorithm.HeuristicE;
+import algorithm.InfoPath;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JSpinner;
@@ -38,7 +40,7 @@ public class Window {
 
     private JFrame frame;
     private Graph g;
-    private ArrayList<Node> nodes;
+    private ArrayList<InfoPath> nodes;
     private ParserGraph p;
     private JTextField textField;
     private JTextField textField_1;
@@ -46,11 +48,11 @@ public class Window {
     private AStar as;
     private Heuristic h;
 
-    public void WritePath(ArrayList<Node> path, BitSet b) {
+    public void WritePath(ArrayList<InfoPath> path, BitSet b) {
 	Transports t;
 	if(!path.isEmpty()) {
 	    for(int i = 0; i < path.size() - 1; i++) {
-		t = path.get(i).getTransMinTo(path.get(i + 1), b);
+		t = path.get(i).getTransport();
 		switch(t) {
     	    	case BUS:
     	    	    textPane.setText(textPane.getText() + "\n" + "Take the bus");
@@ -61,8 +63,8 @@ public class Window {
     	    	case WALK:
     	    	    textPane.setText(textPane.getText() + "\n" + "Walk");
 		}
-		textPane.setText(textPane.getText() + " from " + nodes.get(i).getAlias());
-		textPane.setText(textPane.getText() + " to " + nodes.get(i + 1).getAlias());
+		textPane.setText(textPane.getText() + " from " + path.get(i).getSNode().getAlias());
+		textPane.setText(textPane.getText() + " to " + path.get(i).getDNode().getAlias());
 	    }
 	}
 	else {
