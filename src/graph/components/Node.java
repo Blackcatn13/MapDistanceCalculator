@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.BitSet;
 
 public class Node {
+    
     /**
      * ArrayList with the edges to the neighbors.
      */
     private ArrayList<Edge> neighbors;
+    
     /**
      * NodeName variable to hold the name and the alias of the node.
      */
@@ -70,8 +72,8 @@ public class Node {
      */
     public boolean isThisNodebyName(String n) {
     	return meName.SameName(n);
-        }
-    
+    }
+   
     /**
      * Function to compare this node by alias.
      * @param a alias of the node.
@@ -79,7 +81,7 @@ public class Node {
      */
     public boolean isThisNodebyAlias(String a) {
     	return meName.SameAlias(a);
-        }
+    }
     
     /**
      * Function to add a neighbor to this node.
@@ -126,8 +128,8 @@ public class Node {
      */
     public ArrayList<Node> getNeighbors(){
 	ArrayList<Node> nb = new ArrayList<Node>();
-	for(int i = 0; i < neighbors.size(); i++) {
-	    nb.add(neighbors.get(i).getNeighbor(this));
+	for(Edge n : neighbors) {
+	    nb.add(n.getNeighbor(this));
 	}
 	return nb;
     }
@@ -139,15 +141,15 @@ public class Node {
      * @return The cost to go with this transport to the n node (-1 if we can go to it).
      */
     public float costTo(Node n, Transports t) {
-	for(int i = 0; i < neighbors.size(); i++) {
-	    if(neighbors.get(i).isNode(n)) {
+	for(Edge nb : neighbors) {
+	    if(nb.isNode(n)) {
 		switch(t) {
 		case BUS:
-		    return neighbors.get(i).getBusCost();
+		    return nb.getBusCost();
 		case SUBWAY:
-		    return neighbors.get(i).getSubWCost();
+		    return nb.getSubWCost();
 		case WALK:
-		    return neighbors.get(i).getWalkCost();
+		    return nb.getWalkCost();
 		}
 	    }
 	}
@@ -170,9 +172,9 @@ public class Node {
      * @return The transport name with the minimum cost.
      */
     public Transports getTransMinTo(Node n, BitSet b) {
-	for(int i = 0; i < neighbors.size(); i++) {
-	    if(neighbors.get(i).getNeighbor(this).equals(n)) {
-		return neighbors.get(i).getTransMin(b);
+	for(Edge nb : neighbors) {
+	    if(nb.getNeighbor(this).equals(n)) {
+		return nb.getTransMin(b);
 	    }
 	}
 	return Transports.NOTHING;
