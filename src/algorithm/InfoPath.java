@@ -9,7 +9,7 @@ package algorithm;
 import graph.components.Node;
 import graph.components.Transports;
 
-public class InfoPath {
+public class InfoPath implements Cloneable{
 
     /**
      * Variable that holds the source node in the path.
@@ -45,6 +45,16 @@ public class InfoPath {
 	Snode = sn;
 	Dnode = dn;
 	transport = t;
+    }
+    
+    /**
+     * Constructor to make a copy of an InfoPath.
+     * @param ip the InfoPath that have the values to copy.
+     */
+    public InfoPath(InfoPath ip) {
+	Snode = ip.Snode;
+	Dnode = ip.Dnode;
+	transport = ip.transport;
     }
 
     /**
