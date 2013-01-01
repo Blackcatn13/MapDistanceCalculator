@@ -38,14 +38,12 @@ public class Graph {
      * @return An ArrayList with all the neighbors of the node.
      */
     public ArrayList<Node> getNeighbors(String name, String alias) {
-	int node = 0;
-	for(int i = 0; i < nodes.size(); i++) {
-	    if(nodes.get(i).isThisNode(name, alias)) {
-		node = i;
-		break;
+	for(Node n : nodes) {
+	    if(n.isThisNode(name, alias)) {
+		return n.getNeighbors();
 	    }
 	}
-	return nodes.get(node).getNeighbors();
+	return new ArrayList<Node>();
     }
     
     /**
@@ -55,14 +53,12 @@ public class Graph {
      * @return The node with the name and alias passed as parameters.
      */
     public Node getNode(String name, String alias) {
-	int node = 0;
-	for(int i = 0; i < nodes.size(); i++) {
-	    if(nodes.get(i).isThisNode(name, alias)) {
-		node = i;
-		break;
+	for(Node n : nodes) {
+	    if(n.isThisNode(name, alias)) {
+		return n;
 	    }
 	}
-	return nodes.get(node);
+	return new Node();
     }
     
     /**
@@ -71,14 +67,12 @@ public class Graph {
      * @return The node with the name.
      */
     public Node getNodebyName(String name) {
-    	int node = 0;
-    	for(int i = 0; i < nodes.size(); i++) {
-    	    if(nodes.get(i).isThisNodebyName(name)) {
-    		node = i;
-    		break;
+    	for(Node n : nodes) {
+    	    if(n.isThisNodebyName(name)) {
+    		return n;
     	    }
     	}
-    	return nodes.get(node);
+    	return new Node();
     }
     
     /**
@@ -87,13 +81,25 @@ public class Graph {
      * @return The node with the alias.
      */
     public Node getNodebyAlias(String alias) {
-    	int node = 0;
-    	for(int i = 0; i < nodes.size(); i++) {
-    	    if(nodes.get(i).isThisNodebyAlias(alias)) {
-    		node = i;
-    		break;
+    	for(Node n : nodes) {
+    	    if(n.isThisNodebyAlias(alias)) {
+    		return n;
     	    }
     	}
-    	return nodes.get(node);
+    	return new Node();
+    }
+    
+    /**
+     * Function to get one node by its name or alias.
+     * @param na Name or alias of the node.
+     * @return The node with the given name or alias.
+     */
+    public Node getNodeby(String na) {
+	for(Node n : nodes) {
+	    if(n.isThisNodebyAlias(na) || n.isThisNodebyName(na)) {
+		return n;
+	    }
+	}
+	return new Node();
     }
 }
