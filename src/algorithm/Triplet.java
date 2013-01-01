@@ -20,10 +20,12 @@ public class Triplet implements Comparable<Object>{
      * Variable to hold the f(x) value.
      */
     private float Fx;
+    
     /**
      * Variable to hold the g(x) value.
      */
     private float Gx;
+    
     /**
      * Variable to hold the path.
      */
