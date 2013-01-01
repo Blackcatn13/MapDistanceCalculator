@@ -12,6 +12,7 @@ import graph.components.Transports;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collections;
 
 public class AStar {
     /**
@@ -87,17 +88,20 @@ public class AStar {
      * @param b types of transports to use.
      * @return The path with then nodes to go fomr source to destination.
      */
-    public ArrayList<Node> getPath(BitSet b){
-	ArrayList<Node> path = new ArrayList<Node>();
+    public ArrayList<InfoPath> getPath(BitSet b){
+	ArrayList<InfoPath> path = new ArrayList<InfoPath>();
 	ArrayList<Node> auxl = new ArrayList<Node>();
 	ArrayList<Node> visited = new ArrayList<Node>();
 	Node aux;
 	float cost = 0;
 	float oldcost;
 	Triplet t;
+	InfoPath ip;
 	
+	ip = new InfoPath();
+	ip.setSNode(source);
 	// We add the source in a clear path to start.
-	path.add(source);
+	path.add(ip);
 	// We add the new triplet that holds the f(x), the g(x) and the path in our ordered list.
 	list.add(new Triplet(cost + h.Calculate(source, destination), 0, path));
 	// While the list holds an element or the first element is equals to the destination.
@@ -118,9 +122,16 @@ public class AStar {
 		for(int j = 0; j < b.length(); j++) {
 		    // If the transport method is selected.
 		    if(b.get(j)) {
-			// Add the node to the path.
-                	path = new ArrayList<Node>(t.getPath());
-                	path.add(auxl.get(i));
+			// Copy the path.
+                	path = copyList(t.getPath());
+                	// Update the last InfoPath with the destination node, and the transport used.
+                	path.get(path.size() - 1).setDNode(auxl.get(i));
+                	path.get(path.size() - 1).setTransport(Transports.values()[j]);
+                	// Create a new InfoPath with the source node.
+                	ip = new InfoPath();
+                	ip.setSNode(auxl.get(i));
+                	// Add it to the path.
+                	path.add(ip);
                 	// Get the cost to the node.
                 	cost = aux.costTo(auxl.get(i), Transports.values()[j]);
                 	// If the system of transport exist from the parent to the neighbor.
@@ -140,8 +151,21 @@ public class AStar {
 	    }
 	}
 	if(list.empty()) {
-	    return new ArrayList<Node>();
+	    return new ArrayList<InfoPath>();
 	}
 	return list.First().getPath();
+    }
+    
+    /**
+     * Function to copy an ArrayList.
+     * @param list list to copy.
+     * @return The new ArrayList copied.
+     */
+    private ArrayList<InfoPath> copyList(ArrayList<InfoPath> list){
+	ArrayList<InfoPath> newList = new ArrayList<InfoPath>();
+	for(InfoPath p : list) {
+	    newList.add(new InfoPath(p));
+	}
+	return newList;
     }
 }
