@@ -62,6 +62,10 @@ public class HeuristicE extends Heuristic {
 	return (float)Math.sqrt(distx2 + disty2);
     }
     
+    /**
+     * Function to initialized the heuristic with given files.
+     * @param filenames THe given files to parse.
+     */
     public void setDistances(ArrayList<String> filenames) {
 	ParserQuadrant p = new ParserQuadrant();
 	ArrayList<Position> q;
@@ -75,7 +79,13 @@ public class HeuristicE extends Heuristic {
 	}
     }
     
-    public int getX(ArrayList<Position> list, String alias) {
+    /**
+     * Function to get the X value of a node.
+     * @param list where to get the X value. 
+     * @param alias of the node to get the X value.
+     * @return The X value of the node.
+     */
+    private int getX(ArrayList<Position> list, String alias) {
 	for(Position p : list) {
 	    if(p.getName().toLowerCase().equals(alias.toLowerCase())) {
 		return p.getX();
@@ -84,7 +94,13 @@ public class HeuristicE extends Heuristic {
 	return -1;
     }
     
-    public int getY(ArrayList<Position> list, String alias) {
+    /**
+     * Function to get the Y value of a node.
+     * @param list where to get the Y value. 
+     * @param alias of the node to get the Y value.
+     * @return The Y value of the node.
+     */
+    private int getY(ArrayList<Position> list, String alias) {
 	for(Position p : list) {
 	    if(p.getName().toLowerCase().equals(alias.toLowerCase())) {
 		return p.getY();
