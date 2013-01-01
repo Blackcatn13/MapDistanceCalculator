@@ -16,10 +16,12 @@ public class Edge {
      * Variable to hold a cost class.
      */
     private Cost cost;
+    
     /**
      * Variable to one of the nodes.
      */
     private Node Lneighbor;
+    
     /**
      * Variable to the other node.
      */
@@ -44,6 +46,7 @@ public class Edge {
     public float getCost() {
 	return cost.getCost();
     }
+    
     /**
      * Function that return the cost in function of the hour.
      * @param hour time of the day to get the cost.
