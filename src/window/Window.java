@@ -32,6 +32,8 @@ import algorithm.Heuristic;
 import algorithm.HeuristicD;
 import algorithm.HeuristicE;
 import algorithm.InfoPath;
+import javax.swing.JCheckBox;
+import java.awt.Dimension;
 
 public class Window {
 
@@ -45,7 +47,7 @@ public class Window {
     private AStar as;
     private Heuristic h;
 
-    public void WritePath(ArrayList<InfoPath> path, BitSet b) {
+    public void WritePath(ArrayList<InfoPath> path, BitSet b, boolean alias) {
 	Transports t;
 	if(!path.isEmpty()) {
 	    for(int i = 0; i < path.size() - 1; i++) {
@@ -60,8 +62,14 @@ public class Window {
     	    	case WALK:
     	    	    textPane.setText(textPane.getText() + "\n" + "Walk");
 		}
-		textPane.setText(textPane.getText() + " from " + path.get(i).getSNode().getAlias());
-		textPane.setText(textPane.getText() + " to " + path.get(i).getDNode().getAlias());
+		if(alias) {
+        	    textPane.setText(textPane.getText() + " from " + path.get(i).getSNode().getAlias());
+        	    textPane.setText(textPane.getText() + " to " + path.get(i).getDNode().getAlias());
+		}
+		else {
+		    textPane.setText(textPane.getText() + " from " + path.get(i).getSNode().getName());
+    		    textPane.setText(textPane.getText() + " to " + path.get(i).getDNode().getName());
+		}
 	    }
 	}
 	else {
@@ -105,9 +113,9 @@ public class Window {
 	frame.getContentPane().add(panel_2, BorderLayout.WEST);
 	GridBagLayout gbl_panel_2 = new GridBagLayout();
 	gbl_panel_2.columnWidths = new int[]{59, 0};
-	gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 23, 0};
+	gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 23, 0, 0};
 	gbl_panel_2.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-	gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+	gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 	panel_2.setLayout(gbl_panel_2);
 	
 	JButton btnParse = new JButton("Parse");
@@ -241,9 +249,18 @@ public class Window {
 	final JSpinner spinner = new JSpinner();
 	spinner.setModel(new SpinnerNumberModel(0, 0, 99999999, 1));
 	GridBagConstraints gbc_spinner = new GridBagConstraints();
+	gbc_spinner.insets = new Insets(0, 0, 5, 0);
 	gbc_spinner.gridx = 0;
 	gbc_spinner.gridy = 7;
 	panel_2.add(spinner, gbc_spinner);
+	
+	final JCheckBox chckbxShowByAlias = new JCheckBox("Show by Alias");
+	chckbxShowByAlias.setSelected(true);
+	GridBagConstraints gbc_chckbxShowByAlias = new GridBagConstraints();
+	gbc_chckbxShowByAlias.anchor = GridBagConstraints.WEST;
+	gbc_chckbxShowByAlias.gridx = 0;
+	gbc_chckbxShowByAlias.gridy = 8;
+	panel_2.add(chckbxShowByAlias, gbc_chckbxShowByAlias);
 	
 	btnParse.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
@@ -271,7 +288,7 @@ public class Window {
 			((HeuristicE) h).setDistances(names);
 		    }
 		    int transf = (int) spinner.getModel().getValue();
-		    as = new AStar(g, g.getNodebyAlias(textField.getText()), g.getNodebyAlias(textField_1.getText()), h, transf);
+		    as = new AStar(g, g.getNodeby(textField.getText()), g.getNodeby(textField_1.getText()), h, transf);
 		    BitSet b = new BitSet(3);
 		    b.clear();
 		    b.set(0, rdbtnBus.isSelected());
@@ -279,7 +296,7 @@ public class Window {
 		    b.set(2, rdbtnWalking.isSelected());
 		    nodes = as.getPath(b);
 		    textPane.setText("");
-		    WritePath(nodes, b);
+		    WritePath(nodes, b, chckbxShowByAlias.isSelected());
 		}
 	});
     }
