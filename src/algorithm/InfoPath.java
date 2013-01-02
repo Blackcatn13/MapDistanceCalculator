@@ -26,6 +26,8 @@ public class InfoPath implements Cloneable{
      */
     private Transports transport;
     
+    private String line;
+
     /**
      * Default constructor.
      */
@@ -33,6 +35,7 @@ public class InfoPath implements Cloneable{
 	Snode = new Node();
 	Dnode = new Node();
 	transport = Transports.NOTHING;
+	line = "";
     }
     
     /**
@@ -41,10 +44,11 @@ public class InfoPath implements Cloneable{
      * @param dn Destination node.
      * @param t Transport used.
      */
-    public InfoPath(Node sn, Node dn, Transports t) {
+    public InfoPath(Node sn, Node dn, Transports t, String n) {
 	Snode = sn;
 	Dnode = dn;
 	transport = t;
+	line = n;
     }
     
     /**
@@ -55,6 +59,7 @@ public class InfoPath implements Cloneable{
 	Snode = ip.Snode;
 	Dnode = ip.Dnode;
 	transport = ip.transport;
+	line = ip.line;
     }
 
     /**
@@ -103,5 +108,19 @@ public class InfoPath implements Cloneable{
      */
     public void setDNode(Node node) {
 	this.Dnode = node;
+    }
+    
+    /**
+     * @return the line
+     */
+    public final String getLine() {
+        return line;
+    }
+
+    /**
+     * @param line the line to set
+     */
+    public final void setLine(String line) {
+        this.line = line;
     }
 }
