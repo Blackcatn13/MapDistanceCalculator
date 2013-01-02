@@ -115,12 +115,9 @@ public class ParserGraph {
 			int nRel = 0;
 			int nDefinedCost;
 			int nLines;
-			float busCost;
-			float subCost;
 			float walCost;
 			boolean bus;
 			boolean subway;
-			boolean walk;
 			ArrayList<Node> nodeArray = new ArrayList<Node>();
 			ArrayList<Line> costArray = new ArrayList<Line>();
 			line = file.readLine();
@@ -137,7 +134,8 @@ public class ParserGraph {
 				for (int i = 0; i < nNodes; i++){
 					bus = false;
 					subway = false;
-					walk = false;
+					walCost = -1;
+					
 					nodeArray.get(i).setName(line);
 					line = file.readLine();
 					nRel = Integer.getInteger(line);
@@ -157,7 +155,7 @@ public class ParserGraph {
 								subway = true;
 							}
 							else if (relation[3+k].equals("W")){
-								walCost = Integer.parseInt(relation[3+k+1]);
+								walCost = Float.parseFloat(relation[3+k+1]);
 							}
 							else if (relation[3+k].equals("F")){
 								//funCost = Float.parseFloat(relation[3+k+1]);
@@ -168,7 +166,7 @@ public class ParserGraph {
 							relation = line.split(" ");
 							nLines = Integer.parseInt(relation[1]);
 							for (int k = 0; k < nLines; k++){
-								costArray.add(new Line(relation[2+2*k]), Transports.BUS, relation[2+2*k+1]);
+								costArray.add(new Line(relation[2+2*k]), Transports.BUS, Float.parseFloat(relation[2+2*k+1]));
 							}
 							line = file.readLine();
 						}
@@ -176,7 +174,7 @@ public class ParserGraph {
 							relation = line.split(" ");
 							nLines = Integer.parseInt(relation[1]);
 							for (int k = 0; k < nLines; k++){
-								costArray.add(new Line(relation[2+2*k]), Transports.BUS, relation[2+2*k+1]);
+								costArray.add(new Line(relation[2+2*k]), Transports.BUS, Float.parseFloat(relation[2+2*k+1]));
 							}
 							line = file.readLine();
 						}
