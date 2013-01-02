@@ -39,7 +39,11 @@ public class Triplet implements Comparable<Object>{
     /**
      * Variable to hold the number of transfers make's in this path.
      */
-    private int transfers;
+    private int TransTransfers;
+    
+    private String lastLine;
+    
+    private int LineTransfers;
     
     /**
      * Default constructor of the class.
@@ -48,7 +52,9 @@ public class Triplet implements Comparable<Object>{
 	Fx = 0;
 	Gx = 0;
 	path = new ArrayList<InfoPath>();
-	transfers = 0;
+	TransTransfers = 0;
+	LineTransfers = 0;
+	lastLine = "";
 	lastTransport = Transports.NOTHING;
     }
     
@@ -62,7 +68,9 @@ public class Triplet implements Comparable<Object>{
 	Fx = f;
 	Gx = g;
 	path = p;
-	transfers = 0;
+	TransTransfers = 0;
+	LineTransfers = 0;
+	lastLine = "";
 	lastTransport = Transports.NOTHING;
     }
     
@@ -75,11 +83,13 @@ public class Triplet implements Comparable<Object>{
      * @param tsf number of transfers.
      * @param t last transport used.
      */
-    public Triplet(float f, float g, ArrayList<InfoPath> p, int tsf, Transports t) {
+    public Triplet(float f, float g, ArrayList<InfoPath> p, int Ttsf, Transports t, int Ltsf, String n) {
 	Fx = f;
 	Gx = g;
 	path = p;
-	transfers = tsf;
+	TransTransfers = Ttsf;
+	LineTransfers = Ltsf;
+	lastLine = n;
 	lastTransport = t;
     }
     
@@ -151,14 +161,20 @@ public class Triplet implements Comparable<Object>{
      * @param t The new transport used for this path.
      * @return The number of transfers realized in this path.
      */
-    public int updateTransport(Transports t) {
+    public boolean updateTransport(Transports t, String name, int mT, int mL) {
 	if(lastTransport != Transports.NOTHING) {
 	    if(t != lastTransport) {
-		transfers++;
+		TransTransfers++;
 	    }
 	}
 	lastTransport = t;
-	return transfers;
+	if(lastLine != "") {
+	    if(!equalString(name, lastLine)){
+		LineTransfers++;
+	    }
+	}
+	lastLine = name;
+	return ((TransTransfers <= mT) && (LineTransfers <= mL));
     }
     
     /**
@@ -166,7 +182,7 @@ public class Triplet implements Comparable<Object>{
      * @return The number of transfers.
      */
     public int getTransfers() {
-	return transfers;
+	return TransTransfers;
     }
     
     /**
@@ -175,6 +191,22 @@ public class Triplet implements Comparable<Object>{
      */
     public Transports getLastTransport() {
 	return lastTransport;
+    }
+    
+    private boolean equalString(String n1, String n2) {
+	return (n1.toLowerCase().equals(n2.toLowerCase()));
+    }
+
+    public int getTransTransfers() {
+	return TransTransfers;
+    }
+    
+    public int getLineTransfers() {
+	return LineTransfers;
+    }
+    
+    public String getLastLine() {
+	return lastLine;
     }
     
 }

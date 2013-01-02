@@ -39,6 +39,7 @@ public class AStar {
      * Number of maximum transfers.
      */
     private int maxTransfers;
+    private int maxLines;
     
     /**
      * Default constructor of the class.
@@ -91,6 +92,7 @@ public class AStar {
 	ArrayList<InfoPath> path = new ArrayList<InfoPath>();
 	ArrayList<Node> auxl = new ArrayList<Node>();
 	ArrayList<Node> visited = new ArrayList<Node>();
+	ArrayList<Pair> costs;
 	Node aux;
 	float cost = 0;
 	float oldcost;
@@ -132,19 +134,27 @@ public class AStar {
                 	// Add it to the path.
                 	path.add(ip);
                 	// Get the cost to the node.
-                	cost = aux.costTo(n, Transports.values()[j]);
+                	costs = aux.costTo(n, Transports.values()[j]);
                 	// If the system of transport exist from the parent to the neighbor.
-                	if(cost != -1) {
-                	    // We get the accumulated cost from the source node to this.
+                	for(Pair p : costs) {
+                	    path.get(path.size() - 2).setLine(p.getN());
                 	    oldcost = t.getGx();
-                	    // Create a new triplet with all the info
-                	    Triplet nt = new Triplet(cost + oldcost + h.Calculate(n, destination, Transports.values()[j]), cost + oldcost, path, t.getTransfers(), t.getLastTransport());
-                	    // We check if the number of transfer realized yet is minor than the maximum.
-                	    if(nt.updateTransport(Transports.values()[j]) <= maxTransfers) {
-                		// If after all the node gets there we put it in the list.
+                	    Triplet nt = new Triplet(p.getC() + oldcost + h.Calculate(n, destination, Transports.values()[j]), cost + oldcost, path, t.getTransTransfers(), t.getLastTransport(), t.getLineTransfers(), t.getLastLine());
+                	    if(nt.updateTransport(Transports.values()[j], p.getN(), maxTransfers, maxLines)) {
                 		list.addWithoutRep(nt);
                 	    }
                 	}
+//                	if(cost != -1) {
+//                	    // We get the accumulated cost from the source node to this.
+//                	    oldcost = t.getGx();
+//                	    // Create a new triplet with all the info
+//                	    Triplet nt = new Triplet(cost + oldcost + h.Calculate(n, destination, Transports.values()[j]), cost + oldcost, path, t.getTransfers(), t.getLastTransport());
+//                	    // We check if the number of transfer realized yet is minor than the maximum.
+//                	    if(nt.updateTransport(Transports.values()[j]) <= maxTransfers) {
+//                		// If after all the node gets there we put it in the list.
+//                		list.addWithoutRep(nt);
+//                	    }
+//                	}
 		    }
 		}
 	    }

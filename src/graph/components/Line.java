@@ -53,4 +53,29 @@ public class Line {
         return transport;
     }
     
+    /**
+     * @param name the name to set
+     */
+    public final void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @param cost the cost to set
+     */
+    public final void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    /**
+     * @param transport the transport to set
+     */
+    public final void setTransport(Transports transport) {
+        this.transport = transport;
+    }
+
+    public boolean SameLine(String n) {
+	return (name.toLowerCase().equals(n.toLowerCase()));
+    }
+    
 }
