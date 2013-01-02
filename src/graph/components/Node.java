@@ -108,6 +108,10 @@ public class Node {
 	//neighbors.add(new NewEdge(this, n, Bcost, Scost, Wcost));
     }
     
+    public void addNeighbor(Node n, ArrayList<Line> lines, float c) {
+	neighbors.add(new NewEdge(this, n, c, lines));
+    }
+    
     /**
      * Setter of the node name.
      * @param n new name for the node.

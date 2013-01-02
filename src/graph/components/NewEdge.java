@@ -34,6 +34,13 @@ public class NewEdge {
 	lines = new ArrayList<Line>();
     }
     
+    public NewEdge(Node ln, Node rn, float c, ArrayList<Line> line) {
+	Lneighbor = ln;
+	Rneighbor = rn;
+	WalkCost = c;
+	lines = line;
+    }
+    
     public Node getNeighbor(Node me) {
 	if(Lneighbor == me) {
 	    return Rneighbor;
@@ -81,5 +88,9 @@ public class NewEdge {
 	    }
 	}
 	return ret;
+    }
+    
+    public void setLine(ArrayList<Line> lists) {
+	lines = lists;
     }
 }
