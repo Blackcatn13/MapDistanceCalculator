@@ -1,99 +1,114 @@
-/**
- * File: NodeNames.java
- * Created on 07/12/2012 by Marc
- * 
- * @author Marc
- * Class that represents a Node Name
- */
 package graph.components;
 
+/**
+ * File: NodeNames.java. Created on 07/12/2012 by Marc
+ *
+ * Class that represents a Node Name
+ */
 public class NodeNames {
-    
+
     /**
-     * The name
+     * The name.
      */
-    private String Name;
-    
+    private String name;
+
     /**
-     * The alias of the node
+     * The alias of the node.
      */
-    private String Alias;
-    
+    private String alias;
+
     /**
      * Constructor.
-     * @param n is the name for that node.
-     * @param m is the alias name for that node.
+     *
+     * @param n
+     *            is the name for that node.
+     * @param a
+     *            is the alias name for that node.
      */
     public NodeNames(String n, String a) {
-	Name = n;
-	Alias = a;
+        name = n;
+        alias = a;
     }
-    
+
     /**
      * Default Constructor.
      */
     public NodeNames() {
-	Name = "";
-	Alias = "";
+        name = "";
+        alias = "";
     }
-    
+
     /**
      * Getter of the name.
+     *
      * @return The name of that NodeName.
      */
     public String getName() {
-	return Name;
+        return name;
     }
-    
+
     /**
-     * Getter of the alias
+     * Getter of the alias.
+     *
      * @return The alias of that NodeName.
      */
     public String getAlias() {
-	return Alias;
+        return alias;
     }
-    
+
     /**
      * Function to compare if a name and an alias is the same.
-     * @param n name to compare.
-     * @param m alias to compare.
+     *
+     * @param n
+     *            name to compare.
+     * @param a
+     *            alias to compare.
      * @return True if the name and alias is the same.
      */
-    public boolean Same(String n, String a){
-    	return (Name.toLowerCase().equals(n.toLowerCase()) && Alias.toLowerCase().equals(a.toLowerCase()));
+    public boolean same(String n, String a) {
+        return (name.toLowerCase().equals(n.toLowerCase()) && alias
+                .toLowerCase().equals(a.toLowerCase()));
     }
-    
+
     /**
      * Function to compare if a name is the same.
-     * @param n name to compare.
+     *
+     * @param n
+     *            name to compare.
      * @return True if the name is the same.
      */
-    public boolean SameName(String n){
-    	return Name.toLowerCase().equals(n.toLowerCase());
+    public boolean sameName(String n) {
+        return name.toLowerCase().equals(n.toLowerCase());
     }
-    
+
     /**
      * Function to compare if an alias is the same.
-     * @param a alias to compare.
+     *
+     * @param a
+     *            alias to compare.
      * @return True if the alias is the same.
      */
-    public boolean SameAlias(String a){
-    	return Alias.toLowerCase().equals(a.toLowerCase());
+    public boolean sameAlias(String a) {
+        return alias.toLowerCase().equals(a.toLowerCase());
     }
-    
+
     /**
      * Setter of the name.
-     * @param n is the new name to set.
+     *
+     * @param n
+     *            is the new name to set.
      */
     public void setName(String n) {
-	Name = n;
+        name = n;
     }
-    
+
     /**
      * Setter of the alias.
-     * @param a is the new alias to set.
+     *
+     * @param a
+     *            is the new alias to set.
      */
-    public void setAlias(String a){
-	Alias = a;
+    public void setAlias(String a) {
+        alias = a;
     }
 }
