@@ -1,8 +1,7 @@
 package algorithm;
 
 /**
- * File: Position.java.
- * Created on 30/12/2012 by Marc
+ * File: Position.java. Created on 30/12/2012 by Marc
  *
  * Class that represents a position of a node in a 2D space
  */
@@ -34,9 +33,13 @@ public class Position {
 
     /**
      * Constructor with all the parameters.
-     * @param nx x position of the node.
-     * @param ny y position of the node.
-     * @param n name of the node.
+     *
+     * @param nx
+     *            x position of the node.
+     * @param ny
+     *            y position of the node.
+     * @param n
+     *            name of the node.
      */
     public Position(int nx, int ny, String n) {
         x = nx;
@@ -46,6 +49,7 @@ public class Position {
 
     /**
      * Getter of the name.
+     *
      * @return The name of the node.
      */
     public String getName() {
@@ -54,6 +58,7 @@ public class Position {
 
     /**
      * Getter of the x position.
+     *
      * @return The x position.
      */
     public int getX() {
@@ -62,6 +67,7 @@ public class Position {
 
     /**
      * Getter of the y position.
+     *
      * @return The y position.
      */
     public int getY() {

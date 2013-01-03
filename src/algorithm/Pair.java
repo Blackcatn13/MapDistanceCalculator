@@ -1,8 +1,7 @@
 package algorithm;
 
 /**
- * File: Pair.java
- * Created on 02/01/2013 by Marc
+ * File: Pair.java Created on 02/01/2013 by Marc
  *
  * Class to hold two elements.
  */
@@ -28,8 +27,11 @@ public class Pair {
 
     /**
      * Constructor that takes the cost and the line name.
-     * @param nc Cost.
-     * @param nn Line name.
+     *
+     * @param nc
+     *            Cost.
+     * @param nn
+     *            Line name.
      */
     public Pair(float nc, String nn) {
         c = nc;
@@ -44,7 +46,8 @@ public class Pair {
     }
 
     /**
-     * @param c the c to set
+     * @param c
+     *            the c to set
      */
     public final void setC(float c) {
         this.c = c;
@@ -58,7 +61,8 @@ public class Pair {
     }
 
     /**
-     * @param n the n to set
+     * @param n
+     *            the n to set
      */
     public final void setN(String n) {
         this.n = n;

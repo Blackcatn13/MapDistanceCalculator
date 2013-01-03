@@ -6,7 +6,9 @@ import graph.components.Transports;
 
 public class HeuristicD extends Heuristic {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see algorithm.Heuristic#init(graph.components.Graph)
      */
     @Override
@@ -14,16 +16,22 @@ public class HeuristicD extends Heuristic {
         this.setGraph(g);
     }
 
-    /* (non-Javadoc)
-     * @see algorithm.Heuristic#Calculate(graph.components.Node, graph.components.Node)
+    /*
+     * (non-Javadoc)
+     *
+     * @see algorithm.Heuristic#Calculate(graph.components.Node,
+     * graph.components.Node)
      */
     @Override
     public float calculate(Node s, Node d) {
         return 0;
     }
 
-    /* (non-Javadoc)
-     * @see algorithm.Heuristic#Calculate(graph.components.Node, graph.components.Node, graph.components.Transports)
+    /*
+     * (non-Javadoc)
+     *
+     * @see algorithm.Heuristic#Calculate(graph.components.Node,
+     * graph.components.Node, graph.components.Transports)
      */
     @Override
     public float calculate(Node s, Node d, Transports t) {

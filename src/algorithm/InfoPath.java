@@ -4,8 +4,7 @@ import graph.components.Node;
 import graph.components.Transports;
 
 /**
- * File: InfoPath.java
- * Created on 31/12/2012 by Marc
+ * File: InfoPath.java Created on 31/12/2012 by Marc
  *
  * Class that holds the information to the path.
  */
@@ -48,12 +47,19 @@ public class InfoPath implements Cloneable {
     }
 
     /**
-     * Constructor that takes the two nodes and the transport used to got from the sn to the dn.
-     * @param sn Source node.
-     * @param dn Destination node.
-     * @param t Transport used.
-     * @param n Name of the line used.
-     * @param c Cost accumulated.
+     * Constructor that takes the two nodes and the transport used to got from
+     * the sn to the dn.
+     *
+     * @param sn
+     *            Source node.
+     * @param dn
+     *            Destination node.
+     * @param t
+     *            Transport used.
+     * @param n
+     *            Name of the line used.
+     * @param c
+     *            Cost accumulated.
      */
     public InfoPath(Node sn, Node dn, Transports t, String n, float c) {
         snode = sn;
@@ -65,7 +71,9 @@ public class InfoPath implements Cloneable {
 
     /**
      * Constructor to make a copy of an InfoPath.
-     * @param ip the InfoPath that have the values to copy.
+     *
+     * @param ip
+     *            the InfoPath that have the values to copy.
      */
     public InfoPath(InfoPath ip) {
         snode = ip.snode;
@@ -77,6 +85,7 @@ public class InfoPath implements Cloneable {
 
     /**
      * Transport getter.
+     *
      * @return the transport
      */
     public Transports getTransport() {
@@ -85,7 +94,9 @@ public class InfoPath implements Cloneable {
 
     /**
      * Transport setter.
-     * @param transport the transport to set
+     *
+     * @param transport
+     *            the transport to set
      */
     public void setTransport(Transports transport) {
         this.transport = transport;
@@ -93,6 +104,7 @@ public class InfoPath implements Cloneable {
 
     /**
      * Node source getter.
+     *
      * @return the node
      */
     public Node getSNode() {
@@ -101,7 +113,9 @@ public class InfoPath implements Cloneable {
 
     /**
      * Node source setter.
-     * @param node the node to set
+     *
+     * @param node
+     *            the node to set
      */
     public void setSNode(Node node) {
         this.snode = node;
@@ -109,6 +123,7 @@ public class InfoPath implements Cloneable {
 
     /**
      * Node destination getter.
+     *
      * @return the node
      */
     public Node getDNode() {
@@ -117,7 +132,9 @@ public class InfoPath implements Cloneable {
 
     /**
      * Node destination setter.
-     * @param node the node to set
+     *
+     * @param node
+     *            the node to set
      */
     public void setDNode(Node node) {
         this.dnode = node;
@@ -131,7 +148,8 @@ public class InfoPath implements Cloneable {
     }
 
     /**
-     * @param line the line to set
+     * @param line
+     *            the line to set
      */
     public final void setLine(String line) {
         this.line = line;
@@ -145,7 +163,8 @@ public class InfoPath implements Cloneable {
     }
 
     /**
-     * @param cost the cost to set
+     * @param cost
+     *            the cost to set
      */
     public void setCost(float cost) {
         this.cost = cost;

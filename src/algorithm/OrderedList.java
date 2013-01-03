@@ -3,8 +3,7 @@ package algorithm;
 import java.util.TreeSet;
 
 /**
- * File: OrderedList.java
- * Created on 26/12/2012 by Marc
+ * File: OrderedList.java Created on 26/12/2012 by Marc
  *
  * Class to hold an ordered list of Triplet elements.
  */
@@ -24,24 +23,30 @@ public class OrderedList {
 
     /**
      * Add a new triplet to the list.
-     * @param t new triplet to add.
+     *
+     * @param t
+     *            new triplet to add.
      */
     public void add(Triplet t) {
         list.add(t);
     }
 
     /**
-     * Add a new triplet to the list, and if the last node of the path exist in the list
-     * override it if the cost to get is minor, else don't add it.
-     * @param t Triplet to add in the list.
+     * Add a new triplet to the list, and if the last node of the path exist in
+     * the list override it if the cost to get is minor, else don't add it.
+     *
+     * @param t
+     *            Triplet to add in the list.
      */
     public void addWithoutRep(Triplet t) {
         TreeSet<Triplet> listaux = new TreeSet<Triplet>(list);
         boolean added = false;
-        // We check for all the elements of the list if one path to the same node exists.
+        // We check for all the elements of the list if one path to the same
+        // node exists.
         for (Triplet tr : list) {
             if (tr.getFirst().equals(t.getFirst())) {
-                // If it exists and the cost is greater than the new we take the previous and add the new.
+                // If it exists and the cost is greater than the new we take the
+                // previous and add the new.
                 if (tr.getGx() > t.getGx()) {
                     listaux.remove(tr);
                     listaux.add(t);
@@ -51,7 +56,8 @@ public class OrderedList {
                 break;
             }
         }
-        // If we don't have modified the list the path to the node not exist and we add it.
+        // If we don't have modified the list the path to the node not exist and
+        // we add it.
         if (!added) {
             listaux.add(t);
         }
@@ -60,6 +66,7 @@ public class OrderedList {
 
     /**
      * Function to get the first triplet of the list.
+     *
      * @return the first triplet of the list.
      */
     public Triplet first() {
@@ -68,6 +75,7 @@ public class OrderedList {
 
     /**
      * Function to get and remove the first triplet of the list.
+     *
      * @return the first triplet of the list.
      */
     public Triplet getFirst() {
@@ -77,6 +85,7 @@ public class OrderedList {
 
     /**
      * Function to now if the list is empty.
+     *
      * @return true if the list is empty.
      */
     public boolean empty() {
