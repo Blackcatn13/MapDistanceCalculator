@@ -1,70 +1,78 @@
-/**
- * File: InfoPath.java
- * Created on 31/12/2012 by Marc
- * 
- * Class that holds the information to the path.
- */
 package algorithm;
 
 import graph.components.Node;
 import graph.components.Transports;
 
-public class InfoPath implements Cloneable{
+/**
+ * File: InfoPath.java
+ * Created on 31/12/2012 by Marc
+ *
+ * Class that holds the information to the path.
+ */
+public class InfoPath implements Cloneable {
 
     /**
      * Variable that holds the source node in the path.
      */
-    private Node Snode;
-    
+    private Node snode;
+
     /**
      * Variable that holds the destination node in the path.
      */
-    private Node Dnode;
-    
+    private Node dnode;
+
     /**
      * Variable that holds the transport to the next node.
      */
     private Transports transport;
-    
+
+    /**
+     * Variable that holds the name of a line.
+     */
     private String line;
-    
+
+    /**
+     * Variable that hold the cost to go from the first node to this.
+     */
     private float cost;
 
     /**
      * Default constructor.
      */
     public InfoPath() {
-	Snode = new Node();
-	Dnode = new Node();
-	transport = Transports.NOTHING;
-	line = "";
-	cost = 0;
+        snode = new Node();
+        dnode = new Node();
+        transport = Transports.NOTHING;
+        line = "";
+        cost = 0;
     }
-    
+
     /**
      * Constructor that takes the two nodes and the transport used to got from the sn to the dn.
      * @param sn Source node.
      * @param dn Destination node.
      * @param t Transport used.
+     * @param n Name of the line used.
+     * @param c Cost accumulated.
      */
     public InfoPath(Node sn, Node dn, Transports t, String n, float c) {
-	Snode = sn;
-	Dnode = dn;
-	transport = t;
-	line = n;
-	cost = c;
+        snode = sn;
+        dnode = dn;
+        transport = t;
+        line = n;
+        cost = c;
     }
-    
+
     /**
      * Constructor to make a copy of an InfoPath.
      * @param ip the InfoPath that have the values to copy.
      */
     public InfoPath(InfoPath ip) {
-	Snode = ip.Snode;
-	Dnode = ip.Dnode;
-	transport = ip.transport;
-	line = ip.line;
-	cost = ip.cost;
+        snode = ip.snode;
+        dnode = ip.dnode;
+        transport = ip.transport;
+        line = ip.line;
+        cost = ip.cost;
     }
 
     /**
@@ -72,7 +80,7 @@ public class InfoPath implements Cloneable{
      * @return the transport
      */
     public Transports getTransport() {
-	return transport;
+        return transport;
     }
 
     /**
@@ -80,7 +88,7 @@ public class InfoPath implements Cloneable{
      * @param transport the transport to set
      */
     public void setTransport(Transports transport) {
-	this.transport = transport;
+        this.transport = transport;
     }
 
     /**
@@ -88,7 +96,7 @@ public class InfoPath implements Cloneable{
      * @return the node
      */
     public Node getSNode() {
-	return Snode;
+        return snode;
     }
 
     /**
@@ -96,15 +104,15 @@ public class InfoPath implements Cloneable{
      * @param node the node to set
      */
     public void setSNode(Node node) {
-	this.Snode = node;
-    } 
-    
+        this.snode = node;
+    }
+
     /**
      * Node destination getter.
      * @return the node
      */
     public Node getDNode() {
-	return Dnode;
+        return dnode;
     }
 
     /**
@@ -112,9 +120,9 @@ public class InfoPath implements Cloneable{
      * @param node the node to set
      */
     public void setDNode(Node node) {
-	this.Dnode = node;
+        this.dnode = node;
     }
-    
+
     /**
      * @return the line
      */
@@ -133,13 +141,13 @@ public class InfoPath implements Cloneable{
      * @return the cost
      */
     public float getCost() {
-	return cost;
+        return cost;
     }
 
     /**
      * @param cost the cost to set
      */
     public void setCost(float cost) {
-	this.cost = cost;
+        this.cost = cost;
     }
 }
