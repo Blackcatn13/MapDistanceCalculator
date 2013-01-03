@@ -114,7 +114,7 @@ public class AStar {
         // We add the new triplet that holds the f(x), the g(x) and the path in our ordered list.
         list.add(new Triplet(cost + h.calculate(source, destination), 0, path));
         // While the list holds an element or the first element is equals to the destination.
-        while (!list.empty() && !list.First().getFirst().equals(destination)) {
+        while (!list.empty() && !list.first().getFirst().equals(destination)) {
             // Get the first element of the list.
             t = list.getFirst();
             // Get the last node in that path.
@@ -176,7 +176,7 @@ public class AStar {
             return new ArrayList<InfoPath>();
         }
         // else we return the path to go form the node source to the destination node.
-        return list.First().getPath();
+        return list.first().getPath();
     }
 
     /**
