@@ -264,7 +264,7 @@ public class Window {
 	btnParse.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 		    try {
-			g = p.ParseTxtFile("RandomCity.txt");
+			g = p.ParseTxtFilewLines("cityy.txt");
 		    } catch(Exception e) {
 			e.printStackTrace();
 		    }
