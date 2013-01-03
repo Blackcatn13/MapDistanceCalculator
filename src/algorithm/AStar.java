@@ -112,7 +112,7 @@ public class AStar {
         // We add the source in a clear path to start.
         path.add(ip);
         // We add the new triplet that holds the f(x), the g(x) and the path in our ordered list.
-        list.add(new Triplet(cost + h.Calculate(source, destination), 0, path));
+        list.add(new Triplet(cost + h.calculate(source, destination), 0, path));
         // While the list holds an element or the first element is equals to the destination.
         while (!list.empty() && !list.First().getFirst().equals(destination)) {
             // Get the first element of the list.
@@ -159,7 +159,7 @@ public class AStar {
                             // the last transport type used,
                             // the number of line transfers in this path,
                             // and the last line used.
-                            Triplet nt = new Triplet(p.getC() + oldcost + h.Calculate(n, destination, Transports.values()[j]), p.getC() + oldcost, path, t.getTransTransfers(), t.getLastTransport(), t.getLineTransfers(), t.getLastLine());
+                            Triplet nt = new Triplet(p.getC() + oldcost + h.calculate(n, destination, Transports.values()[j]), p.getC() + oldcost, path, t.getTransTransfers(), t.getLastTransport(), t.getLineTransfers(), t.getLastLine());
                             // Check if with the transfer parameters given the path is in or not.
                             if (nt.updateTransport(Transports.values()[j], p.getN(), maxTransfers, maxLines)) {
                                 // If it's in, we put it in the list.
