@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 
 /**
- * File: AStar.java.
- * Created on 24/12/2012 by Marc
+ * File: AStar.java. Created on 24/12/2012 by Marc
  *
  * Class that represents the A* algorithm
  */
@@ -57,12 +56,19 @@ public class AStar {
 
     /**
      * Constructor with all the parameters to run the A*.
-     * @param g Graph used for the A*.
-     * @param s node source.
-     * @param d node destination.
-     * @param heu heuristic to check.
-     * @param tt transport transfers.
-     * @param lt line transfers.
+     *
+     * @param g
+     *            Graph used for the A*.
+     * @param s
+     *            node source.
+     * @param d
+     *            node destination.
+     * @param heu
+     *            heuristic to check.
+     * @param tt
+     *            transport transfers.
+     * @param lt
+     *            line transfers.
      */
     public AStar(Graph g, Node s, Node d, Heuristic heu, int tt, int lt) {
         graph = g;
@@ -76,7 +82,9 @@ public class AStar {
 
     /**
      * Setter of the source Node.
-     * @param s new source node.
+     *
+     * @param s
+     *            new source node.
      */
     public void setSource(Node s) {
         source = s;
@@ -84,7 +92,9 @@ public class AStar {
 
     /**
      * Setter of the destination Node.
-     * @param d new destination node.
+     *
+     * @param d
+     *            new destination node.
      */
     public void setDestination(Node d) {
         destination = d;
@@ -92,7 +102,9 @@ public class AStar {
 
     /**
      * Function that calculates the A*.
-     * @param b types of transports to use.
+     *
+     * @param b
+     *            types of transports to use.
      * @return The path with then nodes to go from source to destination.
      */
     public ArrayList<InfoPath> getPath(BitSet b) {
@@ -111,9 +123,11 @@ public class AStar {
         ip.setSNode(source);
         // We add the source in a clear path to start.
         path.add(ip);
-        // We add the new triplet that holds the f(x), the g(x) and the path in our ordered list.
+        // We add the new triplet that holds the f(x), the g(x) and the path in
+        // our ordered list.
         list.add(new Triplet(cost + h.calculate(source, destination), 0, path));
-        // While the list holds an element or the first element is equals to the destination.
+        // While the list holds an element or the first element is equals to the
+        // destination.
         while (!list.empty() && !list.first().getFirst().equals(destination)) {
             // Get the first element of the list.
             t = list.getFirst();
@@ -126,27 +140,35 @@ public class AStar {
             // For every neighbor.
             for (Node n : auxl) {
                 // If the neighbor has been visited we skip it.
-                if (visited.contains(n)) continue;
+                if (visited.contains(n))
+                    continue;
                 // For the different types of transports.
                 for (int j = 0; j < b.length(); j++) {
                     // If the transport method is selected.
                     if (b.get(j)) {
-                        // We get all the costs with the transport to got to the node.
+                        // We get all the costs with the transport to got to the
+                        // node.
                         costs = aux.costTo(n, Transports.values()[j]);
                         // If not cost exist exit.
-                        if (costs.size() == 0) continue;
+                        if (costs.size() == 0)
+                            continue;
                         // For every cost from the node to the other node.
                         for (Pair p : costs) {
                             position = path.size() - 1;
                             // If the cost not exist exit.
-                            if (p.getC() == -1) continue;
+                            if (p.getC() == -1)
+                                continue;
                             // Copy the path.
                             path = copyList(t.getPath());
-                            // Update the last InfoPath with the destination node, the transport used and the line of the transport.
+                            // Update the last InfoPath with the destination
+                            // node, the transport used and the line of the
+                            // transport.
                             path.get(position).setDNode(n);
-                            path.get(position).setTransport(Transports.values()[j]);
+                            path.get(position).setTransport(
+                                    Transports.values()[j]);
                             path.get(position).setLine(p.getN());
-                            // We get the cost accumulated and the new cost and save it in the path.
+                            // We get the cost accumulated and the new cost and
+                            // save it in the path.
                             oldcost = t.getGx();
                             path.get(position).setCost(oldcost + p.getC());
                             // Create a new InfoPath with the source node.
@@ -154,14 +176,23 @@ public class AStar {
                             ip.setSNode(n);
                             // Add it to the path.
                             path.add(ip);
-                            // We create a new Triplet with the new f(x), the new g(x), the path,
+                            // We create a new Triplet with the new f(x), the
+                            // new g(x), the path,
                             // the number of transport transfers in this path,
                             // the last transport type used,
                             // the number of line transfers in this path,
                             // and the last line used.
-                            Triplet nt = new Triplet(p.getC() + oldcost + h.calculate(n, destination, Transports.values()[j]), p.getC() + oldcost, path, t.getTransTransfers(), t.getLastTransport(), t.getLineTransfers(), t.getLastLine());
-                            // Check if with the transfer parameters given the path is in or not.
-                            if (nt.updateTransport(Transports.values()[j], p.getN(), maxTransfers, maxLines)) {
+                            Triplet nt = new Triplet(p.getC()
+                                    + oldcost
+                                    + h.calculate(n, destination,
+                                            Transports.values()[j]), p.getC()
+                                            + oldcost, path, t.getTransTransfers(),
+                                            t.getLastTransport(), t.getLineTransfers(),
+                                            t.getLastLine());
+                            // Check if with the transfer parameters given the
+                            // path is in or not.
+                            if (nt.updateTransport(Transports.values()[j],
+                                    p.getN(), maxTransfers, maxLines)) {
                                 // If it's in, we put it in the list.
                                 list.addWithoutRep(nt);
                             }
@@ -175,13 +206,16 @@ public class AStar {
         if (list.empty()) {
             return new ArrayList<InfoPath>();
         }
-        // else we return the path to go form the node source to the destination node.
+        // else we return the path to go form the node source to the destination
+        // node.
         return list.first().getPath();
     }
 
     /**
      * Function to copy an ArrayList.
-     * @param list list to copy.
+     *
+     * @param list
+     *            list to copy.
      * @return The new ArrayList copied.
      */
     private ArrayList<InfoPath> copyList(ArrayList<InfoPath> list) {
