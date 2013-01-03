@@ -112,76 +112,75 @@ public class ParserGraph {
 	    String line;
 	    String aliasDest;
 	    String[] relation;
-	    int nRel = 0;
+	    int nRel;
 	    int nDefinedCost;
 	    int nLines;
-	    float walCost;
-	    boolean bus;
-	    boolean subway;
+	    float walCost = -1;
+	    boolean bus = false;
+	    boolean subway  = false;
 	    ArrayList<Node> nodeArray = new ArrayList<Node>();
 	    ArrayList<Line> costArray = new ArrayList<Line>();
 	    line = file.readLine();
 	    while (line != null){
-		if (line.startsWith("//")){
-		    line = file.readLine();
-		    continue;
-		}
-		nNodes = Integer.parseInt(line);
-		line = file.readLine();
-		for (int i = 0; i < nNodes; i++){
-		    nodeArray.add(new Node());
-		}
-		for (int i = 0; i < nNodes; i++){
-		    bus = false;
-		    subway = false;
-		    walCost = -1;
-
-		    nodeArray.get(i).setName(line);
-		    line = file.readLine();
-		    nRel = Integer.getInteger(line);
-		    //N1 N2 3 B S W 4
-		    for (int j = 0; j < nRel; j++){
-			line = file.readLine();
-			relation = line.split(" ");
-			nodeArray.get(i).setAlias(relation[0]);
-			aliasDest = relation[1];
-			nDefinedCost = Integer.parseInt(relation[2]);
-			//BSW
-			for (int k = 0; k < nDefinedCost; k++){
-			    if (relation[3+k].equals("B")){
-				bus = true;
-			    }
-			    else if (relation[3+k].equals("S")){
-				subway = true;
-			    }
-			    else if (relation[3+k].equals("W")){
-				walCost = Float.parseFloat(relation[3+k+1]);
-			    }
-			    else if (relation[3+k].equals("F")){
-				//funCost = Float.parseFloat(relation[3+k+1]);
-			    }
-			}
-			line = file.readLine();
-			if (bus){
-			    relation = line.split(" ");
-			    nLines = Integer.parseInt(relation[1]);
-			    for (int k = 0; k < nLines; k++){
-				costArray.add(new Line(relation[2+2*k], Transports.BUS, Float.parseFloat(relation[2+2*k+1])));
-			    }
+			if (line.startsWith("//")){
 			    line = file.readLine();
+			    continue;
 			}
-			if (subway){
-			    relation = line.split(" ");
-			    nLines = Integer.parseInt(relation[1]);
-			    for (int k = 0; k < nLines; k++){
-				costArray.add(new Line(relation[2+2*k], Transports.BUS, Float.parseFloat(relation[2+2*k+1])));
-			    }
+			nNodes = Integer.parseInt(line);
+			line = file.readLine();
+			for (int i = 0; i < nNodes; i++){
+			    nodeArray.add(new Node());
+			}
+			for (int i = 0; i < nNodes; i++){
+				nodeArray.get(i).setName(line);
 			    line = file.readLine();
+			    nRel = Integer.parseInt(line);
+			    //N1 N2 3 B S W 4
+			    for (int j = 0; j < nRel; j++){
+				line = file.readLine();
+				relation = line.split(" ");
+				nodeArray.get(i).setAlias(relation[0]);
+				aliasDest = relation[1];
+				nDefinedCost = Integer.parseInt(relation[2]);
+				//BSW
+				for (int k = 0; k < nDefinedCost; k++){
+				    if (relation[3+k].equals("B")){
+					bus = true;
+				    }
+				    else if (relation[3+k].equals("S")){
+					subway = true;
+				    }
+				    else if (relation[3+k].equals("W")){
+					walCost = Float.parseFloat(relation[3+k+1]);
+				    }
+				    else if (relation[3+k].equals("F")){
+					//funCost = Float.parseFloat(relation[3+k+1]);
+				    }
+				}
+				if (bus){
+					line = file.readLine();
+					relation = line.split(" ");
+				    nLines = Integer.parseInt(relation[1]);
+				    for (int k = 0; k < nLines; k++){
+						costArray.add(new Line(relation[2+2*k], Transports.BUS, Float.parseFloat(relation[2+2*k+1])));
+				    }
+				    bus  = false;
+				}
+				if (subway){
+					line = file.readLine();
+				    relation = line.split(" ");
+				    nLines = Integer.parseInt(relation[1]);
+				    for (int k = 0; k < nLines; k++){
+						costArray.add(new Line(relation[2+2*k], Transports.SUBWAY, Float.parseFloat(relation[2+2*k+1])));
+				    }
+				    subway  = false;
+				}
+				nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(aliasDest.substring(1))-1), costArray, walCost);
+			    walCost = -1;
+			    }
+				line = file.readLine();
 			}
-			nodeArray.get(i).addNeighbor(nodeArray.get(Integer.parseInt(aliasDest.substring(1))-1), costArray, walCost);
-		    }
 		}
-	    }
 	    for(int i = 0; i < nNodes; i++) {
 		graph.addNode(nodeArray.get(i));
 	    }
