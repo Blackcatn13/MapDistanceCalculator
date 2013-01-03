@@ -48,15 +48,16 @@ public class Window {
 
     public void WritePath(ArrayList<InfoPath> path, BitSet b, boolean alias) {
 	Transports t;
+	float costTot = 0; 
 	if(!path.isEmpty()) {
 	    for(int i = 0; i < path.size() - 1; i++) {
 		t = path.get(i).getTransport();
 		switch(t) {
     	    	case BUS:
-    	    	    textPane.setText(textPane.getText() + "\n" + "Take the bus");
+    	    	    textPane.setText(textPane.getText() + "\n" + "Take the " + path.get(i).getLine() + " (bus)");
     	    	    break;
     	    	case SUBWAY:
-    	    	    textPane.setText(textPane.getText() + "\n" + "Take the subway");
+    	    	    textPane.setText(textPane.getText() + "\n" + "Take the " + path.get(i).getLine() + " (subway)");
     	    	    break;
     	    	case WALK:
     	    	    textPane.setText(textPane.getText() + "\n" + "Walk");
@@ -69,7 +70,10 @@ public class Window {
 		    textPane.setText(textPane.getText() + " from " + path.get(i).getSNode().getName());
     		    textPane.setText(textPane.getText() + " to " + path.get(i).getDNode().getName());
 		}
+		
 	    }
+	    costTot = path.get(path.size() - 2).getCost();
+	    textPane.setText(textPane.getText() + "\n" + "Cost to travel: " + costTot);
 	}
 	else {
 	    textPane.setText(textPane.getText() + "\n" + "Don't exist a way from source to destination with the selected transports.");
@@ -131,16 +135,8 @@ public class Window {
 	gbc_rdbtnHx.anchor = GridBagConstraints.WEST;
 	gbc_rdbtnHx.insets = new Insets(0, 0, 5, 0);
 	gbc_rdbtnHx.gridx = 0;
-	gbc_rdbtnHx.gridy = 4;
+	gbc_rdbtnHx.gridy = 2;
 	panel_2.add(rdbtnHx, gbc_rdbtnHx);
-	
-	final JRadioButton rdbtnHxEuclidean = new JRadioButton("H(x) = Euclidean");
-	GridBagConstraints gbc_rdbtnHxEuclidean = new GridBagConstraints();
-	gbc_rdbtnHxEuclidean.anchor = GridBagConstraints.WEST;
-	gbc_rdbtnHxEuclidean.insets = new Insets(0, 0, 5, 0);
-	gbc_rdbtnHxEuclidean.gridx = 0;
-	gbc_rdbtnHxEuclidean.gridy = 5;
-	panel_2.add(rdbtnHxEuclidean, gbc_rdbtnHxEuclidean);
 	
 	JPanel panel_1 = new JPanel();
 	frame.getContentPane().add(panel_1, BorderLayout.EAST);
@@ -235,14 +231,22 @@ public class Window {
 	textField_1.setColumns(10);
 	
 	ButtonGroup group = new ButtonGroup();
+	
+	final JRadioButton rdbtnHxEuclidean = new JRadioButton("H(x) = Euclidean");
+	GridBagConstraints gbc_rdbtnHxEuclidean = new GridBagConstraints();
+	gbc_rdbtnHxEuclidean.anchor = GridBagConstraints.WEST;
+	gbc_rdbtnHxEuclidean.insets = new Insets(0, 0, 5, 0);
+	gbc_rdbtnHxEuclidean.gridx = 0;
+	gbc_rdbtnHxEuclidean.gridy = 3;
+	panel_2.add(rdbtnHxEuclidean, gbc_rdbtnHxEuclidean);
 	group.add(rdbtnHxEuclidean);
 	group.add(rdbtnHx);
 	
-	JLabel lblMaxTransfers = new JLabel("Max transfers");
+	JLabel lblMaxTransfers = new JLabel("Max trans. transfers");
 	GridBagConstraints gbc_lblMaxTransfers = new GridBagConstraints();
 	gbc_lblMaxTransfers.insets = new Insets(0, 0, 5, 0);
 	gbc_lblMaxTransfers.gridx = 0;
-	gbc_lblMaxTransfers.gridy = 6;
+	gbc_lblMaxTransfers.gridy = 4;
 	panel_2.add(lblMaxTransfers, gbc_lblMaxTransfers);
 	
 	final JSpinner spinner = new JSpinner();
@@ -250,8 +254,23 @@ public class Window {
 	GridBagConstraints gbc_spinner = new GridBagConstraints();
 	gbc_spinner.insets = new Insets(0, 0, 5, 0);
 	gbc_spinner.gridx = 0;
-	gbc_spinner.gridy = 7;
+	gbc_spinner.gridy = 5;
 	panel_2.add(spinner, gbc_spinner);
+	
+	JLabel lblMaxLineTransfers = new JLabel("Max line transfers");
+	GridBagConstraints gbc_lblMaxLineTransfers = new GridBagConstraints();
+	gbc_lblMaxLineTransfers.insets = new Insets(0, 0, 5, 0);
+	gbc_lblMaxLineTransfers.gridx = 0;
+	gbc_lblMaxLineTransfers.gridy = 6;
+	panel_2.add(lblMaxLineTransfers, gbc_lblMaxLineTransfers);
+	
+	final JSpinner spinner_1 = new JSpinner();
+	spinner_1.setModel(new SpinnerNumberModel(0, 0, 99999999, 1));
+	GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
+	gbc_spinner_1.insets = new Insets(0, 0, 5, 0);
+	gbc_spinner_1.gridx = 0;
+	gbc_spinner_1.gridy = 7;
+	panel_2.add(spinner_1, gbc_spinner_1);
 	
 	final JCheckBox chckbxShowByAlias = new JCheckBox("Show by Alias");
 	chckbxShowByAlias.setSelected(true);
@@ -286,8 +305,9 @@ public class Window {
 			h.init(g);
 			((HeuristicE) h).setDistances(names);
 		    }
-		    int transf = (int) spinner.getModel().getValue();
-		    as = new AStar(g, g.getNodeby(textField.getText()), g.getNodeby(textField_1.getText()), h, transf);
+		    int Transtransf = (int) spinner.getModel().getValue();
+		    int Linetransf = (int) spinner_1.getModel().getValue();
+		    as = new AStar(g, g.getNodeby(textField.getText()), g.getNodeby(textField_1.getText()), h, Transtransf, Linetransf);
 		    BitSet b = new BitSet(3);
 		    b.clear();
 		    b.set(0, rdbtnBus.isSelected());
