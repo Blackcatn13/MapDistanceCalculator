@@ -105,6 +105,7 @@ public class AStar {
         float oldcost;
         Triplet t;
         InfoPath ip;
+        int position;
 
         ip = new InfoPath();
         ip.setSNode(source);
@@ -130,28 +131,38 @@ public class AStar {
                 for (int j = 0; j < b.length(); j++) {
                     // If the transport method is selected.
                     if (b.get(j)) {
+                        // We get all the costs with the transport to got to the node.
                         costs = aux.costTo(n, Transports.values()[j]);
+                        // If not cost exist exit.
                         if (costs.size() == 0) continue;
+                        // For every cost from the node to the other node.
                         for (Pair p : costs) {
+                            position = path.size() - 1;
+                            // If the cost not exist exit.
                             if (p.getC() == -1) continue;
                             // Copy the path.
                             path = copyList(t.getPath());
-                            // Update the last InfoPath with the destination node, and the transport used.
-                            path.get(path.size() - 1).setDNode(n);
-                            path.get(path.size() - 1).setTransport(Transports.values()[j]);
+                            // Update the last InfoPath with the destination node, the transport used and the line of the transport.
+                            path.get(position).setDNode(n);
+                            path.get(position).setTransport(Transports.values()[j]);
+                            path.get(position).setLine(p.getN());
+                            // We get the cost accumulated and the new cost and save it in the path.
+                            oldcost = t.getGx();
+                            path.get(position).setCost(oldcost + p.getC());
                             // Create a new InfoPath with the source node.
                             ip = new InfoPath();
                             ip.setSNode(n);
                             // Add it to the path.
                             path.add(ip);
-                            // Get the cost to the node.
-                            //costs = aux.costTo(n, Transports.values()[j]);
-                            // If the system of transport exist from the parent to the neighbor.
-                            path.get(path.size() - 2).setLine(p.getN());
-                            oldcost = t.getGx();
-                            path.get(path.size() - 2).setCost(oldcost + p.getC());
+                            // We create a new Triplet with the new f(x), the new g(x), the path,
+                            // the number of transport transfers in this path,
+                            // the last transport type used,
+                            // the number of line transfers in this path,
+                            // and the last line used.
                             Triplet nt = new Triplet(p.getC() + oldcost + h.Calculate(n, destination, Transports.values()[j]), p.getC() + oldcost, path, t.getTransTransfers(), t.getLastTransport(), t.getLineTransfers(), t.getLastLine());
+                            // Check if with the transfer parameters given the path is in or not.
                             if (nt.updateTransport(Transports.values()[j], p.getN(), maxTransfers, maxLines)) {
+                                // If it's in, we put it in the list.
                                 list.addWithoutRep(nt);
                             }
 
@@ -160,9 +171,11 @@ public class AStar {
                 }
             }
         }
+        // If the list is empty we return an empty list.
         if (list.empty()) {
             return new ArrayList<InfoPath>();
         }
+        // else we return the path to go form the node source to the destination node.
         return list.First().getPath();
     }
 
