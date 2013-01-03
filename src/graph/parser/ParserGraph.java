@@ -119,7 +119,7 @@ public class ParserGraph {
 	    boolean bus = false;
 	    boolean subway  = false;
 	    ArrayList<Node> nodeArray = new ArrayList<Node>();
-	    ArrayList<Line> costArray = new ArrayList<Line>();
+	    ArrayList<Line> costArray;
 	    line = file.readLine();
 	    while (line != null){
 			if (line.startsWith("//")){
@@ -132,11 +132,12 @@ public class ParserGraph {
 			    nodeArray.add(new Node());
 			}
 			for (int i = 0; i < nNodes; i++){
-				nodeArray.get(i).setName(line);
+			    nodeArray.get(i).setName(line);
 			    line = file.readLine();
 			    nRel = Integer.parseInt(line);
 			    //N1 N2 3 B S W 4
 			    for (int j = 0; j < nRel; j++){
+				costArray = new ArrayList<Line>();
 				line = file.readLine();
 				relation = line.split(" ");
 				nodeArray.get(i).setAlias(relation[0]);

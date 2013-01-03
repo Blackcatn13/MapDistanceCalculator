@@ -58,13 +58,14 @@ public class AStar {
      * @param d node destination.
      * @param heu heuristic to check.
      */
-    public AStar(Graph g, Node s, Node d, Heuristic heu, int t) {
+    public AStar(Graph g, Node s, Node d, Heuristic heu, int tt, int lt) {
 	graph = g;
 	source = s;
 	destination = d;
 	list = new OrderedList();
 	h = heu;
-	maxTransfers = t;
+	maxTransfers = tt;
+	maxLines = lt;
     }
     
     /**
@@ -98,7 +99,7 @@ public class AStar {
 	float oldcost;
 	Triplet t;
 	InfoPath ip;
-	
+
 	ip = new InfoPath();
 	ip.setSNode(source);
 	// We add the source in a clear path to start.
@@ -139,7 +140,8 @@ public class AStar {
                 	for(Pair p : costs) {
                 	    path.get(path.size() - 2).setLine(p.getN());
                 	    oldcost = t.getGx();
-                	    Triplet nt = new Triplet(p.getC() + oldcost + h.Calculate(n, destination, Transports.values()[j]), cost + oldcost, path, t.getTransTransfers(), t.getLastTransport(), t.getLineTransfers(), t.getLastLine());
+                	    path.get(path.size() - 2).setCost(oldcost + p.getC());
+                	    Triplet nt = new Triplet(p.getC() + oldcost + h.Calculate(n, destination, Transports.values()[j]), p.getC() + oldcost, path, t.getTransTransfers(), t.getLastTransport(), t.getLineTransfers(), t.getLastLine());
                 	    if(nt.updateTransport(Transports.values()[j], p.getN(), maxTransfers, maxLines)) {
                 		list.addWithoutRep(nt);
                 	    }

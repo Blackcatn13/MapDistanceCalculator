@@ -94,7 +94,7 @@ public class OutputGenerator {
 			iniNode = actNodes.get(0);
 			actNodes.remove("N".concat(String.valueOf(i+1)));
 			for (int j = 0; j < actNodes.size(); j++){
-			    astar = new AStar(graph,graph.getNodebyAlias(iniNode), graph.getNodebyAlias(actNodes.get(j)), h, 20);
+			    astar = new AStar(graph,graph.getNodebyAlias(iniNode), graph.getNodebyAlias(actNodes.get(j)), h, 20, 20);
 			    file.write(iniNode + " ");
 			    file.write(actNodes.get(j) + " ");
 			    time = new Time();
