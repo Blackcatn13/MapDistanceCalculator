@@ -110,4 +110,14 @@ public class Graph {
     public int getGraphSize(){
 	return nodes.size();
     }
+    
+    /**
+     * Function to get the nodes of the graph.
+     * @return The list of nodes of the graph.
+     */
+    
+    public ArrayList<Node> getNodes(){
+    	return nodes;
+    }
+    
 }
