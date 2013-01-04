@@ -282,11 +282,7 @@ public class Window {
 	
 	btnParse.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-		    try {
 			g = p.ParseTxtFilewLines("cityy.txt");
-		    } catch(Exception e) {
-			e.printStackTrace();
-		    }
 		}
 	});
 	
@@ -307,7 +303,20 @@ public class Window {
 		    }
 		    int Transtransf = (int) spinner.getModel().getValue();
 		    int Linetransf = (int) spinner_1.getModel().getValue();
-		    as = new AStar(g, g.getNodeby(textField.getText()), g.getNodeby(textField_1.getText()), h, Transtransf, Linetransf);
+		    String initName = textField.getText().toLowerCase();
+		    String finalName = textField_1.getText().toLowerCase();
+		    StringMatch strMatch = new StringMatch(g);
+		    if (!strMatch.stringMatchName(initName)){
+		    	System.out.println(initName + " incorrect");
+		    	initName = strMatch.stringMatching(initName);
+		    	System.out.println("Did you mean " + initName + "?");
+		    }
+		    if (!strMatch.stringMatchName(finalName)){
+		    	System.out.println(finalName + " incorrect");
+		    	finalName = strMatch.stringMatching(finalName);
+		    	System.out.println("Did you mean " + finalName + "?");
+		    }
+		    as = new AStar(g, g.getNodeby(initName), g.getNodeby(finalName), h, Transtransf, Linetransf);
 		    BitSet b = new BitSet(3);
 		    b.clear();
 		    b.set(0, rdbtnBus.isSelected());
