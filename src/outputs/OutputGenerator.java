@@ -141,7 +141,7 @@ public class OutputGenerator {
 	String city = "SimpleSimpsonsCity2";
 	OutputGenerator oG = new OutputGenerator();
 	pG = new ParserGraph();
-	graph = pG.ParseTxtFile(city.concat(".txt"));
+	graph = pG.parseTxtFile(city.concat(".txt"));
 	h = new HeuristicD(); 	
 	oG.generateTXT(city.concat("output.txt"), graph);    	
     }

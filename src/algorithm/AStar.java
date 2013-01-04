@@ -154,12 +154,12 @@ public class AStar {
                             continue;
                         // For every cost from the node to the other node.
                         for (Pair p : costs) {
-                            position = path.size() - 1;
                             // If the cost not exist exit.
                             if (p.getC() == -1)
                                 continue;
                             // Copy the path.
                             path = copyList(t.getPath());
+                            position = path.size() - 1;
                             // Update the last InfoPath with the destination
                             // node, the transport used and the line of the
                             // transport.
