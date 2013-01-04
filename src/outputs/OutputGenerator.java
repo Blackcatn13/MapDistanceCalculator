@@ -16,6 +16,7 @@ import algorithm.InfoPath;
 
 import graph.components.Graph;
 import graph.components.Node;
+import graph.components.Transports;
 import graph.parser.ParserGraph;
 import algorithm.Heuristic;
 import outputs.Time;
@@ -58,29 +59,28 @@ public class OutputGenerator {
 	    float maxTime;
 	    float finAverageTime = 0;
 	    float finMaxTime = 0;
+	    ArrayList<InfoPath> maxNodePath = null;
 	    int iter;
 	    int finIter = 0;
-	    /*
-	     * All transports enabled.
-	     */
+	    int maxTransfers = 20;
+	    int maxLines = 20;
 	    BitSet b = new BitSet(3);
+	    //Set of all transport combination.
 	    boolean[][] init = new boolean[][]{{false,false,false},{false,false,true},{false,true,false},{false,true,true},{true,false,false},{true,false,true},{true,true,false},{true,true,true}};
+	    int[][] maxTraLin = new int[][]{{2,0},{4,0},{0,1},{0,3},{0,5},{2,2},{3,5}};
 	    b.clear();
+	    file.write("Heuristic usage: ");
+		file.write(String.valueOf(h.getClass().getName()));
+		file.newLine();
+		file.write(dashed);
+		file.newLine();
 	    for(int k = 0; k < init.length; k++){
 		b.set(0,init[k][0]);
 		b.set(1,init[k][1]);
 		b.set(2,init[k][2]);
-		file.write("All paths and it's time using the transport below.");
-		file.newLine();
-		file.write("Bus" + ": " + b.get(0));
-		file.newLine();
-		file.write("Subwalk" + ": " + b.get(1));
-		file.newLine();
-		file.write("Walk" + ": " + b.get(2));
-		file.newLine();
-		file.write("Heuristic usage: ");
-		file.write(String.valueOf(h.getClass().getName()));
-		file.newLine();
+		if (init[k][0] && init[k][1] && init[k][2]){
+			
+		}
 		averageTime = 0;
 		actTime = 0;
 		maxTime = 0;
@@ -94,41 +94,43 @@ public class OutputGenerator {
 			iniNode = actNodes.get(0);
 			actNodes.remove("N".concat(String.valueOf(i+1)));
 			for (int j = 0; j < actNodes.size(); j++){
-			    astar = new AStar(graph,graph.getNodebyAlias(iniNode), graph.getNodebyAlias(actNodes.get(j)), h, 20, 20);
-			    file.write(iniNode + " ");
-			    file.write(actNodes.get(j) + " ");
+				astar = new AStar(graph,graph.getNodebyAlias(iniNode), graph.getNodebyAlias(actNodes.get(j)), h, maxTransfers, maxLines);
 			    time = new Time();
 			    time.setScale("millisecond");
 			    nodes = astar.getPath(b);
 			    actTime = time.elapsedTime();
-			    if (maxTime < actTime) maxTime = actTime;
-			    if (finMaxTime < maxTime) finMaxTime = maxTime;
+			    if (maxTime < actTime){
+			    	maxTime = actTime;
+			    }
+			    if (finMaxTime < maxTime){
+			    	finMaxTime = maxTime;
+			    	maxNodePath = nodes;
+			    }
 			    averageTime += actTime;
-			    file.write(String.valueOf(actTime));
-			    file.newLine();
 			    iter++;
 			}
 		    }
 		}
-		file.write("Average time of calculate path: ");
 		finAverageTime += averageTime/iter;
 		finIter++;
-		file.write(String.valueOf(averageTime/iter));
-		file.newLine();
-		file.write("Max time of calculate path: ");
-		file.write(String.valueOf(maxTime));
-		file.newLine();
-		file.write(dashed);
-		file.newLine();
 	    }
-	    file.write("Average of average of calculate path: ");
-	    file.write(String.valueOf(finAverageTime/finIter));
+	    file.write("Average calculate path: " + String.valueOf(finAverageTime/finIter));
 	    file.newLine();
-	    file.write("Max of max of calculate path: ");
-	    file.write(String.valueOf(finMaxTime));
+	    file.write("Max calculate path: " + String.valueOf(finMaxTime));
+	    file.newLine();
+	    file.write("Path of max details");
+	    file.newLine();
+		    file.write("Node start: " + maxNodePath.get(0).getSNode().getAlias());
+		    file.newLine();
+		    file.write("Node end: " + maxNodePath.get(maxNodePath.size()-1).getSNode().getAlias());
+		    file.newLine();
+		    for (int i = 0; i < maxNodePath.size()-1; i++){
+		    	InfoPath ip = maxNodePath.get(i);
+		    	file.write("\t" + ip.getSNode().getName()+ " ("+ip.getSNode().getAlias() + ")" + " to " + ip.getSNode().getName()+ " (" + maxNodePath.get(i+1).getSNode().getAlias()+ ")");
+		    	file.newLine();
+		    }
 	    file.close();
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -138,11 +140,22 @@ public class OutputGenerator {
      * @throws Exception 
      */
     public static void main(String[] args){
-	String city = "SimpleSimpsonsCity2";
+	String city = "ciutat60";
 	OutputGenerator oG = new OutputGenerator();
 	pG = new ParserGraph();
-	graph = pG.parseTxtFile(city.concat(".txt"));
+	graph = pG.parseTxtFilewLines(city.concat(".txt"));
 	h = new HeuristicD(); 	
 	oG.generateTXT(city.concat("output.txt"), graph);    	
     }
+    
+    /**
+     * Function to write the path info in the Text Panel.
+     *
+     * @param path
+     *            The Array with the path info.
+     * @param b
+     *            The type of transports used.
+     * @param alias
+     *            If the info is displayed by the alias or the name of the node.
+     */
 }
