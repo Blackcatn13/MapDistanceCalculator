@@ -309,12 +309,12 @@ public class Window {
 		    if (!strMatch.stringMatchName(initName)){
 		    	System.out.println(initName + " incorrect");
 		    	initName = strMatch.stringMatching(initName);
-		    	System.out.println("Did you mean " + initName + "?");
+		    	System.out.println("Using " + initName + " instead");
 		    }
 		    if (!strMatch.stringMatchName(finalName)){
 		    	System.out.println(finalName + " incorrect");
 		    	finalName = strMatch.stringMatching(finalName);
-		    	System.out.println("Did you mean " + finalName + "?");
+		    	System.out.println("Using " + finalName + " instead");
 		    }
 		    as = new AStar(g, g.getNodeby(initName), g.getNodeby(finalName), h, Transtransf, Linetransf);
 		    BitSet b = new BitSet(3);
