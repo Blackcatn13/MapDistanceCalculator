@@ -35,10 +35,13 @@ public class StringMatch {
 		String strMin = null;
 		for (String strAct : strList){
 			distAct = distLevenshtein(inputStr, strAct);
-			if (distLevenshtein(inputStr, strAct) < minValue){
+			if (distAct < minValue){
 				minValue = distAct;
 				strMin = strAct;
 			}
+			//minValue == 0 means that the string is equal, and it's has
+			//been tested before. So, if the minValue = 1, stop the for. 
+			if (minValue == 1) continue;
 		}
 		return strMin;
 	}
@@ -68,9 +71,9 @@ public class StringMatch {
 		for(int i=0; i<nodeChar.length+1; i++){
 			distance[0][i]=i;
 		}
-		for(int i=1; i<inputChar.length; i++){
-			for(int j=1; j<nodeChar.length; j++){
-				if (inputChar[i] == nodeChar[j]) cost = 0;
+		for(int i=1; i<inputChar.length+1; i++){
+			for(int j=1; j<nodeChar.length+1; j++){
+				if (inputChar[i-1] == nodeChar[j-1]) cost = 0;
 				else cost = 1;
 				distance[i][j] = Math.min(distance[i-1][j]+1, Math.min(distance[i][j-1]+1, distance[i-1][j-1]+cost));
 			}
