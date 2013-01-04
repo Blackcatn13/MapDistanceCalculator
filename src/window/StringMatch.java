@@ -14,7 +14,6 @@ import graph.components.Node;
  */
 public class StringMatch {
 	
-	Graph myGraph;
 	ArrayList<String> strList;
 	String str;
 
@@ -23,9 +22,7 @@ public class StringMatch {
 	 * @param graph graph to analyze node names.
 	 */
 	public StringMatch(Graph graph){
-		myGraph = graph;
-		strList = new ArrayList<String>();
-		initStrGraph(myGraph);
+		initStrGraph(graph);
 	}
 	
 	/**
@@ -34,10 +31,12 @@ public class StringMatch {
 	 */
 	public String stringMatching(String inputStr){
 		int minValue = 1000;
+		int distAct;
 		String strMin = null;
 		for (String strAct : strList){
+			distAct = distLevenshtein(inputStr, strAct);
 			if (distLevenshtein(inputStr, strAct) < minValue){
-				minValue = distLevenshtein(inputStr, strAct);
+				minValue = distAct;
 				strMin = strAct;
 			}
 		}
@@ -61,8 +60,22 @@ public class StringMatch {
 	 * @return
 	 */
 	private int distLevenshtein(char[] inputChar, char[] nodeChar) {
-		
-		return 0;
+		int [][] distance = new int[inputChar.length+1][nodeChar.length+1];
+		int cost = 1;
+		for (int i=0; i<inputChar.length+1; i++){
+			distance[i][0]=i;
+		}
+		for(int i=0; i<nodeChar.length+1; i++){
+			distance[0][i]=i;
+		}
+		for(int i=1; i<inputChar.length; i++){
+			for(int j=1; j<nodeChar.length; j++){
+				if (inputChar[i] == nodeChar[j]) cost = 0;
+				else cost = 1;
+				distance[i][j] = Math.min(distance[i-1][j]+1, Math.min(distance[i][j-1]+1, distance[i-1][j-1]+cost));
+			}
+		}
+		return distance[inputChar.length][nodeChar.length];
 	}
 
 	/**
@@ -82,9 +95,9 @@ public class StringMatch {
 	 * @param graph selected graph to check the node names.
 	 */
 	private void initStrGraph(Graph graph) {
-		strList = null;
+		strList = new ArrayList<String>();
 		for (Node node : graph.getNodes()){
-			strList.add(node.getName());
+			strList.add(node.getName().toLowerCase());
 		}
 	}
 }
