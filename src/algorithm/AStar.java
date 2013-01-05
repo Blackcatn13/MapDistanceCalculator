@@ -43,6 +43,11 @@ public class AStar {
      * Number of maximum line transfers.
      */
     private int maxLines;
+    
+    /**
+     * Counter to know the quantity of nodes has been visited.
+     */
+    private int visitedNodes;
 
     /**
      * Default constructor of the class.
@@ -52,6 +57,7 @@ public class AStar {
         source = new Node();
         destination = new Node();
         list = new OrderedList();
+        visitedNodes = 0;
     }
 
     /**
@@ -118,6 +124,7 @@ public class AStar {
         Triplet t;
         InfoPath ip;
         int position;
+        
 
         ip = new InfoPath();
         ip.setSNode(source);
@@ -135,6 +142,8 @@ public class AStar {
             aux = t.getFirst();
             // Mark the node as visited.
             visited.add(aux);
+            //Increment visited nodes counter
+            visitedNodes++;
             // Get the neighbors of the node.
             auxl = aux.getNeighbors();
             // For every neighbor.
@@ -224,5 +233,13 @@ public class AStar {
             newList.add(new InfoPath(p));
         }
         return newList;
+    }
+    
+    /**
+     * Function to know the quantity of nodes has been visited.
+     * @return The quantity of nodes visited.
+     */
+    public int getVisitedNodes(){
+    	return visitedNodes;
     }
 }
