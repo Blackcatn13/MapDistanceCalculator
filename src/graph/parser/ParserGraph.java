@@ -38,107 +38,6 @@ public class ParserGraph {
     }
 
     /**
-     * Function to parse a file and save all the nodes in the graph.
-     *
-     * @param filename
-     *            Name of the file with the graph saved.
-     * @return The graph initialized with all the info.
-     */
-    @Deprecated
-    public Graph parseTxtFile(String filename) {
-        FileInputStream fstream;
-        try {
-            // We open the file with all the information.
-            fstream = new FileInputStream("cities/".concat(filename));
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader file = new BufferedReader(new InputStreamReader(in));
-            String line;
-            line = file.readLine();
-            String[] relation;
-            int nRel = 0;
-            int nDefinedCost;
-            float busCost;
-            float subCost;
-            float walCost;
-            float funCost;
-
-            ArrayList<Node> nodeArray = new ArrayList<Node>();
-            // While the file have lines to read.
-            while (line != null) {
-                // If the line start with // is a comment and we skip it.
-                if (line.startsWith("//")) {
-                    line = file.readLine();
-                    continue;
-                }
-                // We get the number of nodes of the graph.
-                nNodes = Integer.parseInt(line.split(" ")[0]);
-                // Create the same number of nodes.
-                for (int i = 0; i < nNodes; i++) {
-                    nodeArray.add(new Node());
-                }
-                // For every node.
-                for (int i = 0; i < nNodes; i++) {
-                    line = file.readLine();
-                    // We read the name of the node and assign it.
-                    nodeArray.get(i).setName(line);
-                    // We put an alias to the node.
-                    nodeArray.get(i)
-                            .setAlias("N".concat(String.valueOf(i + 1)));
-                    line = file.readLine();
-                    // We get the number of neighbors the node have.
-                    nRel = Integer.parseInt(line.split(" ")[0]);
-                    // For every neighbor.
-                    for (int j = 0; j < nRel; j++) {
-                        // Set the cost to -1.
-                        busCost = -1;
-                        subCost = -1;
-                        walCost = -1;
-                        // funCost = -1;
-                        line = file.readLine();
-                        // We get the relation line.
-                        relation = line.split(" ");
-                        // We get the number of defined costs.
-                        nDefinedCost = 2 * Integer.parseInt(relation[2]);
-                        // And get this costs.
-                        for (int k = 0; k < nDefinedCost; k += 2) {
-                            if (relation[3 + k].equals("B")) {
-                                busCost = Float.parseFloat(relation[4 + k]);
-                            } else if (relation[3 + k].equals("S")) {
-                                subCost = Float.parseFloat(relation[4 + k]);
-                            } else if (relation[3 + k].equals("W")) {
-                                walCost = Float.parseFloat(relation[4 + k]);
-                            } else if (relation[3 + k].equals("F")) {
-                                // This is an implemented but contemplated
-                                // option.
-                                funCost = Float.parseFloat(relation[4 + k]);
-                            }
-                        }
-                        // When we have the cost we add the neighbor to the
-                        // node.
-                        nodeArray.get(i).addNeighbor(
-                                nodeArray.get(Integer.parseInt(relation[1]
-                                        .substring(1)) - 1), busCost, subCost,
-                                walCost);
-                    }
-                }
-                // We read the next line of the text.
-                line = file.readLine();
-            }
-            // When read all the text, we add all the nodes to the graph.
-            for (int i = 0; i < nNodes; i++) {
-                graph.addNode(nodeArray.get(i));
-            }
-            // Close the file and return the graph initialized.
-            file.close();
-            return graph;
-        } catch (IOException e) {
-            // If an exception occurs print the error and don't return anything.
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
      * New function to parse the file with the Line system.
      *
      * @param filename
@@ -155,11 +54,11 @@ public class ParserGraph {
             String line;
             String aliasDest;
             String[] relation;
+            String[] overcost;
             int nRel;
             int nDefinedCost;
             int nLines;
             float walCost = -1;
-            float funCost = -1;
             boolean bus = false;
             boolean subway = false;
             ArrayList<Node> nodeArray = new ArrayList<Node>();
@@ -167,10 +66,21 @@ public class ParserGraph {
             line = file.readLine();
             // For all the line of the text.
             while (line != null) {
-                // If the lie starts with // is a comment and we skip it.
+                // If the line starts with // is a comment and we skip it.
                 if (line.startsWith("//")) {
                     line = file.readLine();
                     continue;
+                }
+                //We compare if the city has overcosts
+                overcost = line.split(" ");
+                if (overcost[0].equals("overcost")){
+                	int nOver = Integer.parseInt(overcost[1]);
+                	for (int i = 0; i < nOver; i++){
+                		//Get actual date
+                		//Set overcost if date matches
+                	}
+                }else{
+                	line=file.readLine();
                 }
                 // We get the number of nodes.
                 nNodes = Integer.parseInt(line);
@@ -205,8 +115,6 @@ public class ParserGraph {
                             } else if (relation[3 + k].equals("W")) {
                                 // If the walking cost exist we save it.
                                 walCost = Float.parseFloat(relation[3 + k + 1]);
-                            } else if (relation[3 + k].equals("F")) {
-                                funCost = Float.parseFloat(relation[3 + k + 1]);
                             }
                         }
                         // If the exist the bus relation.
