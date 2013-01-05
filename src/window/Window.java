@@ -5,7 +5,6 @@ import graph.components.Transports;
 import graph.parser.ParserGraph;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -30,8 +29,6 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import algorithm.AStar;
 import algorithm.Heuristic;
@@ -184,7 +181,7 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         p = new ParserGraph();
-        g = p.parseTxtFilewLines("ciutat60.txt");
+        g = p.parseTxtFilewLines("ciutat60over.txt");
 
         JPanel panel2 = new JPanel();
         frame.getContentPane().add(panel2, BorderLayout.WEST);
@@ -381,6 +378,7 @@ public class Window {
                     names.add("B3.txt");
                     names.add("B5.txt");
                     names.add("B6.txt");
+                    names.add("Walk.txt");
                 }
                 h.init(g);
                 h.setParams(names);
