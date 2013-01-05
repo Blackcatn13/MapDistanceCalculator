@@ -10,7 +10,12 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import algorithm.Pair;
 
 /**
  * @author xyz0k
@@ -61,8 +66,10 @@ public class ParserGraph {
             float walCost = -1;
             boolean bus = false;
             boolean subway = false;
+            boolean overCost = false;
             ArrayList<Node> nodeArray = new ArrayList<Node>();
             ArrayList<Line> costArray;
+            ArrayList<Pair> overArray = new ArrayList<Pair>();
             line = file.readLine();
             // For all the line of the text.
             while (line != null) {
@@ -74,10 +81,21 @@ public class ParserGraph {
                 //We compare if the city has overcosts
                 overcost = line.split(" ");
                 if (overcost[0].equals("overcost")){
+                	overArray = new ArrayList<Pair>();
+                	overCost = true;
                 	int nOver = Integer.parseInt(overcost[1]);
+            		line = file.readLine();
                 	for (int i = 0; i < nOver; i++){
-                		//Get actual date
-                		//Set overcost if date matches
+                		overcost = line.split(" ");
+                		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                		 //get current date time with Date()
+                		 Date date = new Date();
+                		 //Compare if the actual date is between date of over cost.
+                		if (dateFormat.format(date).compareTo(overcost[1]) > 0 && dateFormat.format(date).compareTo(overcost[1]) < 0)
+                			overArray.add(new Pair(Float.parseFloat(overcost[3]),overcost[0]));
+                		else
+                			overArray.add(new Pair(0,overcost[0]));
+                		line = file.readLine();
                 	}
                 }else{
                 	line=file.readLine();
@@ -127,11 +145,30 @@ public class ParserGraph {
                             for (int k = 0; k < nLines; k++) {
                                 // We add the line with the name of the Line,
                                 // the type of transport (BUS), and the cost.
-                                costArray
-                                        .add(new Line(
-                                                relation[2 + 2 * k],
-                                                Transports.BUS,
-                                                Float.parseFloat(relation[2 + 2 * k + 1])));
+                                String busLine = relation[2 + 2 * k];
+                            	if (overCost){
+                            		Float actCost = 0F;
+                            		for (Pair pairLine : overArray){
+                            			if (pairLine.equals(busLine)){
+                            				actCost = pairLine.getC();
+                            				overArray.remove(pairLine);
+                            				continue;
+                            			}
+                            		}
+	                    		costArray
+	                            .add(new Line(
+	                                    busLine,
+	                                    Transports.BUS,
+	                                    Float.parseFloat(relation[2 + 2 * k + 1])+actCost));
+	
+                            	}
+                            	else{
+                            		costArray
+                                    .add(new Line(
+                                            busLine,
+                                            Transports.BUS,
+                                            Float.parseFloat(relation[2 + 2 * k + 1])));
+                            	}
                             }
                             bus = false;
                         }
