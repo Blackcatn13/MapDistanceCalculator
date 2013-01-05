@@ -162,8 +162,6 @@ public class OutputGenerator {
 	graph = pG.parseTxtFilewLines(city.concat(".txt"));
 	h = new HeuristicD(); 	
 	hList.add(h);
-	h = new HeuristicD();
-	hList.add(h);
 	oG.generateTXT(city.concat("output.txt"), graph, hList);    	
     }
     
