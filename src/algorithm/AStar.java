@@ -185,10 +185,12 @@ public class AStar {
                             Triplet nt = new Triplet(p.getC()
                                     + oldcost
                                     + h.calculate(n, destination,
-                                            Transports.values()[j]), p.getC()
-                                            + oldcost, path, t.getTransTransfers(),
-                                            t.getLastTransport(), t.getLineTransfers(),
-                                            t.getLastLine());
+                                            Transports.values()[j],
+                                            t.getLastLine(), maxTransfers,
+                                            maxLines), p.getC() + oldcost,
+                                    path, t.getTransTransfers(),
+                                    t.getLastTransport(), t.getLineTransfers(),
+                                    t.getLastLine());
                             // Check if with the transfer parameters given the
                             // path is in or not.
                             if (nt.updateTransport(Transports.values()[j],

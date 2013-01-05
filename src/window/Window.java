@@ -5,7 +5,9 @@ import graph.components.Transports;
 import graph.parser.ParserGraph;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,16 +24,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import algorithm.AStar;
 import algorithm.Heuristic;
 import algorithm.HeuristicD;
 import algorithm.HeuristicE;
+import algorithm.HeuristicL;
 import algorithm.InfoPath;
 
 public class Window {
@@ -95,41 +101,47 @@ public class Window {
         Transports t;
         float costTot = 0;
         if (!path.isEmpty()) {
-            for (int i = 0; i < path.size() - 1; i++) {
-                t = path.get(i).getTransport();
-                switch (t) {
-                    case BUS:
-                        textPane.setText(textPane.getText() + "\n"
-                                + "Take the " + path.get(i).getLine()
-                                + " (bus)");
-                        break;
-                    case SUBWAY:
-                        textPane.setText(textPane.getText() + "\n"
-                                + "Take the " + path.get(i).getLine()
-                                + " (subway)");
-                        break;
-                    case WALK:
-                        textPane.setText(textPane.getText() + "\n" + "Walk");
-                    default:
-                        textPane.setText(textPane.getText() + "\n"
-                                + "An Alien abducted you and teleported");
-                }
-                if (alias) {
-                    textPane.setText(textPane.getText() + " from "
-                            + path.get(i).getSNode().getAlias());
-                    textPane.setText(textPane.getText() + " to "
-                            + path.get(i).getDNode().getAlias());
-                } else {
-                    textPane.setText(textPane.getText() + " from "
-                            + path.get(i).getSNode().getName());
-                    textPane.setText(textPane.getText() + " to "
-                            + path.get(i).getDNode().getName());
-                }
+            if (path.size() > 1) {
+                for (int i = 0; i < path.size() - 1; i++) {
+                    t = path.get(i).getTransport();
+                    switch (t) {
+                        case BUS:
+                            textPane.setText(textPane.getText() + "\n"
+                                    + "Take the " + path.get(i).getLine()
+                                    + " (bus)");
+                            break;
+                        case SUBWAY:
+                            textPane.setText(textPane.getText() + "\n"
+                                    + "Take the " + path.get(i).getLine()
+                                    + " (subway)");
+                            break;
+                        case WALK:
+                            textPane.setText(textPane.getText() + "\n" + "Walk");
+                            break;
+                        default:
+                            textPane.setText(textPane.getText() + "\n"
+                                    + "An Alien abducted you and teleported");
+                    }
+                    if (alias) {
+                        textPane.setText(textPane.getText() + " from "
+                                + path.get(i).getSNode().getAlias());
+                        textPane.setText(textPane.getText() + " to "
+                                + path.get(i).getDNode().getAlias());
+                    } else {
+                        textPane.setText(textPane.getText() + " from "
+                                + path.get(i).getSNode().getName());
+                        textPane.setText(textPane.getText() + " to "
+                                + path.get(i).getDNode().getName());
+                    }
 
+                }
+                costTot = path.get(path.size() - 2).getCost();
+                textPane.setText(textPane.getText() + "\n" + "Time to travel: "
+                        + costTot + " m");
+            } else {
+                textPane.setText(textPane.getText() + "\n"
+                        + "The source and the destination node are the same.");
             }
-            costTot = path.get(path.size() - 2).getCost();
-            textPane.setText(textPane.getText() + "\n" + "Cost to travel: "
-                    + costTot);
         } else {
             textPane.setText(textPane.getText()
                     + "\n"
@@ -172,6 +184,7 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         p = new ParserGraph();
+        g = p.parseTxtFilewLines("ciutat60.txt");
 
         JPanel panel2 = new JPanel();
         frame.getContentPane().add(panel2, BorderLayout.WEST);
@@ -182,23 +195,6 @@ public class Window {
         gblpanel2.rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel2.setLayout(gblpanel2);
-
-        JButton btnParse = new JButton("Parse");
-        GridBagConstraints gbctnParse = new GridBagConstraints();
-        gbctnParse.insets = new Insets(0, 0, 5, 0);
-        gbctnParse.anchor = GridBagConstraints.NORTH;
-        gbctnParse.gridx = 0;
-        gbctnParse.gridy = 0;
-        panel2.add(btnParse, gbctnParse);
-
-        final JRadioButton rdbtnHx = new JRadioButton("H(x) = 0");
-        rdbtnHx.setSelected(true);
-        GridBagConstraints gbcrdbtnHx = new GridBagConstraints();
-        gbcrdbtnHx.anchor = GridBagConstraints.WEST;
-        gbcrdbtnHx.insets = new Insets(0, 0, 5, 0);
-        gbcrdbtnHx.gridx = 0;
-        gbcrdbtnHx.gridy = 2;
-        panel2.add(rdbtnHx, gbcrdbtnHx);
 
         JPanel panel1 = new JPanel();
         frame.getContentPane().add(panel1, BorderLayout.EAST);
@@ -235,7 +231,9 @@ public class Window {
         panel1.add(rdbtnWalking, gbcrdbtnWalking);
 
         textPane = new JTextPane();
-        frame.getContentPane().add(textPane, BorderLayout.CENTER);
+        JScrollPane js = new JScrollPane(textPane);
+        js.setPreferredSize(new Dimension(10, 10));
+        frame.getContentPane().add(js);
 
         JButton btnSearch = new JButton("Search");
         GridBagConstraints gbcbtnSearch = new GridBagConstraints();
@@ -296,16 +294,33 @@ public class Window {
 
         ButtonGroup group = new ButtonGroup();
 
+        final JRadioButton rdbtnHx = new JRadioButton("H(x) = 0");
+        rdbtnHx.setSelected(true);
+        GridBagConstraints gbcrdbtnHx = new GridBagConstraints();
+        gbcrdbtnHx.anchor = GridBagConstraints.WEST;
+        gbcrdbtnHx.insets = new Insets(0, 0, 5, 0);
+        gbcrdbtnHx.gridx = 0;
+        gbcrdbtnHx.gridy = 1;
+        panel2.add(rdbtnHx, gbcrdbtnHx);
+        group.add(rdbtnHx);
+
         final JRadioButton rdbtnHxEuclidean = new JRadioButton(
                 "H(x) = Euclidean");
         GridBagConstraints gbcrdbtnHxEuclidean = new GridBagConstraints();
         gbcrdbtnHxEuclidean.anchor = GridBagConstraints.WEST;
         gbcrdbtnHxEuclidean.insets = new Insets(0, 0, 5, 0);
         gbcrdbtnHxEuclidean.gridx = 0;
-        gbcrdbtnHxEuclidean.gridy = 3;
+        gbcrdbtnHxEuclidean.gridy = 2;
         panel2.add(rdbtnHxEuclidean, gbcrdbtnHxEuclidean);
         group.add(rdbtnHxEuclidean);
-        group.add(rdbtnHx);
+
+        final JRadioButton rdbtnHxLine = new JRadioButton("H(x) = Line apparitions");
+        GridBagConstraints gbcrdbtnHxLine = new GridBagConstraints();
+        gbcrdbtnHxLine.insets = new Insets(0, 0, 5, 0);
+        gbcrdbtnHxLine.gridx = 0;
+        gbcrdbtnHxLine.gridy = 3;
+        panel2.add(rdbtnHxLine, gbcrdbtnHxLine);
+        group.add(rdbtnHxLine);
 
         JLabel lblMaxTransfers = new JLabel("Max trans. transfers");
         GridBagConstraints gbclblMaxTransfers = new GridBagConstraints();
@@ -345,26 +360,30 @@ public class Window {
         gbcchckbxShowByAlias.gridy = 8;
         panel2.add(chckbxShowByAlias, gbcchckbxShowByAlias);
 
-        btnParse.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                g = p.parseTxtFilewLines("cityy.txt");
-            }
-        });
-
         btnSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                ArrayList<String> names = new ArrayList<String>();
                 if (rdbtnHx.isSelected()) {
                     h = new HeuristicD();
-                    h.init(g);
                 } else if (rdbtnHxEuclidean.isSelected()) {
                     h = new HeuristicE();
-                    ArrayList<String> names = new ArrayList<String>();
-                    names.add("busquadrant.txt");
-                    names.add("subquadrant.txt");
-                    names.add("walkquadrant.txt");
-                    h.init(g);
-                    ((HeuristicE) h).setDistances(names);
+                    names.add("Bus60Quadrant.txt");
+                    names.add("Subway60Quadrant.txt");
+                    names.add("Walk60Quadrant.txt");
+                    names.add("Relations.txt");
+                } else if (rdbtnHxLine.isSelected()) {
+                    h = new HeuristicL();
+                    names.add("S1.txt");
+                    names.add("S3.txt");
+                    names.add("S4.txt");
+                    names.add("S6.txt");
+                    names.add("B2.txt");
+                    names.add("B3.txt");
+                    names.add("B5.txt");
+                    names.add("B6.txt");
                 }
+                h.init(g);
+                h.setParams(names);
                 int transtransf = (int) spinner.getModel().getValue();
                 int linetransf = (int) spinner1.getModel().getValue();
                 String initName = textField.getText().toLowerCase();

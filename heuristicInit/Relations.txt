@@ -1,0 +1,4 @@
+3
+BUS 4 4
+SUBWAY 5 4
+WALK 6 4

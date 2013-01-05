@@ -1,5 +1,7 @@
 package algorithm;
 
+import java.util.ArrayList;
+
 import graph.components.Graph;
 import graph.components.Node;
 import graph.components.Transports;
@@ -67,4 +69,32 @@ public abstract class Heuristic {
     public void setGraph(Graph graph) {
         this.graph = graph;
     }
+
+    /**
+     * Function to set the possible files to the heuristic calculus.
+     *
+     * @param filenames
+     *            Names of the files to set.
+     */
+    public abstract void setParams(ArrayList<String> filenames);
+
+    /**
+     * Function to get the heuristic using a line.
+     *
+     * @param s
+     *            Source node.
+     * @param d
+     *            Destination node.
+     * @param t
+     *            Transport used.
+     * @param lastLine
+     *            used.
+     * @param maxTt
+     *            maximum value of transports transfers.
+     * @param maxLt
+     *            maximum value of line transfers.
+     * @return The heuristica value to go form s to d.
+     */
+    public abstract float calculate(Node s, Node d, Transports t,
+            String lastLine, int maxTt, int maxLt);
 }

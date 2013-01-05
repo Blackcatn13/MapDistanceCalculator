@@ -38,12 +38,7 @@ public class HeuristicE extends Heuristic {
      */
     @Override
     public float calculate(Node s, Node d) {
-        ArrayList<Position> p = positions.get(2);
-        double distx2 = Math.pow(
-                (getX(p, s.getAlias()) - getX(p, d.getAlias())), 2.0);
-        double disty2 = Math.pow(
-                (getY(p, s.getAlias()) - getY(p, d.getAlias())), 2.0);
-        return (float) Math.sqrt(distx2 + disty2);
+        return calculate(s, d, Transports.WALK);
     }
 
     /*
@@ -55,34 +50,40 @@ public class HeuristicE extends Heuristic {
     @Override
     public float calculate(Node s, Node d, Transports t) {
         ArrayList<Position> p;
-
+        float rectification;
+        Position q;
         switch (t) {
             case BUS:
                 p = positions.get(0);
+                q = positions.get(positions.size() - 1).get(0);
                 break;
             case SUBWAY:
                 p = positions.get(1);
+                q = positions.get(positions.size() - 1).get(1);
                 break;
             case WALK:
                 p = positions.get(2);
+                q = positions.get(positions.size() - 1).get(2);
                 break;
             default:
                 p = new ArrayList<Position>();
+                q = new Position();
         }
-        double distx2 = Math.pow(
-                (getX(p, s.getAlias()) - getX(p, d.getAlias())), 2.0);
-        double disty2 = Math.pow(
-                (getY(p, s.getAlias()) - getY(p, d.getAlias())), 2.0);
+        rectification = q.getX() / q.getY();
+        double distx2 = Math.pow((getX(p, s.getAlias()) - getX(p, d.getAlias())
+                * rectification), 2.0);
+        double disty2 = Math.pow((getY(p, s.getAlias()) - getY(p, d.getAlias())
+                * rectification), 2.0);
         return (float) Math.sqrt(distx2 + disty2);
     }
 
-    /**
-     * Function to initialized the heuristic with given files.
+    /*
+     * (non-Javadoc)
      *
-     * @param filenames
-     *            THe given files to parse.
+     * @see algorithm.Heuristic#setParams(java.util.ArrayList)
      */
-    public void setDistances(ArrayList<String> filenames) {
+    @Override
+    public void setParams(ArrayList<String> filenames) {
         ParserQuadrant p = new ParserQuadrant();
         ArrayList<Position> q;
         for (String file : filenames) {
@@ -129,6 +130,19 @@ public class HeuristicE extends Heuristic {
             }
         }
         return -1;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see algorithm.Heuristic#calculate(graph.components.Node,
+     * graph.components.Node, graph.components.Transports, java.lang.String,
+     * int, int)
+     */
+    @Override
+    public float calculate(Node s, Node d, Transports t, String lastLine,
+            int maxTt, int maxLt) {
+        return calculate(s, d, t);
     }
 
 }
