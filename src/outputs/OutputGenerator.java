@@ -63,12 +63,15 @@ public class OutputGenerator {
 	    float finAverageNVisited = 0;
 	    float finMaxTime = 0;
 	    ArrayList<InfoPath> maxNodePath = null;
+	    ArrayList<Float> dijList = null;
+	    ArrayList<Float> nodijList = null;
 	    int iter;
 	    int finIter = 0;
 	    int maxTransfers = 20;
 	    int maxLines = 20;
 	    int maxPathVisited = 0;
 	    float maxCost = 0;
+	    boolean dijkstra = false;
 	    BitSet b = new BitSet(3);
 	    //Set of all transport combination.
 	    boolean[][] init = new boolean[][]{{false,false,false},{false,false,true},{false,true,false},{false,true,true},{true,false,false},{true,false,true},{true,true,false},{true,true,true}};
@@ -77,6 +80,12 @@ public class OutputGenerator {
 	    for (Heuristic h : hList){
 	    	file.write("Heuristic usage: ");
 			file.write(String.valueOf(h.getClass().getName()));
+			if (h.getClass().getName().equals("algorithm.HeuristicD")){
+				dijkstra = true;
+				dijList = new ArrayList<Float>();
+			}
+			else
+				nodijList = new ArrayList<Float>();
 			file.newLine();
 			file.write(dashed);
 			file.newLine();
@@ -102,6 +111,16 @@ public class OutputGenerator {
 						    time = new Time();
 						    time.setScale("millisecond");
 						    nodes = astar.getPath(b);
+						    if (dijkstra && nodes.size()>=2){
+						    	dijList.add(nodes.get(nodes.size()-2).getCost());
+						    }
+						    else if(nodes.size()>=2)
+						    	dijList.add(0F);
+							if(!dijkstra && nodes.size()>=2){
+						    	nodijList.add((dijList.get(j)/nodes.get(nodes.size()-2).getCost())*100);
+						    }
+						    else if(nodes.size()>=2)
+						    	nodijList.add(0F);
 						    actTime = time.elapsedTime();
 						    if (maxTime < actTime){
 						    	maxTime = actTime;
@@ -126,6 +145,17 @@ public class OutputGenerator {
 			    file.write("Average calculate path time: " + String.valueOf(finAverageTime/finIter));
 			    file.write(" average num nodes visited: " + String.valueOf((int) finAverageNVisited/finIter));
 			    file.newLine();
+			    if (dijkstra) file.write("Dijkstra heuristic has 100% effectivity");
+			    else{
+			    	int averageCost = 0;
+			    	int counter = 0;
+			    	for (Float cost : nodijList){
+			    		averageCost += cost;
+			    		counter++;
+			    	}
+			    	file.write("This heuristic has an average of :" + averageCost/counter + "% effectivity");
+			    }
+			    file.newLine();
 			    file.write("Max calculate path: " + String.valueOf(finMaxTime));
 			    file.write(" num nodes visited: " + String.valueOf(maxPathVisited));
 			    file.newLine();
@@ -143,6 +173,7 @@ public class OutputGenerator {
 				    file.write("\tTotal cost: " + maxCost);
 			file.newLine();
 			file.newLine();
+			dijkstra = false;
 	    }
 	    file.close();
 	}catch (IOException e) {
@@ -160,6 +191,8 @@ public class OutputGenerator {
 	OutputGenerator oG = new OutputGenerator();
 	pG = new ParserGraph();
 	graph = pG.parseTxtFilewLines(city.concat(".txt"));
+	h = new HeuristicD(); 	
+	hList.add(h);
 	h = new HeuristicD(); 	
 	hList.add(h);
 	oG.generateTXT(city.concat("output.txt"), graph, hList);    	
