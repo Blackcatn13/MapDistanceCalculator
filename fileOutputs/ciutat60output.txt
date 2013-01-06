@@ -1,0 +1,82 @@
+Heuristic usage: algorithm.HeuristicD
+------------------------------------------------------
+Average calculate path time: 0.36773446 average num nodes visited: 30
+Heuristic usage: algorithm.HeuristicD
+------------------------------------------------------
+Average calculate path time: 0.2440066 average num nodes visited: 30
+Heuristic usage: algorithm.HeuristicD
+------------------------------------------------------
+Average calculate path time: 0.20531952 average num nodes visited: 30
+Heuristic usage: algorithm.HeuristicD
+------------------------------------------------------
+Average calculate path time: 0.17953315 average num nodes visited: 30
+Dijkstra heuristic has 100% effectivity
+Max calculate path: 23.903263 num nodes visited: 49
+Path of max details
+	Node start: N2
+	Node end: N51
+	Aitana (N2) to Acacias (N1)
+	Acacias (N1) to Palma (N30)
+	Palma (N30) to Les Corts (N32)
+	Les Corts (N32) to Poeta Bodria (N34)
+	Poeta Bodria (N34) to Ramat (N36)
+	Ramat (N36) to Rei alfons el benigne (N38)
+	Rei alfons el benigne (N38) to Taula de canvis (N45)
+	Taula de canvis (N45) to Paraguay (N52)
+	Paraguay (N52) to Caravinera (N51)
+	Total cost: 15.700001
+
+Heuristic usage: algorithm.HeuristicE
+------------------------------------------------------
+Average calculate path time: 0.37580878 average num nodes visited: 27
+Heuristic usage: algorithm.HeuristicE
+------------------------------------------------------
+Average calculate path time: 0.4843521 average num nodes visited: 25
+Heuristic usage: algorithm.HeuristicE
+------------------------------------------------------
+Average calculate path time: 0.55607414 average num nodes visited: 23
+Heuristic usage: algorithm.HeuristicE
+------------------------------------------------------
+Average calculate path time: 0.60754293 average num nodes visited: 22
+This heuristic has an average of: 97% effectivity
+Max calculate path: 23.903263 num nodes visited: 49
+Path of max details
+	Node start: N2
+	Node end: N51
+	Aitana (N2) to Acacias (N1)
+	Acacias (N1) to Palma (N30)
+	Palma (N30) to Les Corts (N32)
+	Les Corts (N32) to Poeta Bodria (N34)
+	Poeta Bodria (N34) to Ramat (N36)
+	Ramat (N36) to Rei alfons el benigne (N38)
+	Rei alfons el benigne (N38) to Taula de canvis (N45)
+	Taula de canvis (N45) to Paraguay (N52)
+	Paraguay (N52) to Caravinera (N51)
+	Total cost: 15.700001
+
+Heuristic usage: algorithm.HeuristicL
+------------------------------------------------------
+Average calculate path time: 0.60822374 average num nodes visited: 22
+Heuristic usage: algorithm.HeuristicL
+------------------------------------------------------
+Average calculate path time: 0.57257617 average num nodes visited: 23
+Heuristic usage: algorithm.HeuristicL
+------------------------------------------------------
+Average calculate path time: 0.543501 average num nodes visited: 23
+Heuristic usage: algorithm.HeuristicL
+------------------------------------------------------
+Average calculate path time: 0.514599 average num nodes visited: 23
+This heuristic has an average of: 59% effectivity
+Max calculate path: 238.13063 num nodes visited: 50
+Path of max details
+	Node start: N5
+	Node end: N12
+	Burgos (N5) to Porta del Mar (N35)
+	Porta del Mar (N35) to Pi (N27)
+	Pi (N27) to Miramar (N26)
+	Miramar (N26) to Corona (N15)
+	Corona (N15) to Meravelles (N23)
+	Meravelles (N23) to Plaça Catalunya (N11)
+	Plaça Catalunya (N11) to Almogaver (N12)
+	Total cost: 14.25
+
